@@ -1,0 +1,16 @@
+{
+    "name": "paginationjs",
+    "version": "2.0.0",
+    "main": "./pagination.min.js",
+    "ignore": [
+        "**/.*",
+        "examples",
+        "LICENSE",
+        "component.json",
+        "bower.json",
+        "package.json",
+        "README*.md",
+        "example.js",
+        "Gruntfile.js"
+    ]
+}
