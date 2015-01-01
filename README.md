@@ -5,7 +5,7 @@ Pagination.js
 
 See demos and full documentation at:
 
-## http://paginationjs.com
+## [paginationjs.com](http://paginationjs.com)
 
 # License
 Released under the MIT license.
