@@ -106,11 +106,10 @@
                 var self = this;
                 var model = self.model;
                 var el = model.el || $('<div class="paginationjs"></div>');
+                var isForced = isBoot !== true;
 
-                if(!isBoot){
-                    // Before render
-                    self.callHook('beforeRender');
-                }
+                // Before render
+                self.callHook('beforeRender', isForced);
 
                 var currentPage = model.pageNumber || attributes.pageNumber;
                 var pageRange = attributes.pageRange;
@@ -139,10 +138,8 @@
                     rangeEnd: rangeEnd
                 }));
 
-                if(!isBoot){
-                    // After render
-                    self.callHook('afterRender');
-                }
+                // After render
+                self.callHook('afterRender', isForced);
 
                 return el;
             },
@@ -180,6 +177,9 @@
                 var formatGoInput = $.isFunction(attributes.formatGoInput) ? attributes.formatGoInput() : attributes.formatGoInput;
                 var formatGoButton = $.isFunction(attributes.formatGoButton) ? attributes.formatGoButton() : attributes.formatGoButton;
 
+                var autoHidePrevious = $.isFunction(attributes.autoHidePrevious) ? attributes.autoHidePrevious() : attributes.autoHidePrevious;
+                var autoHideNext = $.isFunction(attributes.autoHideNext) ? attributes.autoHideNext() : attributes.autoHideNext;
+
                 var header = $.isFunction(attributes.header) ? attributes.header() : attributes.header;
                 var footer = $.isFunction(attributes.footer) ? attributes.footer() : attributes.footer;
 
@@ -211,10 +211,12 @@
                         html += '<ul>';
                     }
 
-                    // previous page button
+                    // Previous page button
                     if(showPrevious){
                         if(currentPage === 1){
-                            html += '<li class="'+ classPrefix +'-prev '+ disableClassName +'"><a>'+ prevText +'<\/a><\/li>';
+                            if(!autoHidePrevious){
+                                html += '<li class="'+ classPrefix +'-prev '+ disableClassName +'"><a>'+ prevText +'<\/a><\/li>';
+                            }
                         }
                         else{
                             html += '<li class="'+ classPrefix +'-prev J-paginationjs-previous" data-num="'+ (currentPage - 1) +'" title="Previous page"><a href="'+ pageLink +'">'+ prevText +'<\/a><\/li>';
@@ -265,10 +267,12 @@
                         }
                     }
 
-                    // next page button
+                    // Next page button
                     if(showNext){
                         if(currentPage == totalPage){
-                            html += '<li class="'+ classPrefix +'-next '+ disableClassName +'"><a>'+ nextText +'<\/a><\/li>';
+                            if(!autoHideNext){
+                                html += '<li class="'+ classPrefix +'-next '+ disableClassName +'"><a>'+ nextText +'<\/a><\/li>';
+                            }
                         }
                         else{
                             html += '<li class="'+ classPrefix +'-next J-paginationjs-next" data-num="'+ (currentPage + 1) +'" title="Next page"><a href="'+ pageLink +'">'+ nextText +'<\/a><\/li>';
@@ -346,7 +350,7 @@
                 var self = this;
                 var model = self.model;
 
-                if(self.lock) return;
+                if(self.disabled) return;
 
                 var pageNumber = number;
                 var pageSize = attributes.pageSize;
@@ -387,10 +391,10 @@
                 };
                 formatAjaxParams.error = function(jqXHR, textStatus, errorThrown){
                     attributes.formatAjaxError && attributes.formatAjaxError(jqXHR, textStatus, errorThrown);
-                    self.unlock();
+                    self.enable();
                 };
 
-                self.doLock();
+                self.disable();
 
                 $.ajax(formatAjaxParams);
 
@@ -402,9 +406,9 @@
 
                     self.render();
 
-                    if(self.lock && !self.sync){
-                        // unlock
-                        self.unlock();
+                    if(self.disabled && !self.sync){
+                        // enable
+                        self.enable();
                     }
 
                     // cache model data
@@ -477,32 +481,44 @@
                 this.go(this.model.pageNumber + 1, callback);
             },
 
-            doLock: function(){
+            disable: function(){
                 var self = this;
                 var source = self.sync ? 'sync' : 'async';
 
-                // Before lock
-                if(self.callHook('beforeLock', source) === false) return;
+                // Before disable
+                if(self.callHook('beforeDisable', source) === false) return;
 
-                self.lock = true;
-                self.model.locked = true;
+                self.disabled = true;
+                self.model.disabled = true;
 
-                // After lock
-                self.callHook('afterLock', source);
+                // After disable
+                self.callHook('afterDisable', source);
             },
 
-            unlock: function(){
+            enable: function(){
                 var self = this;
                 var source = self.sync ? 'sync' : 'async';
 
-                // Before unlock
-                if(self.callHook('beforeUnLock', source) === false) return;
+                // Before enable
+                if(self.callHook('beforeEnable', source) === false) return;
 
-                self.lock = false;
-                self.model.locked = false;
+                self.disabled = false;
+                self.model.disabled = false;
 
-                // After unlock
-                self.callHook('afterUnLock', source);
+                // After enable
+                self.callHook('afterEnable', source);
+            },
+
+            show: function(){
+                if(container.is(':visible')) return;
+
+                container.show();
+            },
+
+            hide: function(){
+                if(!container.is(':visible')) return;
+
+                container.hide();
             },
 
             // Replace the variables of template
@@ -751,14 +767,24 @@
                     self.next(done);
                 });
 
-                // Lock ui
-                container.on(eventPrefix + 'lock', function(){
-                    self.doLock();
+                // Disable
+                container.on(eventPrefix + 'disable', function(){
+                    self.disable();
                 });
 
-                // Unlock ui
-                container.on(eventPrefix + 'unlock', function(){
-                    self.unlock();
+                // Enable
+                container.on(eventPrefix + 'enable', function(){
+                    self.enable();
+                });
+
+                // Show
+                container.on(eventPrefix + 'show', function(){
+                    self.show();
+                });
+
+                // Hide
+                container.on(eventPrefix + 'hide', function(){
+                    self.hide();
                 });
 
                 // Destroy
@@ -792,8 +818,10 @@
                     case 'previous':
                     case 'next':
                     case 'go':
-                    case 'lock':
-                    case 'unlock':
+                    case 'disable':
+                    case 'enable':
+                    case 'show':
+                    case 'hide':
                     case 'destroy':
                         container.trigger.apply(this, args);
                         break;
@@ -815,9 +843,9 @@
                     case 'getSelectedPageData':
                         return container.data('pagination').currentPageData;
 
-                    // Whether pagination is locked
-                    case 'isLocked':
-                        return container.data('pagination').model.locked === true;
+                    // Whether pagination was be disabled
+                    case 'isDisabled':
+                        return container.data('pagination').model.disabled === true;
 
                     default:
                         throwError('Pagination do not provide action: ' + options);
@@ -926,6 +954,12 @@
 
         // Pagination element's position in the container
         position: 'bottom',
+
+        // Auto hide previous button when current page is the first page
+        autoHidePrevious: false,
+
+        // Auto hide next button when current page is the last page
+        autoHideNext: false,
 
         //header: '',
 
