@@ -7,6 +7,8 @@ See demos and full documentation at:
 
 ## [paginationjs.com](http://paginationjs.com)
 
+![paginationjs](examples/images/paginationjs_record.gif)
+
 # Usage
 
 ### Normal
