@@ -886,13 +886,13 @@
         // String | Function
         locator: 'data',
 
-        // The total number of entry, asynchronous paging Required
+        // Total entries, must be specified when the pagination is asynchronous
         totalNumber: 1,
 
         // Default page
         pageNumber: 1,
 
-        // Size of per page
+        // entries of per page
         pageSize: 10,
 
         // Page range (pages on both sides of the current page)
@@ -965,10 +965,10 @@
 
         //footer: '',
 
-        // Aliases for custom paging parameters
+        // Aliases for custom pagination parameters
         //alias: {},
 
-        // Whether to trigger pagging on initialization
+        // Whether to trigger pagination at initialization
         triggerPagingOnInit: true,
 
         showFirstOnEllipsisShow: true,
