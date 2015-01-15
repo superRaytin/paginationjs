@@ -510,15 +510,19 @@
             },
 
             show: function(){
-                if(container.is(':visible')) return;
+                var self = this;
 
-                container.show();
+                if(self.model.el.is(':visible')) return;
+
+                self.model.el.show();
             },
 
             hide: function(){
-                if(!container.is(':visible')) return;
+                var self = this;
 
-                container.hide();
+                if(!self.model.el.is(':visible')) return;
+
+                self.model.el.hide();
             },
 
             // Replace the variables of template
