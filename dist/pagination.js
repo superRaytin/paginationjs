@@ -3,6 +3,8 @@
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
+ * Homepage: https://paginationjs.com
+ *
  * Copyright 2014, superRaytin
  * Released under the MIT license.
  */
@@ -50,11 +52,6 @@
                     $('.paginationjs', container).remove();
                 }
 
-                // Inline style
-                if(attributes.inlineStyle === true){
-                    addStyle();
-                }
-
                 // Passed to the callback function
                 var model = self.model = {
                     pageRange: attributes.pageRange,
@@ -74,7 +71,9 @@
                     model.totalPage = self.getTotalPage();
 
                     // Less than one page
-                    //if(model.totalPage <= 1) return;
+                    if(attributes.hideWhenLessThanOnePage){
+                        if(model.totalPage <= 1) return;
+                    }
 
                     var el = self.render(true);
 
@@ -857,11 +856,7 @@
 
                 return this;
             }
-            else{
-                throwError('invalid action: ' + options);
-            }
         }
-
         else{
             if(!$.isObject(options)){
                 throwError('options is illegal');
@@ -888,7 +883,7 @@
         //dataSource: '',
 
         // String | Function
-        locator: 'data',
+        //locator: 'data',
 
         // Total entries, must be specified when the pagination is asynchronous
         totalNumber: 1,
@@ -974,6 +969,9 @@
 
         // Whether to trigger pagination at initialization
         triggerPagingOnInit: true,
+
+        // Whether to hide pagination when less than one page
+        hideWhenLessThanOnePage: false,
 
         showFirstOnEllipsisShow: true,
 
@@ -1075,17 +1073,6 @@
             return toString.call(object) === '[object ' + name + ']';
         };
     });
-
-    // Inline style
-    function addStyle(){
-        var styleElement = $('#paginationjs-style');
-
-        if(styleElement.length) return;
-
-        var cssText = '.paginationjs:not(.custom-paginationjs){line-height: 1.6; font-family: "Marmelad", "Lucida Grande", "Hiragino Sans GB", Georgia, sans-serif; font-size: 14px; box-sizing: initial;}.paginationjs:not(.custom-paginationjs):after{display: table; content: " "; clear: both;}.paginationjs:not(.custom-paginationjs) .paginationjs-pages{float: left;}.paginationjs:not(.custom-paginationjs) .paginationjs-pages ul{float: left; margin: 0; padding: 0;}.paginationjs:not(.custom-paginationjs) .paginationjs-pages li{float: left; border: 1px solid #aaaaaa; border-right: none; list-style: none;}.paginationjs:not(.custom-paginationjs) .paginationjs-pages li > a{min-width: 30px; height: 28px; line-height: 28px; display: block; background: #fff; font-size: 14px; color: #333; text-decoration: none; text-align: center;}.paginationjs:not(.custom-paginationjs) .paginationjs-pages li > a:hover{background: #eee;}.paginationjs:not(.custom-paginationjs) .paginationjs-pages li.active{border: none;}.paginationjs:not(.custom-paginationjs) .paginationjs-pages li.active > a{height: 30px; line-height: 30px; background: #aaaaaa; color: #fff;}.paginationjs:not(.custom-paginationjs) .paginationjs-pages li.disabled > a{opacity: .3;}.paginationjs:not(.custom-paginationjs) .paginationjs-pages li.disabled > a:hover{background: none;}.paginationjs:not(.custom-paginationjs) .paginationjs-pages li:first-child{border-radius: 3px 0 0 3px;}.paginationjs:not(.custom-paginationjs) .paginationjs-pages li:first-child > a{border-radius: 3px 0 0 3px;}.paginationjs:not(.custom-paginationjs) .paginationjs-pages li:last-child{border-right: 1px solid #aaaaaa; border-radius: 0 3px 3px 0;}.paginationjs:not(.custom-paginationjs) .paginationjs-pages li:last-child > a{border-radius: 0 3px 3px 0;}.paginationjs:not(.custom-paginationjs) .paginationjs-go-input{float: left; margin-left: 10px; font-size: 14px;}.paginationjs:not(.custom-paginationjs) .paginationjs-go-input > input[type="text"]{width: 30px; height: 28px; background: #fff; border-radius: 3px; border: 1px solid #aaaaaa; padding: 0; font-size: 14px; text-align: center; vertical-align: baseline; outline: none; box-shadow: none; box-sizing: initial;}.paginationjs:not(.custom-paginationjs) .paginationjs-go-button{float: left; margin-left: 10px; font-size: 14px;}.paginationjs:not(.custom-paginationjs) .paginationjs-go-button > input[type="button"]{min-width: 40px; height: 30px; line-height: 28px; background: #fff; border-radius: 3px; border: 1px solid #aaaaaa; text-align: center; padding: 0 8px; font-size: 14px; vertical-align: baseline; outline: none; box-shadow: none; color: #333; cursor: pointer;}.paginationjs:not(.custom-paginationjs) .paginationjs-go-button > input[type="button"]:hover{background-color: #f8f8f8;}.paginationjs:not(.custom-paginationjs) .paginationjs-nav{float: left; height: 30px; line-height: 30px; margin-left: 10px; font-size: 14px;}.paginationjs:not(.custom-paginationjs).paginationjs-small{font-size: 12px;}.paginationjs:not(.custom-paginationjs).paginationjs-small li > a{min-width: 26px; height: 24px; line-height: 24px; font-size: 12px;}.paginationjs:not(.custom-paginationjs).paginationjs-small li.active > a{height: 26px; line-height: 26px;}.paginationjs:not(.custom-paginationjs).paginationjs-small .paginationjs-go-input{font-size: 12px;}.paginationjs:not(.custom-paginationjs).paginationjs-small .paginationjs-go-input > input[type="text"]{width: 26px; height: 24px; font-size: 12px;}.paginationjs:not(.custom-paginationjs).paginationjs-small .paginationjs-go-button{font-size: 12px;}.paginationjs:not(.custom-paginationjs).paginationjs-small .paginationjs-go-button > input[type="button"]{min-width: 30px; height: 26px; line-height: 24px; padding: 0 6px; font-size: 12px;}.paginationjs:not(.custom-paginationjs).paginationjs-small .paginationjs-nav{height: 26px; line-height: 26px; font-size: 12px;}.paginationjs:not(.custom-paginationjs).paginationjs-big{font-size: 16px;}.paginationjs:not(.custom-paginationjs).paginationjs-big li > a{min-width: 36px; height: 34px; line-height: 34px; font-size: 16px;}.paginationjs:not(.custom-paginationjs).paginationjs-big li.active > a{height: 36px; line-height: 36px;}.paginationjs:not(.custom-paginationjs).paginationjs-big .paginationjs-go-input{font-size: 16px;}.paginationjs:not(.custom-paginationjs).paginationjs-big .paginationjs-go-input > input[type="text"]{width: 36px; height: 34px; font-size: 16px;}.paginationjs:not(.custom-paginationjs).paginationjs-big .paginationjs-go-button{font-size: 16px;}.paginationjs:not(.custom-paginationjs).paginationjs-big .paginationjs-go-button > input[type="button"]{min-width: 50px; height: 36px; line-height: 34px; padding: 0 12px; font-size: 16px;}.paginationjs:not(.custom-paginationjs).paginationjs-big .paginationjs-nav{height: 36px; line-height: 36px; font-size: 16px;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-blue .paginationjs-pages li{border-color: #289de9;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-blue .paginationjs-pages li > a{color: #289de9;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-blue .paginationjs-pages li > a:hover{background: #e9f4fc;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-blue .paginationjs-pages li.active > a{background: #289de9; color: #fff;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-blue .paginationjs-pages li.disabled > a:hover{background: none;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-blue .paginationjs-go-input > input[type="text"]{border-color: #289de9;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-blue .paginationjs-go-button > input[type="button"]{background: #289de9; border-color: #289de9; color: #fff;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-blue .paginationjs-go-button > input[type="button"]:hover{background-color: #3ca5ea;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-green .paginationjs-pages li{border-color: #449d44;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-green .paginationjs-pages li > a{color: #449d44;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-green .paginationjs-pages li > a:hover{background: #ebf4eb;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-green .paginationjs-pages li.active > a{background: #449d44; color: #fff;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-green .paginationjs-pages li.disabled > a:hover{background: none;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-green .paginationjs-go-input > input[type="text"]{border-color: #449d44;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-green .paginationjs-go-button > input[type="button"]{background: #449d44; border-color: #449d44; color: #fff;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-green .paginationjs-go-button > input[type="button"]:hover{background-color: #55a555;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-yellow .paginationjs-pages li{border-color: #ec971f;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-yellow .paginationjs-pages li > a{color: #ec971f;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-yellow .paginationjs-pages li > a:hover{background: #fdf5e9;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-yellow .paginationjs-pages li.active > a{background: #ec971f; color: #fff;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-yellow .paginationjs-pages li.disabled > a:hover{background: none;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-yellow .paginationjs-go-input > input[type="text"]{border-color: #ec971f;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-yellow .paginationjs-go-button > input[type="button"]{background: #ec971f; border-color: #ec971f; color: #fff;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-yellow .paginationjs-go-button > input[type="button"]:hover{background-color: #eea135;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-red .paginationjs-pages li{border-color: #c9302c;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-red .paginationjs-pages li > a{color: #c9302c;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-red .paginationjs-pages li > a:hover{background: #faeaea;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-red .paginationjs-pages li.active > a{background: #c9302c; color: #fff;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-red .paginationjs-pages li.disabled > a:hover{background: none;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-red .paginationjs-go-input > input[type="text"]{border-color: #c9302c;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-red .paginationjs-go-button > input[type="button"]{background: #c9302c; border-color: #c9302c; color: #fff;}.paginationjs:not(.custom-paginationjs).paginationjs-theme-red .paginationjs-go-button > input[type="button"]:hover{background-color: #ce4541;}';
-
-        $('head').append('<style type="text\/css" id="paginationjs-style">'+ cssText +'<\/style>');
-    }
 
     /*
      * export via AMD or CommonJS
