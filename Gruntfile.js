@@ -7,7 +7,8 @@ module.exports = function(grunt){
                 banner: '/*\n' +
                     ' * pagination.js <%= pkg.version %>\n' +
                     ' * <%= pkg.description %>\n' +
-                    ' * https://github.com/superRaytin/paginationjs\n' +
+                    ' * https://github.com/superRaytin/paginationjs\n\n' +
+                    ' * Homepage: https://paginationjs.com\n' +
                     ' *\n' +
                     ' * Copyright 2014, superRaytin\n' +
                     ' * Released under the MIT license.\n' +
@@ -18,6 +19,10 @@ module.exports = function(grunt){
                     {
                         src: ['dist/pagination.js'],
                         dest: 'dist/pagination.min.js'
+                    },
+                    {
+                        src: ['dist/pagination-with-styles.js'],
+                        dest: 'dist/pagination-with-styles.min.js'
                     }
                 ]
             }
