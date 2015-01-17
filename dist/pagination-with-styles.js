@@ -67,7 +67,7 @@
                 self.parseDataSource(attributes.dataSource, function(dataSource){
 
                     // Whether simulated pagination
-                    self.sync = $.isArray(dataSource);
+                    self.sync = Helpers.isArray(dataSource);
                     if(self.sync){
                         model.totalNumber = attributes.totalNumber = dataSource.length;
                     }
@@ -421,7 +421,7 @@
                     // format result before execute callback
                     if($.isFunction(attributes.formatResult)){
                         var cloneData = $.extend(true, [], data);
-                        if(!$.isArray(data = attributes.formatResult(cloneData))){
+                        if(!Helpers.isArray(data = attributes.formatResult(cloneData))){
                             data = cloneData;
                         }
                     }
@@ -585,7 +585,7 @@
                 var filteredData;
 
                 // Data source is an Object, use "locator" to locate the true data
-                if($.isObject(dataSource)){
+                if(Helpers.isObject(dataSource)){
                     try{
                         $.each(locator.split('.'), function(index, item){
                             filteredData = (filteredData ? filteredData : dataSource)[item];
@@ -596,7 +596,7 @@
                     if(!filteredData){
                         throwError('dataSource.'+ locator +' is undefined.');
                     }
-                    else if(!$.isArray(filteredData)){
+                    else if(!Helpers.isArray(filteredData)){
                         throwError('dataSource.'+ locator +' must be an Array.');
                     }
                 }
@@ -610,10 +610,10 @@
                 var self = this;
                 var args = arguments;
 
-                if($.isObject(dataSource)){
+                if(Helpers.isObject(dataSource)){
                     callback(attributes.dataSource = self.filterDataByLocator(dataSource));
                 }
-                else if($.isArray(dataSource)){
+                else if(Helpers.isArray(dataSource)){
                     callback(attributes.dataSource = dataSource);
                 }
                 else if($.isFunction(dataSource)){
@@ -863,7 +863,7 @@
             }
         }
         else{
-            if(!$.isObject(options)){
+            if(!Helpers.isObject(options)){
                 throwError('options is illegal');
             }
         }
@@ -1042,6 +1042,8 @@
     // helpers
     // ============================================================
 
+    var Helpers = {};
+
     // Throw error
     function throwError(content){
         throw new Error('Pagination: '+ content);
@@ -1062,7 +1064,7 @@
                 throwError('"totalNumber" is incorrect. (Number)');
             }
         }
-        else if($.isObject(args.dataSource)){
+        else if(Helpers.isObject(args.dataSource)){
             if(typeof args.locator === 'undefined'){
                 throwError('"dataSource" is a Object, please specify "locator".');
             }
@@ -1073,8 +1075,8 @@
     }
 
     // Object type detection
-    $.each(['Object', 'Array', 'Function'], function(index, name){
-        $['is' + name] = function(object){
+    $.each(['Object', 'Array'], function(index, name){
+        Helpers['is' + name] = function(object){
             return toString.call(object) === '[object ' + name + ']';
         };
     });
