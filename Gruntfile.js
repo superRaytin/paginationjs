@@ -8,9 +8,9 @@ module.exports = function(grunt){
                     ' * pagination.js <%= pkg.version %>\n' +
                     ' * <%= pkg.description %>\n' +
                     ' * https://github.com/superRaytin/paginationjs\n\n' +
-                    ' * Homepage: https://paginationjs.com\n' +
+                    ' * Homepage: http://paginationjs.com\n' +
                     ' *\n' +
-                    ' * Copyright 2014, superRaytin\n' +
+                    ' * Copyright 2014-2100, superRaytin\n' +
                     ' * Released under the MIT license.\n' +
                     '*/\n'
             },

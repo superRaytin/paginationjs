@@ -3,9 +3,9 @@
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
- * Homepage: https://paginationjs.com
+ * Homepage: http://paginationjs.com
  *
- * Copyright 2014, superRaytin
+ * Copyright 2014-2100, superRaytin
  * Released under the MIT license.
  */
 
