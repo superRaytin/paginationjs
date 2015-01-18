@@ -71,9 +71,9 @@
 @B_navHeight: @B_activeHeight;
 
 
-.paginationjs:not(.custom-paginationjs){
+.paginationjs{
   line-height: 1.6;
-  font-family: "Marmelad", "Lucida Grande", 'Arial', "Hiragino Sans GB", Georgia, sans-serif;
+  font-family: "Marmelad", "Lucida Grande", "Arial", "Hiragino Sans GB", Georgia, sans-serif;
   font-size: @N_fontSize;
   box-sizing: initial;
   &:after{
@@ -192,17 +192,19 @@
 
   &.paginationjs-small{
     font-size: @S_fontSize;
-    li{
-      > a{
-        min-width: @S_minWidth;
-        height: @S_height;
-        line-height: @S_lineHeight;
-        font-size: @S_fontSize;
-      }
-      &.active{
+    .paginationjs-pages{
+      li{
         > a{
-          height: @S_activeHeight;
-          line-height: @S_activeHeight;
+          min-width: @S_minWidth;
+          height: @S_height;
+          line-height: @S_lineHeight;
+          font-size: @S_fontSize;
+        }
+        &.active{
+          > a{
+            height: @S_activeHeight;
+            line-height: @S_activeHeight;
+          }
         }
       }
     }
@@ -232,17 +234,19 @@
   }
   &.paginationjs-big{
     font-size: @B_fontSize;
-    li{
-      > a{
-        min-width: @B_minWidth;
-        height: @B_height;
-        line-height: @B_lineHeight;
-        font-size: @B_fontSize;
-      }
-      &.active{
+    .paginationjs-pages{
+      li{
         > a{
-          height: @B_activeHeight;
-          line-height: @B_activeHeight;
+          min-width: @B_minWidth;
+          height: @B_height;
+          line-height: @B_lineHeight;
+          font-size: @B_fontSize;
+        }
+        &.active{
+          > a{
+            height: @B_activeHeight;
+            line-height: @B_activeHeight;
+          }
         }
       }
     }
@@ -272,7 +276,7 @@
   }
 }
 
-.paginationjs:not(.custom-paginationjs){
+.paginationjs{
   &.paginationjs-theme-blue{
     .paginationjs-pages{
       li{
@@ -312,7 +316,7 @@
   }
 }
 
-.paginationjs:not(.custom-paginationjs){
+.paginationjs{
   &.paginationjs-theme-green{
     .paginationjs-pages{
       li{
@@ -352,7 +356,7 @@
   }
 }
 
-.paginationjs:not(.custom-paginationjs){
+.paginationjs{
   &.paginationjs-theme-yellow{
     .paginationjs-pages{
       li{
@@ -392,7 +396,7 @@
   }
 }
 
-.paginationjs:not(.custom-paginationjs){
+.paginationjs{
   &.paginationjs-theme-red{
     .paginationjs-pages{
       li{
@@ -427,6 +431,56 @@
         &:hover{
           background-color: @Red_bgColor_buttonHover;
         }
+      }
+    }
+  }
+}
+
+/* Hacks for IE 6~9 */
+.paginationjs{
+  .paginationjs-pages{
+    li{
+      > a{
+
+      }
+      &.paginationjs-next{
+        *border-right: 1px solid @borderColor;
+        border-right: 1px solid #aaa\0;
+      }
+    }
+  }
+  .paginationjs-go-input{
+    *margin-left: 5px;
+    margin-left: 5px\0;
+    > input[type="text"]{
+      *line-height: @N_inputHeight;
+      line-height: 28px\0;
+      *vertical-align: middle;
+      vertical-align: middle\0;
+    }
+  }
+  .paginationjs-go-button{
+    *margin-left: 5px;
+    margin-left: 5px\0;
+    > input[type="button"]{
+      *vertical-align: middle;
+      vertical-align: middle\0;
+    }
+  }
+  &.paginationjs-big{
+    .paginationjs-pages{
+      li{
+        > a{
+          line-height: 36px\0;
+        }
+      }
+    }
+    .paginationjs-go-input{
+      > input[type="text"]{
+        *height: 35px;
+        height: 36px\0;
+        *line-height: 36px;
+        line-height: 36px\0;
       }
     }
   }
