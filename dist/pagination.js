@@ -1,5 +1,5 @@
 /*
- * pagination.js 2.0.3
+ * pagination.js 2.0.5
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
@@ -236,7 +236,7 @@
                         }
                         else{
                             if(attributes.showFirstOnEllipsisShow){
-                                html += '<li class="'+ classPrefix +'-page J-paginationjs-page" data-num="1"><a href="'+ pageLink +'">1<\/a><\/li>';
+                                html += '<li class="'+ classPrefix +'-page '+ classPrefix +'-first J-paginationjs-page" data-num="1"><a href="'+ pageLink +'">1<\/a><\/li>';
                             }
 
                             html += '<li class="'+ classPrefix +'-ellipsis '+ disableClassName +'"><a>'+ ellipsisText +'<\/a><\/li>';
@@ -261,7 +261,7 @@
                             html += '<li class="'+ classPrefix +'-ellipsis '+ disableClassName +'"><a>'+ ellipsisText +'<\/a><\/li>';
 
                             if(attributes.showLastOnEllipsisShow){
-                                html += '<li class="'+ classPrefix +'-page J-paginationjs-page" data-num="'+ totalPage +'"><a href="'+ pageLink +'">'+ totalPage +'<\/a><\/li>';
+                                html += '<li class="'+ classPrefix +'-page '+ classPrefix +'-last J-paginationjs-page" data-num="'+ totalPage +'"><a href="'+ pageLink +'">'+ totalPage +'<\/a><\/li>';
                             }
                         }
                     }
@@ -1070,9 +1070,13 @@
     }
 
     // Object type detection
+    function getObjectType(object) {
+        var tmp;
+        return ( (tmp = typeof(object)) == "object" ? object == null && "null" || Object.prototype.toString.call(object).slice(8, -1) : tmp ).toLowerCase();
+    }
     $.each(['Object', 'Array'], function(index, name){
         Helpers['is' + name] = function(object){
-            return toString.call(object) === '[object ' + name + ']';
+            return getObjectType(object) === name.toLowerCase();
         };
     });
 
