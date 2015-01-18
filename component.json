@@ -1,6 +1,6 @@
 {
     "name": "paginationjs",
-    "version": "2.0.0",
+    "version": "2.0.5",
     "repo": "superRaytin/paginationjs",
     "description": "A jQuery plugin to provide simple yet fully customisable pagination",
     "keywords": [
@@ -11,6 +11,13 @@
         "jquery pagination"
     ],
     "main": "dist/pagination.min.js",
-    "scripts": ["dist/pagination.min.js", "dist/pagination.js"],
+    "scripts": [
+        "dist/pagination.min.js",
+        "dist/pagination.js",
+        "dist/pagination-with-styles.min.js",
+        "dist/pagination-with-styles.js",
+        "dist/pagination.css",
+        "dist/pagination.less"
+    ],
     "license": "MIT"
 }

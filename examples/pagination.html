@@ -4,7 +4,7 @@
     <title>Paginationjs example</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!--
-    <link href="css/pagination.css" rel="stylesheet" type="text/css">
+    <link href="../dist/pagination.css" rel="stylesheet" type="text/css">
     -->
     <style type="text/css">
         ul, li{
@@ -38,8 +38,8 @@
     </section>
 </div>
 
-<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-<script src="../dist/pagination.js"></script>
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script src="../dist/pagination-with-styles.js"></script>
 <script>
     $(function(){
 
@@ -58,7 +58,7 @@
             var options = {
                 dataSource: sources,
                 callback: function(response, pagination){
-                    console.log(response, pagination);
+                    window.console && console.log(response, pagination);
 
                     var dataHtml = '<ul>';
 
@@ -75,12 +75,12 @@
             //$.pagination(container, options);
 
             container.addHook('beforeInit', function(){
-                console.log('beforeInit...');
+                window.console && console.log('beforeInit...');
             });
             container.pagination(options);
 
             container.addHook('beforePageOnClick', function(){
-                console.log('beforePageOnClick...');
+                window.console && console.log('beforePageOnClick...');
                 //return false
             });
 
