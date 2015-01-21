@@ -401,6 +401,10 @@
                 $.ajax(formatAjaxParams);
 
                 function render(data){
+
+                    // Before paging
+                    if(self.callHook('beforePaging', pageNumber) === false) return false;
+
                     // Pagination direction
                     model.direction = typeof model.pageNumber === 'undefined' ? 0 : (pageNumber > model.pageNumber ? 1 : -1);
 
@@ -426,14 +430,11 @@
 
                     container.data('pagination').currentPageData = data;
 
-                    // Before paging
-                    self.callHook('beforePaging');
-
                     // callback
                     self.doCallback(data, callback);
 
                     // After pageing
-                    self.callHook('afterPaging');
+                    self.callHook('afterPaging', pageNumber);
 
                     // Already the first page
                     if(pageNumber == 1){
@@ -686,12 +687,12 @@
                     if(!pageNumber || current.hasClass(attributes.disableClassName) || current.hasClass(attributes.activeClassName)) return;
 
                     // Before page button clicked
-                    if(self.callHook('beforePageOnClick', event) === false) return false;
+                    if(self.callHook('beforePageOnClick', event, pageNumber) === false) return false;
 
                     self.go(pageNumber);
 
                     // After page button clicked
-                    self.callHook('afterPageOnClick', event);
+                    self.callHook('afterPageOnClick', event, pageNumber);
 
                     if(!attributes.pageLink) return false;
                 });
@@ -704,12 +705,12 @@
                     if(!pageNumber || current.hasClass(attributes.disableClassName)) return;
 
                     // Before previous clicked
-                    if(self.callHook('beforePreviousOnClick', event) === false) return false;
+                    if(self.callHook('beforePreviousOnClick', event, pageNumber) === false) return false;
 
                     self.go(pageNumber);
 
                     // After previous clicked
-                    self.callHook('afterPreviousOnClick', event);
+                    self.callHook('afterPreviousOnClick', event, pageNumber);
 
                     if(!attributes.pageLink) return false;
                 });
@@ -722,12 +723,12 @@
                     if(!pageNumber || current.hasClass(attributes.disableClassName)) return;
 
                     // Before next clicked
-                    if(self.callHook('beforeNextOnClick', event) === false) return false;
+                    if(self.callHook('beforeNextOnClick', event, pageNumber) === false) return false;
 
                     self.go(pageNumber);
 
                     // After next clicked
-                    self.callHook('afterNextOnClick', event);
+                    self.callHook('afterNextOnClick', event, pageNumber);
 
                     if(!attributes.pageLink) return false;
                 });
