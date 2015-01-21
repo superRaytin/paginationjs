@@ -61,7 +61,7 @@
                 // "dataSource"`s type is unknown, parse it to find true data
                 self.parseDataSource(attributes.dataSource, function(dataSource){
 
-                    // Whether simulated pagination
+                    // Whether sync pagination
                     self.sync = Helpers.isArray(dataSource);
                     if(self.sync){
                         model.totalNumber = attributes.totalNumber = dataSource.length;
@@ -360,7 +360,7 @@
                 // Page number out of bounds
                 if(!pageNumber || pageNumber < 1 || pageNumber > totalPage) return;
 
-                // Simulated pagination
+                // Sync pagination
                 if(self.sync){
                     render(self.getDataSegment(pageNumber));
                     return;
@@ -795,8 +795,8 @@
                     self.destroy();
                 });
 
-                // If simulated paging, trigger a default page
-                if(pagination.sync || attributes.triggerPagingOnInit){
+                // Whether to trigger the default page
+                if(attributes.triggerPagingOnInit){
                     container.trigger(eventPrefix + 'go', Math.min(attributes.pageNumber, self.model.totalPage));
                 }
             }
@@ -1061,7 +1061,7 @@
         }
         else if(Helpers.isObject(args.dataSource)){
             if(typeof args.locator === 'undefined'){
-                throwError('"dataSource" is a Object, please specify "locator".');
+                throwError('"dataSource" is an Object, please specify "locator".');
             }
             else if(typeof args.locator !== 'string' && !$.isFunction(args.locator)){
                 throwError(''+ args.locator +' is incorrect. (String | Function)');
@@ -1070,8 +1070,7 @@
     }
 
     // Object type detection
-    function getObjectType(object) {
-        var tmp;
+    function getObjectType(object, tmp) {
         return ( (tmp = typeof(object)) == "object" ? object == null && "null" || Object.prototype.toString.call(object).slice(8, -1) : tmp ).toLowerCase();
     }
     $.each(['Object', 'Array'], function(index, name){
