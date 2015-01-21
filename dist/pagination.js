@@ -52,6 +52,9 @@
                     $('.paginationjs', container).remove();
                 }
 
+                // Whether to disable Pagination at the initialization
+                self.disabled = !!attributes.disabled;
+
                 // Passed to the callback function
                 var model = self.model = {
                     pageRange: attributes.pageRange,
@@ -93,7 +96,7 @@
                     // initialized flag
                     container.data('pagination').initialized = true;
 
-                    // After initialize
+                    // After initialized
                     self.callHook('afterInit', el);
 
                 });
