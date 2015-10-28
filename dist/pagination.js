@@ -1,5 +1,5 @@
 /*
- * pagination.js 2.1
+ * pagination.js 2.1.0
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
@@ -64,7 +64,7 @@
                 // "dataSource"`s type is unknown, parse it to find true data
                 self.parseDataSource(attributes.dataSource, function(dataSource) {
 
-                    // Whether sync pagination
+                    // Whether pagination is sync mode
                     self.sync = Helpers.isArray(dataSource);
                     if (self.sync) {
                         model.totalNumber = attributes.totalNumber = dataSource.length;
@@ -363,7 +363,7 @@
                 // Page number out of bounds
                 if (!pageNumber || pageNumber < 1 || pageNumber > totalPage) return;
 
-                // Sync pagination
+                // Sync mode
                 if (self.sync) {
                     render(self.getDataSegment(pageNumber));
                     return;
@@ -808,7 +808,7 @@
                     self.destroy();
                 });
 
-                // Whether to trigger the default page
+                // Whether to load the default page
                 if (attributes.triggerPagingOnInit) {
                     container.trigger(eventPrefix + 'go', Math.min(attributes.pageNumber, self.model.totalPage));
                 }
@@ -873,7 +873,7 @@
         }
         else{
             if (!Helpers.isObject(options)) {
-                throwError('options is illegal');
+                throwError('Illegal options');
             }
         }
 
