@@ -1,0 +1,487 @@
+@borderColor: #aaa;
+@activeBgColor: #aaa;
+
+@Blue_color_base: #289DE9;
+@Blue_color_font: @Blue_color_base;
+@Blue_color_border: @Blue_color_base;
+@Blue_bgColor_active: @Blue_color_base;
+@Blue_bgColor_hover: #E9F4FC;
+@Blue_bgColor_buttonHover: #3CA5EA;
+
+@Green_color_base: #449D44;
+@Green_color_font: @Green_color_base;
+@Green_color_border: @Green_color_base;
+@Green_bgColor_active: @Green_color_base;
+@Green_bgColor_hover: #EBF4EB;
+@Green_bgColor_buttonHover: #55A555;
+
+@Yellow_color_base: #EC971F;
+@Yellow_color_font: @Yellow_color_base;
+@Yellow_color_border: @Yellow_color_base;
+@Yellow_bgColor_active: @Yellow_color_base;
+@Yellow_bgColor_hover: #FDF5E9;
+@Yellow_bgColor_buttonHover: #EEA135;
+
+@Red_color_base: #C9302C;
+@Red_color_font: @Red_color_base;
+@Red_color_border: @Red_color_base;
+@Red_bgColor_active: @Red_color_base;
+@Red_bgColor_hover: #FAEAEA;
+@Red_bgColor_buttonHover: #CE4541;
+
+@S_fontSize: 12px;
+@S_minWidth: 26px;
+@S_height: 24px;
+@S_lineHeight: @S_height;
+@S_activeHeight: @S_height + 2;
+@S_inputWidth: 26px;
+@S_inputHeight: 24px;
+@S_buttonMinWidth: 30px;
+@S_buttonHeight: 26px;
+@S_buttonLineHeight: @S_buttonHeight - 2;
+@S_buttonPadding: 0 6px;
+@S_navHeight: @S_activeHeight;
+
+
+@N_fontSize: 14px;
+@N_minWidth: 30px;
+@N_height: 28px;
+@N_lineHeight: @N_height;
+@N_activeHeight: @N_height + 2;
+@N_inputWidth: 30px;
+@N_inputHeight: 28px;
+@N_buttonMinWidth: 40px;
+@N_buttonHeight: 30px;
+@N_buttonLineHeight: @N_buttonHeight - 2;
+@N_buttonPadding: 0 8px;
+@N_navHeight: @N_activeHeight;
+
+
+@B_fontSize: 16px;
+@B_minWidth: 36px;
+@B_height: 34px;
+@B_lineHeight: @B_height;
+@B_activeHeight: @B_height + 2;
+@B_inputWidth: 36px;
+@B_inputHeight: 34px;
+@B_buttonMinWidth: 50px;
+@B_buttonHeight: 36px;
+@B_buttonLineHeight: @B_buttonHeight - 2;
+@B_buttonPadding: 0 12px;
+@B_navHeight: @B_activeHeight;
+
+
+.paginationjs{
+  line-height: 1.6;
+  font-family: "Marmelad", "Lucida Grande", "Arial", "Hiragino Sans GB", Georgia, sans-serif;
+  font-size: @N_fontSize;
+  box-sizing: initial;
+  &:after{
+    display: table;
+    content: " ";
+    clear: both;
+  }
+  .paginationjs-pages{
+    float: left;
+    ul{
+      float: left;
+      margin: 0;
+      padding: 0;
+    }
+    li{
+      float: left;
+      border: 1px solid @borderColor;
+      border-right: none;
+      list-style: none;
+      > a{
+        min-width: @N_minWidth;
+        height: @N_height;
+        line-height: @N_lineHeight;
+        display: block;
+        background: #fff;
+        font-size: @N_fontSize;
+        color: #333;
+        text-decoration: none;
+        text-align: center;
+        &:hover{
+          background: #eee;
+        }
+      }
+      &.active{
+        border: none;
+        > a{
+          height: @N_activeHeight;
+          line-height: @N_activeHeight;
+          background: @activeBgColor;
+          color: #fff;
+        }
+      }
+      &.disabled{
+        > a{
+          opacity: .3;
+          &:hover{
+            background: none;
+          }
+        }
+      }
+      &:first-child{
+        border-radius: 3px 0 0 3px;
+        > a{
+          border-radius: 3px 0 0 3px;
+        }
+      }
+      &:last-child{
+        border-right: 1px solid @borderColor;
+        border-radius: 0 3px 3px 0;
+        > a{
+          border-radius: 0 3px 3px 0;
+        }
+      }
+    }
+  }
+  .paginationjs-go-input{
+    float: left;
+    margin-left: 10px;
+    font-size: @N_fontSize;
+    > input[type="text"]{
+      width: @N_inputWidth;
+      height: @N_inputHeight;
+      background: #fff;
+      border-radius: 3px;
+      border: 1px solid @borderColor;
+      padding: 0;
+      font-size: @N_fontSize;
+      text-align: center;
+      vertical-align: baseline;
+      outline: none;
+      box-shadow: none;
+      box-sizing: initial;
+    }
+  }
+  .paginationjs-go-button{
+    float: left;
+    margin-left: 10px;
+    font-size: @N_fontSize;
+    > input[type="button"]{
+      min-width: @N_buttonMinWidth;
+      height: @N_buttonHeight;
+      line-height: @N_buttonLineHeight;
+      background: #fff;
+      border-radius: 3px;
+      border: 1px solid @borderColor;
+      text-align: center;
+      padding: @N_buttonPadding;
+      font-size: @N_fontSize;
+      vertical-align: baseline;
+      outline: none;
+      box-shadow: none;
+      color: #333;
+      cursor: pointer;
+      &:hover{
+        background-color: #f8f8f8;
+      }
+    }
+  }
+  .paginationjs-nav{
+    float: left;
+    height: @N_navHeight;
+    line-height: @N_navHeight;
+    margin-left: 10px;
+    font-size: @N_fontSize;
+  }
+
+  &.paginationjs-small{
+    font-size: @S_fontSize;
+    .paginationjs-pages{
+      li{
+        > a{
+          min-width: @S_minWidth;
+          height: @S_height;
+          line-height: @S_lineHeight;
+          font-size: @S_fontSize;
+        }
+        &.active{
+          > a{
+            height: @S_activeHeight;
+            line-height: @S_activeHeight;
+          }
+        }
+      }
+    }
+    .paginationjs-go-input{
+      font-size: @S_fontSize;
+      > input[type="text"]{
+        width: @S_inputWidth;
+        height: @S_inputHeight;
+        font-size: @S_fontSize;
+      }
+    }
+    .paginationjs-go-button{
+      font-size: @S_fontSize;
+      > input[type="button"]{
+        min-width: @S_buttonMinWidth;
+        height: @S_buttonHeight;
+        line-height: @S_buttonLineHeight;
+        padding: @S_buttonPadding;
+        font-size: @S_fontSize;
+      }
+    }
+    .paginationjs-nav{
+      height: 26px;
+      line-height: 26px;
+      font-size: @S_fontSize;
+    }
+  }
+  &.paginationjs-big{
+    font-size: @B_fontSize;
+    .paginationjs-pages{
+      li{
+        > a{
+          min-width: @B_minWidth;
+          height: @B_height;
+          line-height: @B_lineHeight;
+          font-size: @B_fontSize;
+        }
+        &.active{
+          > a{
+            height: @B_activeHeight;
+            line-height: @B_activeHeight;
+          }
+        }
+      }
+    }
+    .paginationjs-go-input{
+      font-size: @B_fontSize;
+      > input[type="text"]{
+        width: @B_inputWidth;
+        height: @B_inputHeight;
+        font-size: @B_fontSize;
+      }
+    }
+    .paginationjs-go-button{
+      font-size: @B_fontSize;
+      > input[type="button"]{
+        min-width: @B_buttonMinWidth;
+        height: @B_buttonHeight;
+        line-height: @B_buttonLineHeight;
+        padding: @B_buttonPadding;
+        font-size: @B_fontSize;
+      }
+    }
+    .paginationjs-nav{
+      height: @B_navHeight;
+      line-height: @B_navHeight;
+      font-size: @B_fontSize;
+    }
+  }
+}
+
+.paginationjs{
+  &.paginationjs-theme-blue{
+    .paginationjs-pages{
+      li{
+        border-color: @Blue_color_border;
+        > a{
+          color: @Blue_color_font;
+          &:hover{
+            background: @Blue_bgColor_hover;
+          }
+        }
+        &.active{
+          > a{
+            background: @Blue_bgColor_active;
+            color: #fff;
+          }
+        }
+        &.disabled > a:hover{
+            background: none;
+        }
+      }
+    }
+    .paginationjs-go-input{
+      > input[type="text"]{
+        border-color: @Blue_color_border;
+      }
+    }
+    .paginationjs-go-button{
+      > input[type="button"]{
+        background: @Blue_bgColor_active;
+        border-color: @Blue_color_border;
+        color: #fff;
+        &:hover{
+          background-color: @Blue_bgColor_buttonHover;
+        }
+      }
+    }
+  }
+}
+
+.paginationjs{
+  &.paginationjs-theme-green{
+    .paginationjs-pages{
+      li{
+        border-color: @Green_color_border;
+        > a{
+          color: @Green_color_font;
+          &:hover{
+            background: @Green_bgColor_hover;
+          }
+        }
+        &.active{
+          > a{
+            background: @Green_bgColor_active;
+            color: #fff;
+          }
+        }
+        &.disabled > a:hover{
+          background: none;
+        }
+      }
+    }
+    .paginationjs-go-input{
+      > input[type="text"]{
+        border-color: @Green_color_border;
+      }
+    }
+    .paginationjs-go-button{
+      > input[type="button"]{
+        background: @Green_bgColor_active;
+        border-color: @Green_color_border;
+        color: #fff;
+        &:hover{
+          background-color: @Green_bgColor_buttonHover;
+        }
+      }
+    }
+  }
+}
+
+.paginationjs{
+  &.paginationjs-theme-yellow{
+    .paginationjs-pages{
+      li{
+        border-color: @Yellow_color_border;
+        > a{
+          color: @Yellow_color_font;
+          &:hover{
+            background: @Yellow_bgColor_hover;
+          }
+        }
+        &.active{
+          > a{
+            background: @Yellow_bgColor_active;
+            color: #fff;
+          }
+        }
+        &.disabled > a:hover{
+          background: none;
+        }
+      }
+    }
+    .paginationjs-go-input{
+      > input[type="text"]{
+        border-color: @Yellow_color_border;
+      }
+    }
+    .paginationjs-go-button{
+      > input[type="button"]{
+        background: @Yellow_bgColor_active;
+        border-color: @Yellow_color_border;
+        color: #fff;
+        &:hover{
+          background-color: @Yellow_bgColor_buttonHover;
+        }
+      }
+    }
+  }
+}
+
+.paginationjs{
+  &.paginationjs-theme-red{
+    .paginationjs-pages{
+      li{
+        border-color: @Red_color_border;
+        > a{
+          color: @Red_color_font;
+          &:hover{
+            background: @Red_bgColor_hover;
+          }
+        }
+        &.active{
+          > a{
+            background: @Red_bgColor_active;
+            color: #fff;
+          }
+        }
+        &.disabled > a:hover{
+          background: none;
+        }
+      }
+    }
+    .paginationjs-go-input{
+      > input[type="text"]{
+        border-color: @Red_color_border;
+      }
+    }
+    .paginationjs-go-button{
+      > input[type="button"]{
+        background: @Red_bgColor_active;
+        border-color: @Red_color_border;
+        color: #fff;
+        &:hover{
+          background-color: @Red_bgColor_buttonHover;
+        }
+      }
+    }
+  }
+}
+
+/* Hacks for IE 6~9 */
+.paginationjs{
+  .paginationjs-pages{
+    li{
+      > a{
+
+      }
+      &.paginationjs-next{
+        *border-right: 1px solid @borderColor;
+        border-right: 1px solid #aaa\0;
+      }
+    }
+  }
+  .paginationjs-go-input{
+    *margin-left: 5px;
+    margin-left: 5px\0;
+    > input[type="text"]{
+      *line-height: @N_inputHeight;
+      line-height: 28px\0;
+      *vertical-align: middle;
+      vertical-align: middle\0;
+    }
+  }
+  .paginationjs-go-button{
+    *margin-left: 5px;
+    margin-left: 5px\0;
+    > input[type="button"]{
+      *vertical-align: middle;
+      vertical-align: middle\0;
+    }
+  }
+  &.paginationjs-big{
+    .paginationjs-pages{
+      li{
+        > a{
+          line-height: 36px\0;
+        }
+      }
+    }
+    .paginationjs-go-input{
+      > input[type="text"]{
+        *height: 35px;
+        height: 36px\0;
+        *line-height: 36px;
+        line-height: 36px\0;
+      }
+    }
+  }
+}
