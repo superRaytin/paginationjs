@@ -12,6 +12,7 @@
     "ignore": [
         "**/.*",
         "src",
+        "docs",
         "examples",
         "node_modules",
         "LICENSE",
