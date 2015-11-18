@@ -556,4 +556,4 @@ After the change, all the new pagination instances's `pageSize` will be set to 2
 
 ---
 
-[Help improve these docs. Open an issue or pull request.](https://github.com/superRaytin/paginationjs-site/issues)
+[Help improve these docs. Open an issue or pull request.](https://github.com/superRaytin/paginationjs/issues)
