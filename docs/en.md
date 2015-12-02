@@ -3,9 +3,9 @@
 ## Commonly used
 
 ### dataSource <em>array | string | object | function</em>
-Data source, ultimately an array will be provided for Pagination.
+Data sources, and ultimately provided to Pagination is an array
 
-Data source supports 4 formats.
+`DataSource` supports 4 formats.
 
 1. **Array**
 	
@@ -104,7 +104,7 @@ Total entries, This option must be specified when pagination is asynchronous.
 Note: This option only has effect in Pagination constructor and only if dataSource option is a URL.
 
 ### pageNumber <em>number (default `1`)</em>
-Specify the page number at initialization.
+Specify the page number when initializing.
 
 ### pageSize <em>number (default `10`)</em>
 Entries of per page.
@@ -113,7 +113,7 @@ Entries of per page.
 Range of visible page number, this means that the amount on both sides of the selected page. For example, if the selected page number is `6`, and pageRange set to 2, then the pagination bar will be displayed as like this '1 ... 4 5`6`7 8'.
 
 ### callback <em>function(data, pagination)</em>
-Callback of each paging. Useful for process the result data before rendered.
+This function will be triggered when paging happened. Useful for process the result data before rendered.
 
 The `callback` function will get two parameters
 
@@ -298,9 +298,9 @@ Page link.
 ## Utilities
 
 ### formatResult <em>function(data)</em>
-Provide a custom function, processing result data before the `callback` function called.
+This function used to processing result data before the `callback` function called.
 
-Return an processed array, or process the passed `data` array directly.
+An processed array will be returned, also feasible for process the passed `data` array directly.
 
 See [demo](/index.html#formatResult)
 
@@ -361,7 +361,6 @@ var container = $('#example1');
 container.pagination({ ... });
 
 container.pagination('previous');
-
 ```
 
 ### previous
@@ -443,7 +442,6 @@ container.pagination({
 container.addHook('afterRender', function(){
 	// function body
 });
-
 ```
 
 Note, the hook can be added before Pagination initialized, can also be added after Pagination initialized.
@@ -525,7 +523,7 @@ Callback fired after the selected page number was the first.
 Callback fired after the selected page number was the last.
 
 # Skin
-Pagination comes with 5 sets of default skins, but you can fully customize your own skin.
+Pagination.js comes with a bunch of default skins to get you started, also you can fully customize your own skin.
 
 The blue skin, for example, it can be used:
 
@@ -542,7 +540,7 @@ The big blue skin:
 If you need a custom style, you can add CSS class `custom-paginationjs`.
 
 # Configuring Defaults
-Pagination exposes its default options via the `$.fn.pagination.defaults` object. Properties changed in this object (same properties configurable through the constructor) will take effect for every instance created after the change.
+Pagination.js exposes its default options via the `$.fn.pagination.defaults` object. Properties changed in this object (same properties configurable through the constructor) will take effect for every instance created after the change.
 
 For example:
 
