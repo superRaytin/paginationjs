@@ -10,7 +10,7 @@ Data sources, and ultimately provided to Pagination is an array
 1. **Array**
 	
 	Directly provide an array, such as:
-		
+
 		['1', '2', '3', '4']
 	
 2. **Object**
@@ -70,7 +70,7 @@ Used as a string:
 
 `locator: 'data'`:
 
-```
+```js
 {
 	data: ['1', '2', '3', '4']
 }
@@ -78,7 +78,7 @@ Used as a string:
 
 locator uses [to-function](https://github.com/component/to-function), so you may use dot notation to traverse the result array, such as `locator: 'a.b'`:
 
-```
+```js
 {
 	a: {b: ['1', '2', '3', '4']}
 }
@@ -88,7 +88,7 @@ Using as a function:
 
 Provide a custom function, find the array position, and return.
 
-```
+```js
 locator: function(){
 	// find data and return
 	return 'a.b';
@@ -96,7 +96,6 @@ locator: function(){
 ```
 
 Please note that the data via Ajax will apply the same rules.
-
 
 ### totalNumber <em>number (default `1`)</em>
 Total entries, This option must be specified when pagination is asynchronous.
@@ -117,8 +116,10 @@ This function will be triggered when paging happened. Useful for process the res
 
 The `callback` function will get two parameters
 
-	callback: function(data, pagination){ ... }
-	
+```js
+callback: function(data, pagination){ ... }
+```
+
 Parameter | Type | Description
 ------------ | ------------- | ------------
 data | array | data of selected page
@@ -141,10 +142,12 @@ Used to manually modify the parameters of the Ajax request. Useful for asynchron
 
 Here's the example：
 
-	alias: {
-		pageNumber: 'pageNum',
-		pageSize: 'limit'
-	}
+```js
+alias: {
+	pageNumber: 'pageNum',
+	pageSize: 'limit'
+}
+```
 	
 When the Ajax request sent, will replace the defaults `pageaNumber` and `pageSize`.
 
@@ -356,7 +359,7 @@ Note, this will not be supported from v2.0.6, please use Link to import css.
 # Methods
 After Pagination is constructed, you can modify the behavior using the available public methods.
 
-```
+```js
 var container = $('#example1');
 container.pagination({ ... });
 
@@ -372,14 +375,18 @@ Go to the next page.
 ### go
 Go to the custom page. There is 2 ways:
 
-	container.pagination('go', 8)
-	container.pagination(8)
+```js
+container.pagination('go', 8)
+container.pagination(8)
+```
 	
 A custom callback function is also supported, for example:
-	
-	container.pagination('go', 8, function(data, pagination){
-		// template method of yourself
-	})
+
+```js
+container.pagination('go', 8, function(data, pagination){
+	// template method of yourself
+})
+```
 
 Note, after set a custom function, will no longer call the default `callback` function.
 
@@ -412,26 +419,24 @@ Get selected page data.
 ### isDisabled <em>function</em>
 Whether pagination was be disabled.
 
-	
 
 # [Events](id:events)
 Pagination events are the common interface that function in 2 ways: as callbacks and as plugin hooks.
 
 Using events as callbacks:
 
-```
+```js
 var container = $('#example1');
 container.pagination({
 	afterRender: function(){
 		// function body
 	}
 });
-
 ```
 
 Using events as plugin hooks:
 
-```
+```js
 var container = $('#example2');
 
 container.pagination({
@@ -544,7 +549,7 @@ Pagination.js exposes its default options via the `$.fn.pagination.defaults` obj
 
 For example:
 
-```
+```js
 $.extend($.fn.pagination.defaults, {
 	pageSize: 20
 })

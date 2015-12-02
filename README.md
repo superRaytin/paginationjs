@@ -1,26 +1,23 @@
-Pagination.js
-=================
+# Pagination.js
 
-A jQuery plugin to provide simple yet fully customisable pagination.
+> A jQuery plugin to provide simple yet fully customisable pagination.
 
-[Docs](docs/en.md) | [中文文档](docs/cn.md)
+<img src="examples/images/paginationjs_record.gif" alt="paginationjs" width="500">
 
-Screenshot:
+# [Documentation](docs/en.md) - [中文文档](docs/cn.md)
 
-![paginationjs](examples/images/paginationjs_record.gif)
-
-Use like this:
+# Usage:
 
 ```js
 $('#container').pagination({
     dataSource: [1, 2, 3, 4, 5, 6, 7, ... , 195],
     callback: function(data, pagination) {
-        // TODO
+        // template method of yourself
+        var html = template(data);
+        dataContainer.html(html);
     }
 })
 ```
-
-See demos and full documentation at [paginationjs.com](http://paginationjs.com)
 
 # License
 
