@@ -37,12 +37,12 @@ $('#pagination-container').pagination({
 })
 ```
 
-# Data rendering
+# Rendering data
 
-Below is a minimal data rendering method:
+Below is a minimal rendering method:
 
 ```js
-function simpleRender(data) {
+function simpleTemplating(data) {
     var html = '<ul>';
     $.each(data, function(index, item){
         html += '<li>'+ item +'</li>';
@@ -55,21 +55,21 @@ function simpleRender(data) {
 Calling:
 
 ```js
-$('#container').pagination({
+$('#pagination-container').pagination({
     dataSource: [1, 2, 3, 4, 5, 6, 7, ... , 195],
     callback: function(data, pagination) {
-        var html = simpleRender(data);
-        dataContainer.html(html);
+        var html = simpleTemplating(data);
+        $('#data-container').html(html);
     }
 })
 ```
 
-To make it easier to maintain, you'd better use specialized templating engine to do the data rendering.
+To make it easier to maintain, you'd better use specialized templating engine to rendering data.
 
 Below is an example using [undercore.template](http://underscorejs.org/#template):
 
 ```js
-$('#container').pagination({
+$('#pagination-container').pagination({
     dataSource: [1, 2, 3, 4, 5, 6, 7, ... , 195],
     callback: function(data, pagination) {
         var html = _.template(templateString, {
@@ -84,7 +84,7 @@ $('#container').pagination({
         </ul>
         */
 
-        dataContainer.html(html);
+        $('#data-container').html(html);
     }
 })
 ```
@@ -92,7 +92,7 @@ $('#container').pagination({
 Using [Handlebars](http://handlebarsjs.com/):
 
 ```js
-$('#container').pagination({
+$('#pagination-container').pagination({
     dataSource: [1, 2, 3, 4, 5, 6, 7, ... , 195],
     callback: function(data, pagination) {
         var html = Handlebars.compile(templateString, {
@@ -107,7 +107,7 @@ $('#container').pagination({
         {{/each}}
         */
 
-        dataContainer.html(html);
+        $('#data-container').html(html);
     }
 })
 ```
