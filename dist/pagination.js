@@ -1,5 +1,5 @@
 /*
- * pagination.js 2.0.6
+ * pagination.js 2.0.7
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
@@ -869,6 +869,9 @@
                 }
 
                 return this;
+            } else {
+                // Uninstall the old instance before initialize a new one
+                uninstallPlugin(container);
             }
         }
         else{
@@ -1081,6 +1084,22 @@
                 throwError(''+ args.locator +' is incorrect. (String | Function)');
             }
         }
+    }
+
+    // uninstall plugin
+    function uninstallPlugin(target) {
+        var events = ['go', 'previous', 'next', 'disable', 'enable', 'refresh', 'show', 'hide', 'destroy'];
+
+        // off events of old instance
+        $.each(events, function(index, value) {
+            target.off(eventPrefix + value);
+        });
+
+        // reset pagination data
+        target.data('pagination', {});
+
+        // remove old
+        $('.paginationjs', target).remove();
     }
 
     // Object type detection
