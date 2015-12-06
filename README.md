@@ -2,9 +2,18 @@
 
 > A jQuery plugin to provide simple yet fully customisable pagination.
 
+[![Bower version][bower-image]][bower-url]
+
+[bower-url]:http://badge.fury.io/bo/paginationjs
+[bower-image]: https://badge.fury.io/bo/paginationjs.svg
+
 <img src="examples/images/paginationjs_record.gif" alt="paginationjs" width="500">
 
-# [Documentation](docs/en.md) - [中文文档](docs/cn.md)
+See demos and full documentation at [Documentation](http://paginationjs.com/docs/index.html)
+
+# Installation / Download
+
+`bower install paginationjs` or just download [pagination.js](dist/pagination.js) from the git repo.
 
 # Usage:
 
