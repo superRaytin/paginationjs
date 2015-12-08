@@ -68,22 +68,27 @@ To make it easier to maintain, you'd better use specialized templating engine to
 
 Below is an example using [undercore.template](http://underscorejs.org/#template):
 
+HTML:
+
+```html
+<script type="text/template" id="template-demo">
+    <ul>
+    <% for (var i = 0, len = data.length; i < len; i++) { %>
+        <li><%= data[i] %></li>
+    <% } %>
+    </ul>
+</script>
+```
+
+JS:
+
 ```js
 $('#pagination-container').pagination({
     dataSource: [1, 2, 3, 4, 5, 6, 7, ... , 195],
     callback: function(data, pagination) {
-        var html = _.template(templateString, {
+        var html = _.template($('#template-demo').html(), {
             data: data
         });
-
-        /* templateString:
-        <ul>
-        <% for (var i = 0, len = data.length; i < len; i++) { %>
-            <li><%= data[i] %></li>
-        <% } %>
-        </ul>
-        */
-
         $('#data-container').html(html);
     }
 })
@@ -91,22 +96,27 @@ $('#pagination-container').pagination({
 
 Using [Handlebars](http://handlebarsjs.com/):
 
+HTML:
+
+```html
+<script type="text/template" id="template-demo">
+    <ul>
+    {{#each data}}
+        <li>{{this}}</li>
+    {{/each}}
+    </ul>
+</script>
+```
+
+JS:
+
 ```js
 $('#pagination-container').pagination({
     dataSource: [1, 2, 3, 4, 5, 6, 7, ... , 195],
     callback: function(data, pagination) {
-        var html = Handlebars.compile(templateString, {
+        var html = Handlebars.compile($('#template-demo').html(), {
             data: data
         });
-
-        /* templateString:
-        <ul>
-        {{#each data}}
-            <li>{{this}}</li>
-        </ul>
-        {{/each}}
-        */
-
         $('#data-container').html(html);
     }
 })
