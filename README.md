@@ -52,7 +52,7 @@ function simpleTemplating(data) {
 }
 ```
 
-Calling:
+Call:
 
 ```js
 $('#pagination-container').pagination({
@@ -64,37 +64,11 @@ $('#pagination-container').pagination({
 })
 ```
 
-To make it easier to maintain, you'd better use specialized templating engine to rendering data.
+To make it easier to maintain, you'd better use specialized templating engine to rendering data. Such as [Handlebars](http://handlebarsjs.com/) and [Undercore.template](http://underscorejs.org/#template).
 
-Below is an example using [undercore.template](http://underscorejs.org/#template):
+Fresh examples:
 
-HTML:
-
-```html
-<script type="text/template" id="template-demo">
-    <ul>
-    <% for (var i = 0, len = data.length; i < len; i++) { %>
-        <li><%= data[i] %></li>
-    <% } %>
-    </ul>
-</script>
-```
-
-JS:
-
-```js
-$('#pagination-container').pagination({
-    dataSource: [1, 2, 3, 4, 5, 6, 7, ... , 195],
-    callback: function(data, pagination) {
-        var html = _.template($('#template-demo').html(), {
-            data: data
-        });
-        $('#data-container').html(html);
-    }
-})
-```
-
-Using [Handlebars](http://handlebarsjs.com/):
+## Handlebars
 
 HTML:
 
@@ -122,7 +96,35 @@ $('#pagination-container').pagination({
 })
 ```
 
-Or any other templating engine what you prefer.
+## Underscore
+
+HTML:
+
+```html
+<script type="text/template" id="template-demo">
+    <ul>
+    <% for (var i = 0, len = data.length; i < len; i++) { %>
+        <li><%= data[i] %></li>
+    <% } %>
+    </ul>
+</script>
+```
+
+JS:
+
+```js
+$('#pagination-container').pagination({
+    dataSource: [1, 2, 3, 4, 5, 6, 7, ... , 195],
+    callback: function(data, pagination) {
+        var html = _.template($('#template-demo').html(), {
+            data: data
+        });
+        $('#data-container').html(html);
+    }
+})
+```
+
+Or any other templating engine you prefer.
 
 # License
 
