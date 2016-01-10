@@ -17,14 +17,10 @@ See demos and full documentation at official site: [http://paginationjs.com](htt
 
 # Quick Start
 
-HTML:
-
 ```html
 <div id="data-container"></div>
 <div id="pagination-container"></div>
 ```
-
-JS:
 
 ```js
 $('#pagination-container').pagination({
@@ -64,13 +60,9 @@ $('#pagination-container').pagination({
 })
 ```
 
-To make it easier to maintain, you'd better use specialized templating engine to rendering data. Such as [Handlebars](http://handlebarsjs.com/) and [Undercore.template](http://underscorejs.org/#template).
+To make it easier to maintain, you'd better use specialized templating engine to do that. Such as [Handlebars](http://handlebarsjs.com/) and [Undercore.template](http://underscorejs.org/#template).
 
-Fresh examples:
-
-## Handlebars
-
-HTML:
+### Handlebars
 
 ```html
 <script type="text/template" id="template-demo">
@@ -81,8 +73,6 @@ HTML:
     </ul>
 </script>
 ```
-
-JS:
 
 ```js
 $('#pagination-container').pagination({
@@ -96,9 +86,7 @@ $('#pagination-container').pagination({
 })
 ```
 
-## Underscore
-
-HTML:
+### Underscore
 
 ```html
 <script type="text/template" id="template-demo">
@@ -109,8 +97,6 @@ HTML:
     </ul>
 </script>
 ```
-
-JS:
 
 ```js
 $('#pagination-container').pagination({
