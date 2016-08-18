@@ -320,7 +320,6 @@
 
       // Go to the specified page
       go: function(number, callback) {
-
         var self = this;
         var model = self.model;
 
@@ -373,7 +372,6 @@
         $.ajax(formatAjaxParams);
 
         function render(data) {
-
           // Before paging
           if (self.callHook('beforePaging', pageNumber) === false) return false;
 
@@ -417,7 +415,6 @@
           if (pageNumber == model.totalPage) {
             self.callHook('afterIsLastPage');
           }
-
         }
       },
 
@@ -433,7 +430,6 @@
       },
 
       destroy: function() {
-
         // Before destroy
         if (this.callHook('beforeDestroy') === false) return;
 
@@ -630,7 +626,6 @@
 
         // Go to page
         container.on(eventPrefix + 'go', function(event, pageNumber, done) {
-
           pageNumber = parseInt($.trim(pageNumber));
 
           if (!pageNumber) return;
@@ -801,8 +796,7 @@
           case 'getSelectedPageNum':
             if (container.data('pagination').model) {
               return container.data('pagination').model.pageNumber;
-            }
-            else {
+            } else {
               return container.data('pagination').attributes.pageNumber;
             }
           // Get total page
