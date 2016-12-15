@@ -3,6 +3,7 @@
 > A jQuery plugin to provide simple yet fully customisable pagination.
 
 [![Bower version][bower-image]][bower-url]
+[![CDNJS](https://img.shields.io/cdnjs/v/paginationjs.svg)](https://cdnjs.com/libraries/paginationjs)
 
 [bower-url]:http://badge.fury.io/bo/paginationjs
 [bower-image]: https://badge.fury.io/bo/paginationjs.svg
