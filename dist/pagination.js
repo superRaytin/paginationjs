@@ -584,7 +584,7 @@
             if ($.isFunction(data)) {
               throwError('Unexpect parameter of the "done" Function.');
             }
-              $.fn[pluginName].call(self, data, callback);
+              self.parseDataSource.call(self, data, callback);
           });
         } else if (typeof dataSource === 'string') {
           if (/^https?|file:/.test(dataSource)) {
