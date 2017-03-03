@@ -359,6 +359,7 @@
         $.extend(formatAjaxParams.data || {}, postData);
 
         formatAjaxParams.url = attributes.dataSource;
+        formatAjaxParams.headers = attributes.headers;
         formatAjaxParams.success = function(response) {
           render(self.filterDataByLocator(response));
         };
