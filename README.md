@@ -10,7 +10,7 @@
 
 <img src="examples/images/paginationjs_record.gif" alt="paginationjs" width="500">
 
-See demos and full documentation at official site: [http://paginationjs.com](http://paginationjs.com)
+See demos and full documentation at official site: [http://paginationjs.com](http://pagination.js.org)
 
 # Installation / Download
 
