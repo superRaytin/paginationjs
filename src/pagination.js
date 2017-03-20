@@ -692,7 +692,7 @@
         });
 
         // Go button click
-        el.delegate('.J-paginationjs-go-button', 'click', function() {
+        el.delegate('.J-paginationjs-go-button', 'click', function(event) {
           var pageNumber = $('.J-paginationjs-go-pagenumber', el).val();
 
           // Before Go button clicked
