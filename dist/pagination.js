@@ -584,7 +584,7 @@
             if ($.isFunction(data)) {
               throwError('Unexpect parameter of the "done" Function.');
             }
-            args.callee.call(self, data, callback);
+              $.fn[pluginName].call(self, data, callback);
           });
         } else if (typeof dataSource === 'string') {
           if (/^https?|file:/.test(dataSource)) {
@@ -821,7 +821,7 @@
     }
 
     // Attributes
-    var attributes = $.extend({}, arguments.callee.defaults, options);
+    var attributes = $.extend({}, $.fn[pluginName].defaults, options);
 
     // Check parameters
     parameterChecker(attributes);
