@@ -1,9 +1,9 @@
 /*
- * pagination.js 2.0.7
+ * pagination.js 2.0.8
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
- * Homepage: http://paginationjs.com
+ * Homepage: http://pagination.js.org
  *
  * Copyright 2014-2100, superRaytin
  * Released under the MIT license.
@@ -692,7 +692,7 @@
         });
 
         // Go button click
-        el.delegate('.J-paginationjs-go-button', 'click', function() {
+        el.delegate('.J-paginationjs-go-button', 'click', function(event) {
           var pageNumber = $('.J-paginationjs-go-pagenumber', el).val();
 
           // Before Go button clicked

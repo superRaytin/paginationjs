@@ -1,8 +1,8 @@
 {
   "name": "paginationjs",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "A jQuery plugin to provide simple yet fully customisable pagination",
-  "main": "pagination.js",
+  "main": "src/pagination.js",
   "directories": {
     "test": "test"
   },
@@ -25,7 +25,7 @@
   "bugs": {
     "url": "https://github.com/superRaytin/paginationjs/issues"
   },
-  "homepage": "http://paginationjs.com",
+  "homepage": "http://pagination.js.org",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-uglify": "~0.4",
