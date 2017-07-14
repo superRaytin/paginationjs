@@ -151,18 +151,25 @@
         var rangeStart = args.rangeStart;
         var rangeEnd = args.rangeEnd;
 
+        var pageSize = attributes.pageSize;
         var totalNumber = attributes.totalNumber;
 
+        var showFirst = attributes.showFirst;
         var showPrevious = attributes.showPrevious;
         var showNext = attributes.showNext;
+        var showLast = attributes.showLast;
         var showPageNumbers = attributes.showPageNumbers;
         var showNavigator = attributes.showNavigator;
         var showGoInput = attributes.showGoInput;
         var showGoButton = attributes.showGoButton;
+        var showLengthController = attributes.showLengthController;
 
+        var lengthController = attributes.lengthController;
         var pageLink = attributes.pageLink;
+        var firstText = attributes.firstText;
         var prevText = attributes.prevText;
         var nextText = attributes.nextText;
+        var lastText = attributes.lastText;
         var ellipsisText = attributes.ellipsisText;
         var goButtonText = attributes.goButtonText;
 
@@ -171,6 +178,7 @@
         var disableClassName = attributes.disableClassName;
         var ulClassName = attributes.ulClassName;
 
+        var formatLengthController = $.isFunction(attributes.formatNavigator) ? attributes.formatLengthController() : attributes.formatLengthController;
         var formatNavigator = $.isFunction(attributes.formatNavigator) ? attributes.formatNavigator() : attributes.formatNavigator;
         var formatGoInput = $.isFunction(attributes.formatGoInput) ? attributes.formatGoInput() : attributes.formatGoInput;
         var formatGoButton = $.isFunction(attributes.formatGoButton) ? attributes.formatGoButton() : attributes.formatGoButton;
@@ -182,6 +190,7 @@
         var footer = $.isFunction(attributes.footer) ? attributes.footer() : attributes.footer;
 
         var html = '';
+        var lengthSelect = '<select class="J-paginationjs-length-select">';
         var goInput = '<input type="text" class="J-paginationjs-go-pagenumber">';
         var goButton = '<input type="button" class="J-paginationjs-go-button" value="' + goButtonText + '">';
         var formattedString;
@@ -196,7 +205,24 @@
           html += formattedString;
         }
 
-        if (showPrevious || showPageNumbers || showNext) {
+        if (showLengthController) {
+          if (Object.prototype.toString.call(lengthController) === '[object Array]') {
+            for (i = 0; i < lengthController.length; i ++) {
+              lengthSelect += '<option value="' + lengthController[i] + '"' + (lengthController[i] === pageSize ? 'selected' : '') + '>' + lengthController[i] + '</option>';
+            }
+            lengthSelect += '</select>';
+
+            if (formatLengthController) {
+              formattedString = self.replaceVariables(formatLengthController, {
+                length: lengthSelect,
+                total: totalNumber
+              });
+              html += '<div class="paginationjs-length-controller">' + formattedString + '</div>';
+            }
+          }
+        }
+
+        if (showFirst || showPrevious || showPageNumbers || showNext || showLast) {
           html += '<div class="paginationjs-pages">';
 
           if (ulClassName) {
@@ -205,6 +231,13 @@
             html += '<ul>';
           }
 
+          if (showFirst) {
+            if (currentPage === 1) {
+              html += '<li class="' + classPrefix + '-first ' + disableClassName + '" data-num="1"><a>' + firstText + '<\/a><\/li>';
+            } else {
+              html += '<li class="' + classPrefix + '-first J-paginationjs-page" data-num="1" title="First page"><a href="' + pageLink + '">' + firstText + '<\/a><\/li>';              
+            }
+          }
           // Previous page button
           if (showPrevious) {
             if (currentPage === 1) {
@@ -263,6 +296,14 @@
               }
             } else {
               html += '<li class="' + classPrefix + '-next J-paginationjs-next" data-num="' + (currentPage + 1) + '" title="Next page"><a href="' + pageLink + '">' + nextText + '<\/a><\/li>';
+            }
+          }
+
+          if (showLast) {
+            if (currentPage == totalPage) {
+              html += '<li class="' + classPrefix + '-last ' + disableClassName + '" data-num="' + totalPage + '"><a>' + lastText + '<\/a><\/li>';              
+            } else {
+              html += '<li class="' + classPrefix + '-last J-paginationjs-page" data-num="' + totalPage + '" title="Last page"><a href="' + pageLink + '">' + lastText + '<\/a><\/li>';                            
             }
           }
           html += '<\/ul><\/div>';
@@ -637,6 +678,24 @@
           self.go(pageNumber, done);
         });
 
+        el.delegate('.J-paginationjs-length-select', 'change', function(event) {
+          var current = $(event.currentTarget);
+          var length = parseInt(current.val());
+          
+          if (typeof length !== 'number') return ;
+
+          // Before length select changed
+          if (self.callHook('beforeLengthSelectOnChange', event, length) === false) return false;
+
+          attributes.pageSize = length;
+          self.refresh();
+
+          // After length select changed
+          self.callHook('afterLengthSelectOnChange', event, pageNumber);
+
+          if (!attributes.pageLink) return false;
+        });
+
         // Page click
         el.delegate('.J-paginationjs-page', 'click', function(event) {
           var current = $(event.currentTarget);
@@ -853,6 +912,12 @@
     // Page range (pages on both sides of the current page)
     pageRange: 2,
 
+    // Whether to display the 'First' button
+    showFirst: true,
+
+    // Whether to display the 'Last' button
+    showLast: true,
+
     // Whether to display the 'Previous' button
     showPrevious: true,
 
@@ -870,14 +935,23 @@
     // Whether to display the 'Go' button
     showGoButton: false,
 
+    showLengthController: false,
+    lengthController: [10, 20, 50],
+
     // Page link
     pageLink: '',
 
+    // 'First' text
+    firstText: '&laquo;',
+
     // 'Previous' text
-    prevText: '&laquo;',
+    prevText: '&lsaquo;',
 
     // 'Next' text
-    nextText: '&raquo;',
+    nextText: '&rsaquo;',
+
+    // 'last' text
+    lastText: '&raquo;',
 
     // Ellipsis text
     ellipsisText: '...',
@@ -900,6 +974,8 @@
 
     // Whether to insert inline style
     inlineStyle: true,
+
+    formatLengthController: 'Showing <%= length %> entries per page from <%= total %> entries',
 
     formatNavigator: '<%= currentPage %> / <%= totalPage %>',
 
