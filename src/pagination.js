@@ -681,6 +681,7 @@
         el.delegate('.J-paginationjs-length-select', 'change', function(event) {
           var current = $(event.currentTarget);
           var length = parseInt(current.val());
+          var currentPage = self.model.pageNumber || attributes.pageNumber;
           
           if (typeof length !== 'number') return ;
 
@@ -688,10 +689,14 @@
           if (self.callHook('beforeLengthSelectOnChange', event, length) === false) return false;
 
           attributes.pageSize = length;
-          self.refresh();
+          self.model.totalPage = self.getTotalPage();
+          if (currentPage > self.model.totalPage) {
+            currentPage = self.model.totalPage;
+          }
+          self.go(currentPage);
 
           // After length select changed
-          self.callHook('afterLengthSelectOnChange', event, pageNumber);
+          self.callHook('afterLengthSelectOnChange', event, length);
 
           if (!attributes.pageLink) return false;
         });

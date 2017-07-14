@@ -40,7 +40,7 @@
     </section>
 </div>
 
-<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script src="../src/jquery-1.8.2.min.js"></script>
 <script src="../src/pagination.js"></script>
 <script>
     $(function () {
@@ -57,7 +57,12 @@
             }();
 
             var options = {
+                showGoInput: true,
+                showGoButton: true,
                 dataSource: sources,
+                showLengthController: true,
+                lengthController: [10, 30, 50],
+                formatLengthController: '共 <%= total %> 项，每页显示 <%= length %> 项',
                 callback: function (response, pagination) {
                     window.console && console.log(response, pagination);
 
