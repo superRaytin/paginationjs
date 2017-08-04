@@ -689,6 +689,7 @@
           if (self.callHook('beforeLengthSelectOnChange', event, length) === false) return false;
 
           attributes.pageSize = length;
+          self.model.pageSize = length;
           self.model.totalPage = self.getTotalPage();
           if (currentPage > self.model.totalPage) {
             currentPage = self.model.totalPage;
