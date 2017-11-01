@@ -108,8 +108,6 @@
         var el = model.el || $('<div class="paginationjs"></div>');
         var isForced = isBoot !== true;
 
-        self.callHook('beforeRender', isForced);
-
         var currentPage = model.pageNumber || attributes.pageNumber;
         var pageRange = attributes.pageRange;
         var totalPage = self.getTotalPage();
@@ -128,6 +126,8 @@
           rangeEnd = Math.min(pageRange * 2 + 1, totalPage);
         }
 
+        self.callHook('beforeRender', isForced);
+
         el.html(self.createTemplate({
           currentPage: currentPage,
           pageRange: pageRange,
@@ -144,11 +144,11 @@
       createTemplate: function(args) {
         var self = this;
         var currentPage = args.currentPage;
-        var totalPage = self.getTotalPage();
         var rangeStart = args.rangeStart;
         var rangeEnd = args.rangeEnd;
 
         var totalNumber = self.getTotalNumber();
+        var totalPage = self.getTotalPage();
 
         var showPrevious = attributes.showPrevious;
         var showNext = attributes.showNext;

@@ -93,7 +93,10 @@ $(function() {
     container.pagination({
       dataSource: 'https://api.flickr.com/services/feeds/photos_public.gne?tags=cat&tagmode=any&format=json&jsoncallback=?',
       locator: 'items',
-      totalNumber: 120,
+      totalNumberLocator: function(response) {
+        // you can return totalNumber by analyzing response content
+        return Math.floor(Math.random() * (1000 - 100)) + 100;
+      },
       pageSize: 20,
       ajax: {
         beforeSend: function() {

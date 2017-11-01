@@ -7,6 +7,8 @@
     "test": "test"
   },
   "scripts": {
+    "publish": "grunt && npm run bower-update && npm publish",
+    "bower-update": "bower update",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
