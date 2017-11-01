@@ -101,6 +101,13 @@
 ### totalNumber <em>number (default `1`)</em>
 条目总数，异步分页时必填，模拟分页时为数组的长度
 
+### totalNumberLocator <em>function(response)</em>
+远程获取 `totalNumber`，用于异步分页，只在 `dataSource` 为字符串时可用
+
+注意: 指定 `totalNumberLocator` 后将会忽略 `totalNumber`
+
+查看 [demo](/index.html#totalNumber_locator)
+
 ### pageNumber <em>number (default `1`)</em>
 指定初始化时加载哪一页的数据
 
@@ -127,7 +134,6 @@ pagination 对象包含以下属性值：
 pageNumber | number | 当前页码
 pageRange | number | 页码范围
 pageSize | number | 每页条目数
-totalPage | number | 总页数
 totalNumber | number | 总条目数
 el | jQueryObject | 分页实例的容器
 direction | number | 分页方向，往前翻页时值为 -1，往后翻为 1，初始化时为 0
@@ -187,12 +193,12 @@ direction | number | 分页方向，往前翻页时值为 -1，往后翻为 1，
 ### autoHidePrevious <em>boolean (default `false`)</em>
 是否在当前显示为第一页时隐藏 '上一页' 按钮
 
-See [demo](/index.html#auto_hide)
+查看 [demo](/index.html#auto_hide)
 
 ### autoHideNext <em>boolean (default `false`)</em>
 是否在当前显示为最后一页时隐藏 '下一页' 按钮
 
-See [demo](/index.html#auto_hide)
+查看 [demo](/index.html#auto_hide)
 
 ## Style
 
@@ -234,7 +240,7 @@ See [demo](/index.html#auto_hide)
 - `totalPage` 总页数
 - `totalNumber` 总条目数
 
-See [demo](/index.html#format_navigator)
+查看 [demo](/index.html#format_navigator)
 
 ### formatGoInput <em>string | function</em>
 跳转输入框格式化模板，默认为 `<%= input %>`，也可提供一个自定义函数，返回一个这样的字符串
@@ -248,7 +254,7 @@ See [demo](/index.html#format_navigator)
 - `totalPage` 总页数
 - `totalNumber` 总条目数
 
-See [demo](/index.html#format_go_input)
+查看 [demo](/index.html#format_go_input)
 
 ### formatGoButton <em>string | function</em>
 跳转按钮格式化模板，默认为 `<%= button %>`，也可提供一个自定义函数，返回一个这样的字符串
@@ -290,7 +296,7 @@ See [demo](/index.html#format_go_input)
 
 可以返回一个处理后的数组，或者直接在传过来的 `data` 数组里处理
 
-See [demo](/index.html#formatResult)
+查看 [demo](/index.html#formatResult)
 
 ### formatAjaxError <em>function(jqXHR, textStatus, errorThrown)</em>
 提供一个自定义函数，用于渲染错误信息，默认为空

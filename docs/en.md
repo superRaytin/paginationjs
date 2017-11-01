@@ -102,6 +102,13 @@ Total entries, This option must be specified when pagination is asynchronous.
 
 Note: This option only has effect in Pagination constructor and only if dataSource option is a URL.
 
+### totalNumberLocator <em>function(response)</em>
+Find `totalNumber` from remote response, only available when `dataSource` is a string.
+
+Note: Specify `totalNumberLocator` will ignore the `totalNumber` option.
+
+See [demo](/index.html#totalNumber_locator)
+
 ### pageNumber <em>number (default `1`)</em>
 Specify the page number when initializing.
 
