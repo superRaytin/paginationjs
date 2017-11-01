@@ -7,6 +7,7 @@
 [![CDNJS](https://img.shields.io/cdnjs/v/paginationjs.svg)](https://cdnjs.com/libraries/paginationjs)
 
 [npm-url]: https://npmjs.org/package/paginationjs
+[npm-image]: http://img.shields.io/npm/v/paginationjs.svg
 [bower-url]:http://badge.fury.io/bo/paginationjs
 [bower-image]: https://badge.fury.io/bo/paginationjs.svg
 
