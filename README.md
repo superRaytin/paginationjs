@@ -2,9 +2,11 @@
 
 > A jQuery plugin to provide simple yet fully customisable pagination.
 
+[![NPM version][npm-image]][npm-url]
 [![Bower version][bower-image]][bower-url]
 [![CDNJS](https://img.shields.io/cdnjs/v/paginationjs.svg)](https://cdnjs.com/libraries/paginationjs)
 
+[npm-url]: https://npmjs.org/package/paginationjs
 [bower-url]:http://badge.fury.io/bo/paginationjs
 [bower-image]: https://badge.fury.io/bo/paginationjs.svg
 
@@ -14,7 +16,7 @@ See demos and full documentation at official site: [http://pagination.js.org](ht
 
 # Installation / Download
 
-`bower install paginationjs` or just download [pagination.js](dist/pagination.js) from the git repo.
+`npm install paginationjs` or `bower install paginationjs` or just download [pagination.js](dist/pagination.js) from the git repo.
 
 # Quick Start
 
