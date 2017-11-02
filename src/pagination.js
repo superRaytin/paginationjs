@@ -157,7 +157,6 @@
         var showGoInput = attributes.showGoInput;
         var showGoButton = attributes.showGoButton;
 
-        var pageLink = attributes.pageLink;
         var prevText = attributes.prevText;
         var nextText = attributes.nextText;
         var ellipsisText = attributes.ellipsisText;
@@ -177,6 +176,7 @@
 
         var header = $.isFunction(attributes.header) ? attributes.header() : attributes.header;
         var footer = $.isFunction(attributes.footer) ? attributes.footer() : attributes.footer;
+        var pageLink = $.isFunction(attributes.pageLink) ? attributes.pageLink(self.model) : attributes.pageLink;
 
         var html = '';
         var goInput = '<input type="text" class="J-paginationjs-go-pagenumber">';
@@ -894,6 +894,7 @@
     // Whether to display the 'Go' button
     showGoButton: false,
 
+    // String | Function
     // Page link
     pageLink: '',
 
