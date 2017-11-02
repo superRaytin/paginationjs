@@ -66,7 +66,7 @@ In general, data source is an array, and it can be processed directly by Paginat
 
 This option is used to manually modify the location of that array in data source.
 
-Used as a string:
+Use as a string:
 
 `locator: 'data'`:
 
@@ -84,9 +84,9 @@ locator uses [to-function](https://github.com/component/to-function), so you may
 }
 ```
 
-Using as a function:
+Use as a function:
 
-Provide a custom function, find the array position, and return.
+Provide a custom function, find the array position, and return it.
 
 ```js
 locator: function(){
@@ -302,8 +302,18 @@ Provide 3 template variables.
 - `totalPage`
 - `totalNumber`
 
-### pageLink <em>string</em>
+### pageLink <em>string | function</em>
 Page link.
+
+Use as a function:
+
+Provide a custom function and return a link string.
+
+```js
+pageLink: function(pagination) {
+	return '/page_' + pagination.pageNumber + '.html';
+}
+```
 
 ## Utilities
 
@@ -428,9 +438,9 @@ Whether pagination was be disabled.
 
 
 # [Events](id:events)
-Pagination events are the common interface that function in 2 ways: as callbacks and as plugin hooks.
+There are two ways to use pagination events: with option or with plugin hook.
 
-Using events as callbacks:
+Use with option:
 
 ```js
 var container = $('#example1');
@@ -441,7 +451,7 @@ container.pagination({
 });
 ```
 
-Using events as plugin hooks:
+Use with plugin hook:
 
 ```js
 var container = $('#example2');
@@ -456,86 +466,86 @@ container.addHook('afterRender', function(){
 });
 ```
 
-Note, the hook can be added before Pagination initialized, can also be added after Pagination initialized.
+Note: the hook can be added before Pagination initialized, can also be added after Pagination initialized.
 
 ### beforeInit <em>function</em>
-Callback fired before Pagination instance initialized. Return `false` will stop the initialization.
+Invoked before initializing a new pagination instance. Return `false` will stop the initialization.
 
 ### beforeRender <em>function</em>
-Callback fired before Pagination bar is rendered. Parameters:
+Invoked before rendering pagination. Parameters:
 
-`isForced` is `true` if rendering was triggered by a paging; or `false` if rendering was triggered by Pagination initialization.
+`isForced` will be `true` when the render process triggered by paging behavior; or it will be `false` when triggered by Pagination initialization.
 
 ### beforePaging <em>function</em>
-Callback fired before a paging was triggered.
+Invoked before paging.
 
 ### beforeDestroy <em>function</em>
-Callback fired before pagination instance was destroyed.
+Invoked before destroying pagination instance.
 
 ### beforeDisable <em>function</em>
-Callback fired before pagination was disabled.
+Invoked before disabling paging.
 
 ### beforeEnable <em>function</em>
-Callback fired before pagination was enabled.
+Invoked before enabling Pagination.
 
 ### beforePreviousOnClick <em>function</em>
-Callback fired before 'previous' clicked.
+Invoked before clicking 'previous' button.
 
 ### beforePageOnClick <em>function</em>
-Callback fired before page number clicked.
+Invoked before clicking page number button.
 
 ### beforeNextOnClick <em>function</em>
-Callback fired before 'next' clicked.
+Invoked before clicking 'next' button.
 
 ### beforeGoInputOnEnter <em>function</em>
-Callback fired before 'Go' input Enter pressed.
+Invoked before Enter key pressed on the 'Go' input.
 
 ### beforeGoButtonOnClick <em>function</em>
-Callback fired before 'Go' button clicked.
+Invoked before clicking 'Go' button.
 
 ### afterInit <em>function</em>
-Callback fired after Pagination instance is initialized.
+Invoked after initializing a new pagination instance.
 
 ### afterRender <em>function</em>
-Callback fired after Pagination bar is rendered. Parameters:
+Invoked after rendering pagination bar. Parameters:
 
-`isForced` is `true` if rendering was triggered by a paging; or `false` if rendering was triggered by Pagination initialization.
+`isForced` will be `true` when the render process triggered by paging behavior; or it will be `false` when triggered by Pagination initialization.
 
 ### afterPaging <em>function</em>
-Callback fired after a paging was triggered.
+Invoked after paging.
 
 ### afterDestroy <em>function</em>
-Callback fired after pagination instance was destroyed.
+Invoked immediately after destroying pagination instance.
 
 ### afterDisable <em>function</em>
-Callback fired after pagination was disabled.
+Invoked after disabling Pagination.
 
 ### afterEnable <em>function</em>
-Callback fired after pagination was enabled.
+Invoked after enabling Pagination.
 
 ### afterPreviousOnClick <em>function</em>
-Callback fired after 'previous' clicked.
+Invoked after clicking 'previous' button.
 
 ### afterPageOnClick <em>function</em>
-Callback fired after page number clicked.
+Invoked after clicking page number button.
 
 ### afterNextOnClick <em>function</em>
-Callback fired after 'next' clicked.
+Invoked after clicking 'next' button.
 
 ### afterGoInputOnEnter <em>function</em>
-Callback fired after 'Go' input Enter pressed.
+Invoked after Enter key pressed on the 'Go' input.
 
 ### afterGoButtonOnClick <em>function</em>
-Callback fired after 'Go' button clicked.
+Invoked after clicking 'Go' button.
 
 ### afterIsFirstPage <em>function</em>
-Callback fired after the selected page number was the first.
+Invoked when the selected page number is 1.
 
 ### afterIsLastPage <em>function</em>
-Callback fired after the selected page number was the last.
+Invoked when the selected page number is the last.
 
 # Skin
-Pagination.js comes with a bunch of default skins to get you started, also you can fully customize your own skin.
+Pagination comes with 5 sets of default skins, but you can fully customize your own skin.
 
 The blue skin, for example, it can be used:
 
