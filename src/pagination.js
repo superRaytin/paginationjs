@@ -341,12 +341,9 @@
         var totalPage = self.getTotalPage();
 
         // Page number is out of bounds
-        if (totalNumber) {
+        if (totalNumber > 0) {
           if (pageNumber > totalPage) return;
         }
-
-        // There is no data
-        if (totalNumber === 0) return;
 
         // Pick data fragment in synchronous mode
         if (!self.isAsync) {
