@@ -2,7 +2,7 @@
   "name": "paginationjs",
   "version": "2.1.1",
   "description": "A jQuery plugin to provide simple yet fully customisable pagination",
-  "main": "src/pagination.js",
+  "main": "dist/pagination.js",
   "directories": {
     "test": "test"
   },
