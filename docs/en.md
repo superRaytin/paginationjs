@@ -3,70 +3,81 @@
 ## Commonly used
 
 ### dataSource <em>array | string | object | function</em>
-Data sources, and ultimately provided to Pagination is an array
+Specify the data source of the pagination.
 
-`DataSource` supports 4 formats.
+`dataSource` supports 4 formats.
 
 1. **Array**
 	
-	Directly provide an array, such as:
+    Directly provide an array, such as:
 
-		['1', '2', '3', '4']
+    ```
+    ['1', '2', '3', '4']
+    ```
 	
 2. **Object**
 	
-	Provide an object, which will contain an array, and the array can be specified via `locator: 'data'`.
+	Provide an object contained an array, that array can be specified via `locator: 'data'`.
 		
-		{
-			data: ['1', '2', '3', '4']
-		}		
+	```
+	{
+        data: ['1', '2', '3', '4']
+    }
+	```
 	
 3. **Function**
 	
-	Provide a custom function, use `done` to return an array, can achieve above 2 ways.
-	
-		dataSource: function(done){
-			var result = [];
+	Provide a custom function.
 
-			for(var i = 1; i < 196; i++){
-				result.push(i);
-			}
+    ```
+    dataSource: function(done){
+        var result = [];
+
+        for(var i = 1; i < 196; i++){
+            result.push(i);
+        }
+
+        done(result);
+    }
+    ```
 		
-			done(result);
-		}
-		
-	You can also send a request to get data, use `done` return asynchronous data.
-	
-		dataSource: function(done){
-			$.ajax({
-				type: 'GET',
-				url: '/test.json',
-				success: function(response){
-					done(response);
-				}
-			});
-		}
+	You can also send a request to get data, invoke `done` to return the data source.
+
+    ```
+    dataSource: function(done){
+        $.ajax({
+            type: 'GET',
+            url: '/test.json',
+            success: function(response){
+                done(response);
+            }
+        });
+    }
+    ```
 		
 4. **URL**
 
-	Provide a URL, returns data via Ajax, each request returns one page of data, the data returned can also be located by `locator`.
+	Indicate the data source via Ajax, each request returns one page of data, the data returned can be located by `locator`.
 	
-	
-	If URL is file, HTTP or HTTPS protocol, will using `jsonp` to send requests, otherwise Ajax.
-	
-		/test.json
+	Pagination will using `jsonp` to send requests while `URL` is file, HTTP or HTTPS protocol, otherwise Ajax.
+
+    ```
+    /test.json
+    ```
 		
-	For each pagination request, two parameters `pageNumber` and `pageSize` will be added, you can also use `alias` to specify the parameter's name.
-	
-		/test.json?pageNumber=2&pageSize=10
+	For each pagination request, these two parameters `pageNumber` `pageSize` will be appended to the request url. The parameter's name can be specified by `alias`.
+
+	```
+    /test.json?pageNumber=2&pageSize=10
+    ```
 		
 	
 ### locator <em>string | function (default `data`)</em>
-In general, data source is an array, and it can be processed directly by Pagination. But if the return is an Object, then you need to specify that array.
+In general, data source is an array, and it can be processed directly by Pagination. But if an Object is returned, then you need to specify that array.
 
-This option is used to manually modify the location of that array in data source.
+This option is used to manually modify the location of that array in the data source.
 
-Used as a string:
+Using as a string:
 
 `locator: 'data'`:
 
@@ -76,7 +87,7 @@ Used as a string:
 }
 ```
 
-locator uses [to-function](https://github.com/component/to-function), so you may use dot notation to traverse the result array, such as `locator: 'a.b'`:
+locator uses [to-function](https://github.com/component/to-function), so you can use dot notation to traverse the result array, such as `locator: 'a.b'`:
 
 ```js
 {
@@ -86,7 +97,7 @@ locator uses [to-function](https://github.com/component/to-function), so you may
 
 Using as a function:
 
-Provide a custom function, find the array position, and return.
+Provide a custom function to find the position of that array.
 
 ```js
 locator: function(){
@@ -95,10 +106,10 @@ locator: function(){
 }
 ```
 
-Please note that the data via Ajax will apply the same rules.
+Please note that the data got via Ajax will apply the same rules.
 
-### totalNumber <em>number (default `1`)</em>
-Total entries, This option must be specified when pagination is asynchronous.
+### totalNumber <em>number (default `0`)</em>
+Specify the total number of entries in advance (optional), it can be used when Pagination is in asynchronous mode
 
 Note: This option only has effect in Pagination constructor and only if dataSource option is a URL.
 
@@ -183,20 +194,24 @@ Determines whether to display the 'Go' button.
 ### showFirstOnEllipsisShow <em>boolean (default `true`)</em>
 Determines whether to display the first page number buttons when the ellipsis was displayed.
 
-	showBeginingOnOmit: false,
-	pageRange: 1,
-	totalNumber: 100,
-	pageSize: 10
+```
+showBeginingOnOmit: false,
+pageRange: 1,
+totalNumber: 100,
+pageSize: 10
+```
 
 The above settings, pagination bar will be displayed as like this "... 4 `5` 6 ... 10".
 
 ### showLastOnEllipsisShow <em>boolean (default `true`)</em>
 Determines whether to display the last page number when the ellipsis was displayed.
 
-	showEndingOnOmit: false,
-	pageRange: 1,
-	totalNumber: 100,
-	pageSize: 10
+```
+showEndingOnOmit: false,
+pageRange: 1,
+totalNumber: 100,
+pageSize: 10
+```
 
 The above settings, for example, pagination bar will be displayed as like this "1 ... 4 `5` 6 ...".
 
@@ -241,12 +256,12 @@ The text to display for the ellipsis button. Default is `...`.
 ### goButtonText <em>string</em>
 The text to display for the `Go` button. Default is `Go`.
 
-### formatNavigator <em>string | function</em>
-Format template for the navigator. Default is `<%= currentPage %> / <%= totalPage %>`.
+### formatNavigator <em>string | function(currentPage, totalPage, totalNumber)</em>
+Format the navigator from the template. Default is `<%= currentPage %> / <%= totalPage %>`.
 
-String containing the template variables or a function that returns such a string.
+A string contained template variables or a function that returns such a string.
 
-Provide 3 template variables.
+There are 3 template variables.
 
 - `currentPage`
 - `totalPage`
@@ -254,14 +269,14 @@ Provide 3 template variables.
 
 See [demo](/index.html#format_navigator)
 
-### formatGoInput <em>string | function</em>
-Format template for the 'Go' input box. Default is `<%= input %>`.
+### formatGoInput <em>string | function(input, currentPage, totalPage, totalNumber)</em>
+Format the "Go" input from the template. Default is `<%= input %>`.
 
-String containing the template variables or a function that returns such a string.
+A string contained template variables or a function that returns such a string.
 
-`<%= input %>` is equivalent to a package of `<input type= "text" class= "J-paginationjs-go-pagenumber" >`, therefore, you can also customize an input box element, ensure that the element has the `J-paginationjs-go-pagenumber` class.
+`<%= input %>` is equivalent to `<input type= "text" class= "J-paginationjs-go-pagenumber" >`, therefore, you can also customize an input element yourself, just ensure that the element has a `J-paginationjs-go-pagenumber` class.
 
-Provide 4 template variables.
+There are 4 template variables.
 
 - `input`
 - `currentPage`
@@ -270,59 +285,56 @@ Provide 4 template variables.
 
 See [demo](/index.html#format_go_input)
 
-### formatGoButton <em>string | function</em>
-Format template for the 'Go' button. Default is `<%= button %>`.
+### formatGoButton <em>string | function(button, currentPage, totalPage, totalNumber)</em>
+Format the "Go" button from the template. Default is `<%= button %>`.
 
-String containing the template variables or a function that returns such a string.
+A string contained template variables or a function that returns such a string.
 
-`<%= button %>` is equivalent to a package of `<input type="button" class="J-paginationjs-go-button">`, therefore, you can also customize an button element, ensure that the element has the `J-paginationjs-go-button` class.
+`<%= button %>` is equivalent to `<input type="button" class="J-paginationjs-go-button">`, therefore, you can also customize an button element yourself, just ensure that the element has a `J-paginationjs-go-button` class.
 
-Provide 4 template variables.
+There are 4 template variables.
 
 - `button`
 - `currentPage`
 - `totalPage`
 - `totalNumber` Total entries.
 
-### header <em>string | function</em>
-Custom header content. `header` may be a string or a function.
+### header <em>string | function(currentPage, totalPage, totalNumber)</em>
+Customize the header content. `header` may be a string or a function.
 
-Provide 3 template variables.
-
-- `currentPage`
-- `totalPage`
-- `totalNumber`
-
-### footer <em>string | function</em>
-Custom footer content. `footer` may be a string or a function.
-
-Provide 3 template variables.
+There are 3 template variables.
 
 - `currentPage`
 - `totalPage`
 - `totalNumber`
 
-### pageLink <em>string</em>
-Page link.
+### footer <em>string | function(currentPage, totalPage, totalNumber)</em>
+Customize the footer content. `footer` may be a string or a function.
+
+There are 3 template variables.
+
+- `currentPage`
+- `totalPage`
+- `totalNumber`
 
 ## Utilities
 
 ### formatResult <em>function(data)</em>
-This function used to processing result data before the `callback` function called.
+Used to process result data before `callback` invoked.
 
-An processed array will be returned, also feasible for process the passed `data` array directly.
+You should return an array processed by this function, you can also process `data` directly.
 
 See [demo](/index.html#formatResult)
 
 ### formatAjaxError <em>function(jqXHR, textStatus, errorThrown)</em>
-Provide a custom function, for rendering the error message.
+A function for rendering the error message.
 
 ```
 formatAjaxError: function(jqXHR, textStatus, errorThrown){ ... }
 ```
 
 ### ajax <em>object</em>
-Customized configuration for the built-in Ajax function. Must be parameter-compatible with `$.ajax`. Usuful for the asynchronous pagination.
+Used to customize configuration for the built-in Ajax function. it must be parameter-compatible with `$.ajax`. Usuful for the asynchronous pagination.
 
 Parameter | Type | Description
 ------------ | ------------- | ------------
@@ -333,19 +345,12 @@ cache | boolean  | If set to `false`, it will force requested pages not to be ca
 async | boolean | By default, all requests are sent asynchronously. If you need synchronous requests, set this option to `false`. Default is `true`.
 beforeSend | function | A pre-request callback function that can be used to modify the jqXHR object before it is sent. Returning false in the beforeSend function will cancel the request.
 
-
 For more info on the parameters, refer to the [JQuery API Documentation](http://api.jquery.com/jquery.ajax/).
 
 ### triggerPagingOnInit <em>boolean (default `true`)</em>
 Determines whether to trigger default pagination at initialization.
 
-in some cases, you may load the content of the first page with AJAX and the content already showed before you initialize the pagination, you should set this option to `false`.
-
-There are anthor usage, load the content of the second page by default, for example:
-
-	triggerPagingOnInit: true，
-	pageNum: 2
-
+you may want to load the first page with AJAX, while the content has already been loaded before the pagination initialized. In this situation, you should set this option to `false`.
 
 ### hideWhenLessThanOnePage <em>boolean (default `false`)</em>
 Determines whether to hide pagination when less than one page.
@@ -539,15 +544,21 @@ Pagination.js comes with a bunch of default skins to get you started, also you c
 
 The blue skin, for example, it can be used:
 
-	className: 'paginationjs-theme-blue'
+```
+className: 'paginationjs-theme-blue'
+```
 
 The small blue skin:
 
-	className: 'paginationjs-theme-blue paginationjs-small'
+```
+className: 'paginationjs-theme-blue paginationjs-small'
+```
 
 The big blue skin:
 
-	className: 'paginationjs-theme-blue paginationjs-big'
+```
+className: 'paginationjs-theme-blue paginationjs-big'
+```
 
 If you need a custom style, you can add CSS class `custom-paginationjs`.
 

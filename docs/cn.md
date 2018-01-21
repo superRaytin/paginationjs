@@ -10,44 +10,52 @@
 1. **Array**
 	
 	直接提供一个数组，如：
-		
-		['1', '2', '3', '4']
+
+    ```
+    ['1', '2', '3', '4']
+    ```
 	
 2. **Object**
 	
 	提供一个对象，里面要包含数组，可以通过 `locator: 'data'` 指定这个数组
-		
-		{
-			data: ['1', '2', '3', '4']
-		}		
+
+    ```
+    {
+        data: ['1', '2', '3', '4']
+    }
+    ```
 	
 3. **Function**
 
 	提供一个自定义函数，根据自己的业务逻辑返回数组，自定义程度很高，可以实现上面 2 种方式
 	
 	可以动态组装数据，使用 `done` 返回数据，如：
-	
-		dataSource: function(done){
-			var result = [];
 
-			for(var i = 1; i < 196; i++){
-				result.push(i);
-			}
-		
-			done(result);
-		}
+    ```
+    dataSource: function(done){
+        var result = [];
+
+        for(var i = 1; i < 196; i++){
+            result.push(i);
+        }
+
+        done(result);
+    }
+    ```
 		
 	也可以发送请求获取数据，使用 `done` 异步返回数据
-	
-		dataSource: function(done){
-			$.ajax({
-				type: 'GET',
-				url: '/test.json',
-				success: function(response){
-					done(response);
-				}
-			});
-		}
+
+	```
+    dataSource: function(done){
+        $.ajax({
+            type: 'GET',
+            url: '/test.json',
+            success: function(response){
+                done(response);
+            }
+        });
+    }
+    ```
 		
 4. **URL**
 
@@ -55,13 +63,16 @@
 	
 	
 	如果URL为 file, http 或 https 协议，会用 `jsonp` 发送请求，否则为 Ajax
-	
-		/test.json
+
+    ```
+    /test.json
+    ```
 		
 	每次分页发起请求时，会附加两个参数 `pageNumber` 和 `pageSize` ，也可使用 `alias` 来指定参数名
-	
-		/test.json?pageNumber=2&pageSize=10
-		
+
+    ```
+    /test.json?pageNumber=2&pageSize=10
+    ```
 
 	
 ### locator <em>string | function</em>
@@ -70,35 +81,39 @@
 指定 `locator` 可定位到数据源的位置，支持 2 种方式
 
 1. **String**
-	
-		{
-			data: ['1', '2', '3', '4']
-		}
+
+	```
+    {
+        data: ['1', '2', '3', '4']
+    }
+    ```
 		
 	指定 `locator: 'data'` 之后，最终传给分页组件的就是 `['1', '2', '3', '4']` 
 	
 	
 	此外，还支持多层定位，如果 `dataSource` 是如下，则可用 `locator: 'a.b'`
 	
-	
-		{
-			a: {b: ['1', '2', '3', '4']}
-		}
+	```
+    {
+        a: {b: ['1', '2', '3', '4']}
+    }
+    ```
 
 2. **Function**
 	
 	提供一个自定义函数，找到数组的位置，并返回
 	
-	
-		locator: function(){
-			// find data and return
-			return 'a.b';
-		}
+	```
+    locator: function(){
+        // find data and return
+        return 'a.b';
+    }
+    ```
 
 通过 Ajax 获取的数据同样会应用此规则
 
 
-### totalNumber <em>number (default `1`)</em>
+### totalNumber <em>number (default `0`)</em>
 条目总数，异步分页时必填，模拟分页时为数组的长度
 
 ### totalNumberLocator <em>function(response)</em>
@@ -120,7 +135,9 @@
 ### callback <em>function(data, pagination)</em>
 每次翻页时的回调，`callback` 会传入两个参数
 
-	callback: function(data, pagination){ ... }
+```
+callback: function(data, pagination){ ... }
+```
 	
 参数 | 类型 | 描述
 ------------ | ------------- | ------------
@@ -141,14 +158,18 @@ direction | number | 分页方向，往前翻页时值为 -1，往后翻为 1，
 ### alias <em>object</em>
 请求的参数别名，用于异步分页，默认为空
 
-	alias: {
-		pageNumber: 'pageNum',
-		pageSize: 'limit'
-	}
+```
+alias: {
+    pageNumber: 'pageNum',
+    pageSize: 'limit'
+}
+```
 	
 那么通过 Ajax 发起请求时，会替换默认的 `pageNumber` 和 `pageSize`
 
-	/test.json?pageNum=2&limit=10	
+```
+/test.json?pageNum=2&limit=10
+```
 
 ## Display control
 
@@ -173,20 +194,24 @@ direction | number | 分页方向，往前翻页时值为 -1，往后翻为 1，
 ### showFirstOnEllipsisShow <em>boolean (default `true`)</em>
 是否在有省略号时显示开始页码
 
-	showBeginingOnOmit: false,
-	pageRange: 1,
-	totalNumber: 100,
-	pageSize: 10
+```
+showBeginingOnOmit: false,
+pageRange: 1,
+totalNumber: 100,
+pageSize: 10
+```
 
 如上设置，分页条会显示成这样 '... 4 `5` 6 ... 10'
 
 ### showLastOnEllipsisShow <em>boolean (default `true`)</em>
 是否在有省略号时显示结束页码
 
-	showEndingOnOmit: false,
-	pageRange: 1,
-	totalNumber: 100,
-	pageSize: 10
+```
+showEndingOnOmit: false,
+pageRange: 1,
+totalNumber: 100,
+pageSize: 10
+```
 
 如上设置，分页条会显示成这样 '1 ... 4 `5` 6 ...'
 
@@ -231,7 +256,7 @@ direction | number | 分页方向，往前翻页时值为 -1，往后翻为 1，
 ### goButtonText <em>string</em>
 跳转按钮文本，默认为 `Go`
 
-### formatNavigator <em>string | function</em>
+### formatNavigator <em>string | function(currentPage, totalPage, totalNumber)</em>
 导航器格式化模板，默认为 `<%= currentPage %> / <%= totalPage %>`，也可提供一个自定义函数，返回一个这样的字符串
 
 提供 3 个模板变量
@@ -242,7 +267,7 @@ direction | number | 分页方向，往前翻页时值为 -1，往后翻为 1，
 
 查看 [demo](/index.html#format_navigator)
 
-### formatGoInput <em>string | function</em>
+### formatGoInput <em>string | function(input, currentPage, totalPage, totalNumber)</em>
 跳转输入框格式化模板，默认为 `<%= input %>`，也可提供一个自定义函数，返回一个这样的字符串
 
 `<%= input %>` 相当于 `<input type="text" class="J-paginationjs-go-pagenumber">` 的一个包装，所以，也可自定义一个输入框标签元素，只需要确保带有 `J-paginationjs-go-pagenumber` 这个class即可
@@ -256,7 +281,7 @@ direction | number | 分页方向，往前翻页时值为 -1，往后翻为 1，
 
 查看 [demo](/index.html#format_go_input)
 
-### formatGoButton <em>string | function</em>
+### formatGoButton <em>string | function(button, currentPage, totalPage, totalNumber)</em>
 跳转按钮格式化模板，默认为 `<%= button %>`，也可提供一个自定义函数，返回一个这样的字符串
 
 `<%= button %>` 相当于 `<input type="button" class="J-paginationjs-go-button">`，所以，也可自定义一个跳转按钮的标签元素，只需要确保带有 `J-paginationjs-go-button` 这个class即可
@@ -268,7 +293,7 @@ direction | number | 分页方向，往前翻页时值为 -1，往后翻为 1，
 - `totalPage` 总页数
 - `totalNumber` 总条目数
 
-### header <em>string | function</em>
+### header <em>string | function(currentPage, totalPage, totalNumber)</em>
 自定义头部内容，默认为空
 
 提供 3 个模板变量
@@ -277,7 +302,7 @@ direction | number | 分页方向，往前翻页时值为 -1，往后翻为 1，
 - `totalPage` 总页数
 - `totalNumber` 总条目数
 
-### footer <em>string | function</em>
+### footer <em>string | function(currentPage, totalPage, totalNumber)</em>
 自定义尾部内容，默认为空
 
 提供 3 个模板变量
@@ -324,8 +349,10 @@ beforeSend | function | 发起请求之前的回调函数，可用于发送前�
 
 也有其他的用法，例如：默认加载第二页的数据
 
-	triggerPagingOnInit: true，
-	pageNum: 2
+```
+triggerPagingOnInit: true，
+pageNum: 2
+```
 
 ### hideWhenLessThanOnePage <em>boolean (default `false`)</em>
 是否在总页数小于1页时隐藏分页
@@ -364,14 +391,18 @@ container.pagination('previous');
 ### go
 跳转到指定页，有以下 2 种使用方式
 
-	container.pagination('go', 8)
-	container.pagination(8)
+```
+container.pagination('go', 8)
+container.pagination(8)
+```
 	
 也支持自定义回调函数，例如：
-	
-	container.pagination('go', 8, function(data, pagination){
-		// template method of yourself
-	})
+
+```
+container.pagination('go', 8, function(data, pagination){
+    // template method of yourself
+})
+```
 	
 注意，设置自定义函数后，就不会再调用分页的回调函数 `callback` 了
 
@@ -403,8 +434,6 @@ container.pagination('previous');
 
 ### isDisabled <em>function</em>
 当前是否正处在禁用状态
-
-	
 
 # [Events](id:events)
 
@@ -518,15 +547,21 @@ container.addHook('afterRender', function(){
 
 例如蓝色皮肤，可以这样使用：
 
-	className: 'paginationjs-theme-blue'
+```
+className: 'paginationjs-theme-blue'
+```
 
 小号蓝色皮肤：
 
-	className: 'paginationjs-theme-blue paginationjs-small'
+```
+className: 'paginationjs-theme-blue paginationjs-small'
+```
 
 大号蓝色皮肤：
 
-	className: 'paginationjs-theme-blue paginationjs-big'
+```
+className: 'paginationjs-theme-blue paginationjs-big'
+```
 
 如果需要自定义样式，则可以增加 css 类 `custom-paginationjs`
 
