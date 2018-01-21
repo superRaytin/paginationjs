@@ -204,7 +204,7 @@
 
           // Previous page button
           if (showPrevious) {
-            if (currentPage === 1) {
+            if (currentPage <= 1) {
               if (!autoHidePrevious) {
                 html += '<li class="' + classPrefix + '-prev ' + disableClassName + '"><a>' + prevText + '<\/a><\/li>';
               }
@@ -254,7 +254,7 @@
 
           // Next page button
           if (showNext) {
-            if (currentPage == totalPage) {
+            if (currentPage >= totalPage) {
               if (!autoHideNext) {
                 html += '<li class="' + classPrefix + '-next ' + disableClassName + '"><a>' + nextText + '<\/a><\/li>';
               }
@@ -343,6 +343,9 @@
         if (totalNumber) {
           if (pageNumber > totalPage) return;
         }
+
+        // There is no data
+        if (totalNumber === 0) return;
 
         // Pick data fragment in sync mode
         if (!self.isAsync) {
@@ -541,7 +544,7 @@
 
       // Get total number
       getTotalNumber: function() {
-        return this.model.totalNumber || attributes.totalNumber || 1;
+        return this.model.totalNumber || attributes.totalNumber || 0;
       },
 
       // Get total page
@@ -781,13 +784,14 @@
         });
 
         // Whether to load the default page
+        var validTotalPage = Math.max(self.getTotalPage(), 1)
         var defaultPageNumber = attributes.pageNumber;
         // Default pageNumber should be 1 when totalNumber is dynamic
         if (self.isDynamicTotalNumber) {
           defaultPageNumber = 1;
         }
         if (attributes.triggerPagingOnInit) {
-          container.trigger(eventPrefix + 'go', Math.min(defaultPageNumber, self.getTotalPage()));
+          container.trigger(eventPrefix + 'go', Math.min(defaultPageNumber, validTotalPage));
         }
       }
     };
@@ -866,7 +870,7 @@
     //totalNumberLocator: function() {},
 
     // Total entries
-    totalNumber: 1,
+    totalNumber: 0,
 
     // Default page
     pageNumber: 1,
