@@ -1,5 +1,5 @@
 /*
- * pagination.js 2.1.1
+ * pagination.js 2.1.2
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
@@ -341,12 +341,9 @@
         var totalPage = self.getTotalPage();
 
         // Page number is out of bounds
-        if (totalNumber) {
+        if (totalNumber > 0) {
           if (pageNumber > totalPage) return;
         }
-
-        // There is no data
-        if (totalNumber === 0) return;
 
         // Pick data fragment in synchronous mode
         if (!self.isAsync) {
