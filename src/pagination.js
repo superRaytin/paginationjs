@@ -644,7 +644,7 @@
         var el = self.model.el;
 
         // Go to specified page number
-        container.on(eventPrefix + 'go', function(event, pageNumber, done) {
+        container.on(attributes.eventPrefix + 'go', function(event, pageNumber, done) {
           pageNumber = parseInt($.trim(pageNumber));
 
           if (!pageNumber) return;
@@ -717,7 +717,7 @@
           // Before Go button clicked
           if (self.callHook('beforeGoButtonOnClick', event, pageNumber) === false) return false;
 
-          container.trigger(eventPrefix + 'go', pageNumber);
+          container.trigger(attributes.eventPrefix + 'go', pageNumber);
 
           // After Go button clicked
           self.callHook('afterGoButtonOnClick', event, pageNumber);
@@ -731,7 +731,7 @@
             // Before Go input enter
             if (self.callHook('beforeGoInputOnEnter', event, pageNumber) === false) return false;
 
-            container.trigger(eventPrefix + 'go', pageNumber);
+            container.trigger(attributes.eventPrefix + 'go', pageNumber);
 
             // Regains focus
             $('.J-paginationjs-go-pagenumber', el).focus();
@@ -742,42 +742,42 @@
         });
 
         // Previous page
-        container.on(eventPrefix + 'previous', function(event, done) {
+        container.on(attributes.eventPrefix + 'previous', function(event, done) {
           self.previous(done);
         });
 
         // Next page
-        container.on(eventPrefix + 'next', function(event, done) {
+        container.on(attributes.eventPrefix + 'next', function(event, done) {
           self.next(done);
         });
 
         // Disable
-        container.on(eventPrefix + 'disable', function() {
+        container.on(attributes.eventPrefix + 'disable', function() {
           self.disable();
         });
 
         // Enable
-        container.on(eventPrefix + 'enable', function() {
+        container.on(attributes.eventPrefix + 'enable', function() {
           self.enable();
         });
 
         // Refresh
-        container.on(eventPrefix + 'refresh', function(event, done) {
+        container.on(attributes.eventPrefix + 'refresh', function(event, done) {
           self.refresh(done);
         });
 
         // Show
-        container.on(eventPrefix + 'show', function() {
+        container.on(attributes.eventPrefix + 'show', function() {
           self.show();
         });
 
         // Hide
-        container.on(eventPrefix + 'hide', function() {
+        container.on(attributes.eventPrefix + 'hide', function() {
           self.hide();
         });
 
         // Destroy
-        container.on(eventPrefix + 'destroy', function() {
+        container.on(attributes.eventPrefix + 'destroy', function() {
           self.destroy();
         });
 
@@ -789,7 +789,7 @@
           defaultPageNumber = 1;
         }
         if (attributes.triggerPagingOnInit) {
-          container.trigger(eventPrefix + 'go', Math.min(defaultPageNumber, validTotalPage));
+          container.trigger(attributes.eventPrefix + 'go', Math.min(defaultPageNumber, validTotalPage));
         }
       }
     };
@@ -799,11 +799,11 @@
       // Handle events
       if ($.isNumeric(options)) {
         // eg: container.pagination(5)
-        container.trigger.call(this, eventPrefix + 'go', options, arguments[1]);
+        container.trigger.call(this, attributes.eventPrefix + 'go', options, arguments[1]);
         return this;
       } else if (typeof options === 'string') {
         var args = Array.prototype.slice.apply(arguments);
-        args[0] = eventPrefix + args[0];
+        args[0] = attributes.eventPrefix + args[0];
 
         switch (options) {
           case 'previous':
@@ -839,7 +839,7 @@
         return this;
       } else {
         // Uninstall the old instance before initializing a new one
-        uninstallPlugin(container);
+        uninstallPlugin(container, attributes);
       }
     } else {
       if (!Helpers.isObject(options)) throwError('Illegal options');
@@ -915,6 +915,9 @@
     //className: '',
 
     classPrefix: 'paginationjs',
+
+    // Event namespace specific to this pagination instance
+    eventPrefix: eventPrefix,
 
     // Default active class
     activeClassName: 'active',
@@ -1054,12 +1057,12 @@
   }
 
   // uninstall plugin
-  function uninstallPlugin(target) {
+  function uninstallPlugin(target, attributes) {
     var events = ['go', 'previous', 'next', 'disable', 'enable', 'refresh', 'show', 'hide', 'destroy'];
 
     // off events of old instance
     $.each(events, function(index, value) {
-      target.off(eventPrefix + value);
+      target.off(attributes.eventPrefix + value);
     });
 
     // reset pagination data
