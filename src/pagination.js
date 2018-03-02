@@ -82,10 +82,20 @@
           var el = self.render(true);
 
           // Add extra className to the pagination element
-            if (attributes.className) {
+          if (attributes.className) {
             el.addClass(attributes.className);
           }
 
+          // Append/prepend pagination element to the container
+          var elClones = [];
+          container.each(function(index, element) {
+            var elClone = el.clone(true);
+            $(element)[attributes.position === 'bottom' ? 'append' : 'prepend'](elClone);
+            elClones.push(elClone);
+          })
+
+          // Convert the clones array of elements into a jQuery set. Update "el" to this new set of "els".
+          el = $(elClones).map(function () { return this.toArray(); });
           model.el = el;
 
           // Append/prepend pagination element to the container
