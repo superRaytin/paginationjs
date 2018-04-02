@@ -574,7 +574,8 @@
         if (Helpers.isObject(dataSource)) {
           try {
             $.each(locator.split('.'), function(index, item) {
-              filteredData = (filteredData ? filteredData : dataSource)[item];
+              var data = filteredData ? filteredData : dataSource;
+              filteredData = data[item]?data[item]:[];
             });
           }
           catch (e) {
