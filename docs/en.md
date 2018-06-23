@@ -333,7 +333,7 @@ A function for rendering the error message.
 formatAjaxError: function(jqXHR, textStatus, errorThrown){ ... }
 ```
 
-### ajax <em>object</em>
+### ajax <em>object | function</em>
 Used to customize configuration for the built-in Ajax function. it must be parameter-compatible with `$.ajax`. Usuful for the asynchronous pagination.
 
 Parameter | Type | Description

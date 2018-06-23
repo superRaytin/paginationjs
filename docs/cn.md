@@ -330,7 +330,7 @@ pageSize: 10
 formatAjaxError: function(jqXHR, textStatus, errorThrown){ ... }
 ```
 
-### ajax <em>object</em>
+### ajax <em>object | function</em>
 针对内置 Ajax 请求方法的参数作更加自定义的配置，参数必须与 `$.ajax` 兼容，适用于异步分页
 
 参数 | 类型 | 描述
