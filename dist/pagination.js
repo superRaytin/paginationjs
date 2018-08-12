@@ -59,7 +59,8 @@
         // Model will be passed to the callback function
         var model = self.model = {
           pageRange: attributes.pageRange,
-          pageSize: attributes.pageSize
+          pageSize: attributes.pageSize,
+          currPageSize: Array.isArray(attributes.pageSize)?attributes.pageSize[0]:attributes.pageSize
         };
 
         // dataSource`s type is unknown, parse it to find true data
@@ -141,12 +142,14 @@
       },
 
       // Generate HTML content from the template
-        generateHTML: function(args) {
+      generateHTML: function(args) {
         var self = this;
         var currentPage = args.currentPage;
         var totalPage = self.getTotalPage();
         var rangeStart = args.rangeStart;
         var rangeEnd = args.rangeEnd;
+        var pageSize = self.model.pageSize;
+        var isMultPageSize = Array.isArray(pageSize);
 
         var totalNumber = self.getTotalNumber();
 
@@ -313,6 +316,20 @@
           html += formattedString;
         }
 
+        if(isMultPageSize){
+          self.model.currPageSize = $('.paginationjs-page-combobox').val();
+          html += '<select class="' + classPrefix + '-page-combobox">'
+          for (var index = 0; index < pageSize.length; index++) {
+            var element = pageSize[index];
+            if (self.model.currPageSize == element) {
+              html += '<option selected value="' + element + '">' + element + '</option>';
+            } else {
+              html += '<option value="' + element + '">' + element + '</option>';
+            }
+          }
+          html += '</select>';
+        }
+
         return html;
       },
 
@@ -336,7 +353,7 @@
         // Page number is out of bounds
         if (!pageNumber || pageNumber < 1) return;
 
-        var pageSize = attributes.pageSize;
+        var pageSize = self.getPageSize();
         var totalNumber = self.getTotalNumber();
         var totalPage = self.getTotalPage();
 
@@ -356,7 +373,7 @@
         postData[alias.pageSize ? alias.pageSize : 'pageSize'] = pageSize;
         postData[alias.pageNumber ? alias.pageNumber : 'pageNumber'] = pageNumber;
 
-        var ajaxParams = $.isFunction(attributes.ajax) ? attributes.ajax() : {};
+        var ajaxParams = $.isFunction(attributes.ajax) ? attributes.ajax() : attributes.ajax;
         var formatAjaxParams = {
           type: 'get',
           cache: false,
@@ -530,7 +547,7 @@
 
       // Get data fragment
       getDataFragment: function(number) {
-        var pageSize = attributes.pageSize;
+        var pageSize = this.getPageSize();
         var dataSource = attributes.dataSource;
         var totalNumber = this.getTotalNumber();
 
@@ -547,7 +564,17 @@
 
       // Get total page
       getTotalPage: function() {
-        return Math.ceil(this.getTotalNumber() / attributes.pageSize);
+        return Math.ceil(this.getTotalNumber() / this.getPageSize());
+      },
+
+      // Get page size
+      getPageSize: function() {
+        var isMultPageSize = Array.isArray(attributes.pageSize);
+        if(isMultPageSize){
+          return this.model.currPageSize || attributes.pageSize[0];
+        }else{
+          return attributes.pageSize;
+        }
       },
 
       // Get locator
@@ -739,6 +766,26 @@
             // After Go input enter
             self.callHook('afterGoInputOnEnter', event, pageNumber);
           }
+        });
+
+        // pageSize change
+        el.delegate('.paginationjs-page-combobox', 'change', function (event) {
+
+          var selectedPageSize = parseInt($(this).val());
+          self.model.currPageSize= selectedPageSize;
+
+          var current = $(event.currentTarget);
+          var pageNumber = 1;
+
+          // Before page button clicked
+          if (self.callHook('beforePageOnClick', event, pageNumber) === false) return false;
+
+          self.go(pageNumber);
+
+          // After page button clicked
+          self.callHook('afterPageOnClick', event, pageNumber);
+
+          if (!attributes.pageLink) return false;
         });
 
         // Previous page
