@@ -1,5 +1,5 @@
 /*
- * pagination.js 2.1.3
+ * pagination.js 2.1.4
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
