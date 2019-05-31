@@ -347,6 +347,9 @@ beforeSend | function | A pre-request callback function that can be used to modi
 
 For more info on the parameters, refer to the [JQuery API Documentation](http://api.jquery.com/jquery.ajax/).
 
+### ajaxFunction <em>function(settings)</em>
+A function to use as a replacement for $.ajax(). This function will be called with a single object parameter containing the same parameters as $.ajax(). Use this to implement a custom ajax function for pagination. The provided function must call either `settings.success(response)` where `response` is the returned data array or `settings.error(jqXHR, textStatus, errorThrown)`. The parameters for the error function are passed to the `formatAjaxError` function if one is provided. These are the same parameters provided by the built-in Ajax function.
+
 ### triggerPagingOnInit <em>boolean (default `true`)</em>
 Determines whether to trigger default pagination at initialization.
 
