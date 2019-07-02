@@ -385,7 +385,11 @@
 
         self.disable();
 
-        $.ajax(formatAjaxParams);
+        if (attributes.ajaxFunction) {
+          attributes.ajaxFunction(formatAjaxParams);
+        } else {
+          $.ajax(formatAjaxParams);
+        }
 
         function render(data) {
           // Will be invoked before paging
