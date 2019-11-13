@@ -1,5 +1,5 @@
 /*
- * pagination.js 2.1.4
+ * pagination.js 2.1.5
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
@@ -74,11 +74,6 @@
           // Currently in asynchronous mode and a totalNumberLocator is specified
           self.isDynamicTotalNumber = self.isAsync && attributes.totalNumberLocator;
 
-          // There is only one page
-          if (attributes.hideWhenLessThanOnePage) {
-            if (self.getTotalPage() <= 1) return;
-          }
-
           var el = self.render(true);
 
           // Add extra className to the pagination element
@@ -111,7 +106,7 @@
         self.callHook('beforeRender', isForced);
 
         var currentPage = model.pageNumber || attributes.pageNumber;
-        var pageRange = attributes.pageRange;
+        var pageRange = attributes.pageRange || 0;
         var totalPage = self.getTotalPage();
 
         var rangeStart = currentPage - pageRange;
@@ -135,18 +130,88 @@
           rangeEnd: rangeEnd
         }));
 
+        // There is only one page
+        if (attributes.hideWhenLessThanOnePage) {
+          el[totalPage <= 1 ? 'hide' : 'show']();
+        }
+
         self.callHook('afterRender', isForced);
 
         return el;
       },
 
-      // Generate HTML content from the template
-        generateHTML: function(args) {
+      // Generate HTML of the pages
+      generatePageNumbersHTML: function(args) {
         var self = this;
         var currentPage = args.currentPage;
         var totalPage = self.getTotalPage();
         var rangeStart = args.rangeStart;
         var rangeEnd = args.rangeEnd;
+        var html = '';
+        var i;
+
+        var pageLink = attributes.pageLink;
+        var ellipsisText = attributes.ellipsisText;
+
+        var classPrefix = attributes.classPrefix;
+        var activeClassName = attributes.activeClassName;
+        var disableClassName = attributes.disableClassName;
+
+        // Disable page range, display all the pages
+        if (attributes.pageRange === null) {
+          for (i = 1; i <= totalPage; i++) {
+            if (i == currentPage) {
+              html += '<li class="' + classPrefix + '-page J-paginationjs-page ' + activeClassName + '" data-num="' + i + '"><a>' + i + '<\/a><\/li>';
+            } else {
+              html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
+            }
+          }
+          return html;
+        }
+
+        if (rangeStart <= 3) {
+          for (i = 1; i < rangeStart; i++) {
+            if (i == currentPage) {
+              html += '<li class="' + classPrefix + '-page J-paginationjs-page ' + activeClassName + '" data-num="' + i + '"><a>' + i + '<\/a><\/li>';
+            } else {
+              html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
+            }
+          }
+        } else {
+          if (attributes.showFirstOnEllipsisShow) {
+            html += '<li class="' + classPrefix + '-page ' + classPrefix + '-first J-paginationjs-page" data-num="1"><a href="' + pageLink + '">1<\/a><\/li>';
+          }
+          html += '<li class="' + classPrefix + '-ellipsis ' + disableClassName + '"><a>' + ellipsisText + '<\/a><\/li>';
+        }
+
+        for (i = rangeStart; i <= rangeEnd; i++) {
+          if (i == currentPage) {
+            html += '<li class="' + classPrefix + '-page J-paginationjs-page ' + activeClassName + '" data-num="' + i + '"><a>' + i + '<\/a><\/li>';
+          } else {
+            html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
+          }
+        }
+
+        if (rangeEnd >= totalPage - 2) {
+          for (i = rangeEnd + 1; i <= totalPage; i++) {
+            html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
+          }
+        } else {
+          html += '<li class="' + classPrefix + '-ellipsis ' + disableClassName + '"><a>' + ellipsisText + '<\/a><\/li>';
+
+          if (attributes.showLastOnEllipsisShow) {
+            html += '<li class="' + classPrefix + '-page ' + classPrefix + '-last J-paginationjs-page" data-num="' + totalPage + '"><a href="' + pageLink + '">' + totalPage + '<\/a><\/li>';
+          }
+        }
+
+        return html;
+      },
+
+      // Generate HTML content from the template
+      generateHTML: function(args) {
+        var self = this;
+        var currentPage = args.currentPage;
+        var totalPage = self.getTotalPage();
 
         var totalNumber = self.getTotalNumber();
 
@@ -160,11 +225,9 @@
         var pageLink = attributes.pageLink;
         var prevText = attributes.prevText;
         var nextText = attributes.nextText;
-        var ellipsisText = attributes.ellipsisText;
         var goButtonText = attributes.goButtonText;
 
         var classPrefix = attributes.classPrefix;
-        var activeClassName = attributes.activeClassName;
         var disableClassName = attributes.disableClassName;
         var ulClassName = attributes.ulClassName;
 
@@ -172,7 +235,6 @@
         var goInput = '<input type="text" class="J-paginationjs-go-pagenumber">';
         var goButton = '<input type="button" class="J-paginationjs-go-button" value="' + goButtonText + '">';
         var formattedString;
-        var i;
 
         var formatNavigator = $.isFunction(attributes.formatNavigator) ? attributes.formatNavigator(currentPage, totalPage, totalNumber) : attributes.formatNavigator;
         var formatGoInput = $.isFunction(attributes.formatGoInput) ? attributes.formatGoInput(goInput, currentPage, totalPage, totalNumber) : attributes.formatGoInput;
@@ -216,40 +278,7 @@
 
           // Whether to display the pages
           if (showPageNumbers) {
-            if (rangeStart <= 3) {
-              for (i = 1; i < rangeStart; i++) {
-                if (i == currentPage) {
-                  html += '<li class="' + classPrefix + '-page J-paginationjs-page ' + activeClassName + '" data-num="' + i + '"><a>' + i + '<\/a><\/li>';
-                } else {
-                  html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
-                }
-              }
-            } else {
-              if (attributes.showFirstOnEllipsisShow) {
-                html += '<li class="' + classPrefix + '-page ' + classPrefix + '-first J-paginationjs-page" data-num="1"><a href="' + pageLink + '">1<\/a><\/li>';
-              }
-              html += '<li class="' + classPrefix + '-ellipsis ' + disableClassName + '"><a>' + ellipsisText + '<\/a><\/li>';
-            }
-
-            for (i = rangeStart; i <= rangeEnd; i++) {
-              if (i == currentPage) {
-                html += '<li class="' + classPrefix + '-page J-paginationjs-page ' + activeClassName + '" data-num="' + i + '"><a>' + i + '<\/a><\/li>';
-              } else {
-                html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
-              }
-            }
-
-            if (rangeEnd >= totalPage - 2) {
-              for (i = rangeEnd + 1; i <= totalPage; i++) {
-                html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
-              }
-            } else {
-              html += '<li class="' + classPrefix + '-ellipsis ' + disableClassName + '"><a>' + ellipsisText + '<\/a><\/li>';
-
-              if (attributes.showLastOnEllipsisShow) {
-                html += '<li class="' + classPrefix + '-page ' + classPrefix + '-last J-paginationjs-page" data-num="' + totalPage + '"><a href="' + pageLink + '">' + totalPage + '<\/a><\/li>';
-              }
-            }
+            html += self.generatePageNumbersHTML(args);
           }
 
           // Whether to display the Next button
@@ -376,7 +405,9 @@
           } else {
             self.model.totalNumber = attributes.totalNumber;
           }
-          render(self.filterDataByLocator(response));
+
+          var finalData = self.filterDataByLocator(response);
+          render(finalData);
         };
         formatAjaxParams.error = function(jqXHR, textStatus, errorThrown) {
           attributes.formatAjaxError && attributes.formatAjaxError(jqXHR, textStatus, errorThrown);
