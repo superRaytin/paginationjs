@@ -74,11 +74,6 @@
           // Currently in asynchronous mode and a totalNumberLocator is specified
           self.isDynamicTotalNumber = self.isAsync && attributes.totalNumberLocator;
 
-          // There is only one page
-          if (attributes.hideWhenLessThanOnePage) {
-            if (self.getTotalPage() <= 1) return;
-          }
-
           var el = self.render(true);
 
           // Add extra className to the pagination element
@@ -135,13 +130,18 @@
           rangeEnd: rangeEnd
         }));
 
+        // There is only one page
+        if (attributes.hideWhenLessThanOnePage) {
+          el[totalPage <= 1 ? 'hide' : 'show']();
+        }
+
         self.callHook('afterRender', isForced);
 
         return el;
       },
 
       // Generate HTML content from the template
-        generateHTML: function(args) {
+      generateHTML: function(args) {
         var self = this;
         var currentPage = args.currentPage;
         var totalPage = self.getTotalPage();
@@ -376,7 +376,9 @@
           } else {
             self.model.totalNumber = attributes.totalNumber;
           }
-          render(self.filterDataByLocator(response));
+
+          var finalData = self.filterDataByLocator(response);
+          render(finalData);
         };
         formatAjaxParams.error = function(jqXHR, textStatus, errorThrown) {
           attributes.formatAjaxError && attributes.formatAjaxError(jqXHR, textStatus, errorThrown);
