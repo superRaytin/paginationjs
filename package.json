@@ -1,13 +1,13 @@
 {
   "name": "paginationjs",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "A jQuery plugin to provide simple yet fully customisable pagination",
   "main": "dist/pagination.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "push": "grunt && git tag 2.1.4 && npm publish",
+    "push": "grunt && git tag 2.1.5 && npm publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
