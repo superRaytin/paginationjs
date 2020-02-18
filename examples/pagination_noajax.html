@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<title>Paginationjs example - No AJAX</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link href="../dist/pagination.css" rel="stylesheet" type="text/css">
+		<style type="text/css">
+				ul, li {
+						list-style: none;
+				}
+				#wrapper {
+						width: 900px;
+						margin: 20px auto;
+				}
+				.data-container {
+						margin-top: 5px;
+				}
+				.data-container ul {
+						padding: 0;
+						margin: 0;
+				}
+				.data-container li {
+						margin-bottom: 5px;
+						padding: 5px 10px;
+						background: #eee;
+						color: #666;
+				}
+		</style>
+</head>
+<body>
+<div id="wrapper">
+		<section>
+				<div class="data-container"></div>
+				<div id="pagination-noajax"></div>
+		</section>
+</div>
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script src="../src/pagination.js"></script>
+<script>
+		$(function(){
+				function createDemo(name){
+						var container = $('#pagination-' + name)
+						var sources = function(){
+								var result = []
+								for(var i = 1; i < 196; i++)
+										result.push(i)
+								return result
+						}()
+						var records_display_per_page = 10																		// set this according your app
+
+						var options = {
+								dataSource: sources,
+								pageLink: ' ',																									// must be set to modify page links in callback
+								callback: function(response, pagination){
+									$('.paginationjs-page').each(function(index, el){
+
+										if(!$(el).children('a').attr('active')){
+											offset = ($(el).attr('data-num') - 1) * records_display_per_page
+											$(el).children('a').attr('href', offset)
+										}
+
+										var dataHtml = '<ul>'
+										$.each(response, function (index, item){
+												dataHtml += '<li>' + item + '</li>'
+										})
+										dataHtml += '</ul>'
+
+										container.prev().html(dataHtml)
+									})
+								}
+						}
+						container.pagination(options)
+						return container
+				}
+				createDemo('noajax')
+		})
+</script>
+</body>
+</html>
