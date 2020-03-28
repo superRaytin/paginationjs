@@ -581,6 +581,11 @@
                 return result;
             },
 
+            // Set Ajax Params
+            setAjaxParams: function(params) {
+              $.extend(attributes.ajax,{data:params});
+            },
+
             // Filter data by "locator"
             filterDataByLocator: function(dataSource) {
 
@@ -808,6 +813,12 @@
                     self.destroy();
                 });
 
+
+                // setAjaxParams
+                container.on(eventPrefix + 'set-ajax-params', function(event,params) {
+                  self.setAjaxParams(params);
+                })
+
                 // Whether to load the default page
                 if (attributes.triggerPagingOnInit) {
                     container.trigger(eventPrefix + 'go', Math.min(attributes.pageNumber, self.model.totalPage));
@@ -840,6 +851,7 @@
                     case 'show':
                     case 'hide':
                     case 'destroy':
+                    case 'set-ajax-params':
                         container.trigger.apply(this, args);
                         break;
 
