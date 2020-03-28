@@ -116,6 +116,17 @@ $('#pagination-container').pagination({
 
 Or any other templating engine you prefer.
 
+# Custom ajax parameters
+
+This is the small feature I added simply because I needed it for my project. Hope it would serve anyone that requires this change.
+
+```js
+// Set the custom ajax parameter(s)
+$('#pagination-container').pagination('set-ajax-params',{user_id: 1});
+
+// Make ajax call using the go event
+$('#pagination-container').pagination('go',1);
+
 # License
 
 Released under the MIT license.
