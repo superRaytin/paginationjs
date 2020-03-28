@@ -126,6 +126,7 @@ $('#pagination-container').pagination('set-ajax-params',{user_id: 1});
 
 // Make ajax call using the go event
 $('#pagination-container').pagination('go',1);
+```
 
 # License
 
