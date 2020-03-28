@@ -116,6 +116,11 @@ $('#pagination-container').pagination({
 
 Or any other templating engine you prefer.
 
+### Ajax parameter
+```js
+$('#pagination-container').pagination('set-ajax-params', {user_id: 1});
+```
+
 # License
 
 Released under the MIT license.

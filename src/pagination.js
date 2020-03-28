@@ -596,6 +596,11 @@
         return result;
       },
 
+      // Set Ajax Params
+      setAjaxParams: function(params) {
+        $.extend(attributes.ajax,{data:params});
+      },
+
       // Filter data by "locator"
       filterDataByLocator: function(dataSource) {
         var locator = this.getLocator(attributes.locator);
@@ -812,6 +817,11 @@
           self.destroy();
         });
 
+        // setAjaxParams
+        container.on(eventPrefix + 'set-ajax-params', function(event,params) {
+          self.setAjaxParams(params);
+        })
+
         // Whether to load the default page
         var validTotalPage = Math.max(self.getTotalPage(), 1)
         var defaultPageNumber = attributes.pageNumber;
@@ -846,6 +856,7 @@
           case 'show':
           case 'hide':
           case 'destroy':
+          case 'set-ajax-params':
             container.trigger.apply(this, args);
             break;
           // Get selected page number
