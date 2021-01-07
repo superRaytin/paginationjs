@@ -382,8 +382,9 @@
 
         var postData = {};
         var alias = attributes.alias || {};
+        var firstPageIsZero = attributes.firstPageIsZero || false;
         postData[alias.pageSize ? alias.pageSize : 'pageSize'] = pageSize;
-        postData[alias.pageNumber ? alias.pageNumber : 'pageNumber'] = pageNumber;
+        postData[alias.pageNumber ? alias.pageNumber : 'pageNumber'] = firstPageIsZero ? pageNumber -1 : pageNumber;
 
         var ajaxParams = $.isFunction(attributes.ajax) ? attributes.ajax() : attributes.ajax;
         var formatAjaxParams = {
@@ -886,6 +887,9 @@
 
   // Instance defaults
   $.fn[pluginName].defaults = {
+
+    // First page index is zero rather than 1?
+    firstPageIsZero: false,
 
     // Data source
     // Array | String | Function | Object
