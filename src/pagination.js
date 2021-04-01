@@ -163,7 +163,11 @@
             if (i == currentPage) {
               html += '<li class="' + classPrefix + '-page J-paginationjs-page ' + activeClassName + '" data-num="' + i + '"><a>' + i + '<\/a><\/li>';
             } else {
-              html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
+              if (pageLink) {
+                html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
+              } else {
+                html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a>' + i + '<\/a><\/li>';
+              }
             }
           }
           return html;
@@ -174,12 +178,20 @@
             if (i == currentPage) {
               html += '<li class="' + classPrefix + '-page J-paginationjs-page ' + activeClassName + '" data-num="' + i + '"><a>' + i + '<\/a><\/li>';
             } else {
-              html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
+              if (pageLink){
+                html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
+              } else {
+                html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a>' + i + '<\/a><\/li>';
+              }
             }
           }
         } else {
           if (attributes.showFirstOnEllipsisShow) {
-            html += '<li class="' + classPrefix + '-page ' + classPrefix + '-first J-paginationjs-page" data-num="1"><a href="' + pageLink + '">1<\/a><\/li>';
+            if (pageLink) {
+              html += '<li class="' + classPrefix + '-page ' + classPrefix + '-first J-paginationjs-page" data-num="1"><a href="' + pageLink + '">1<\/a><\/li>';
+            } else {
+              html += '<li class="' + classPrefix + '-page ' + classPrefix + '-first J-paginationjs-page" data-num="1"><a>1<\/a><\/li>';
+            }
           }
           html += '<li class="' + classPrefix + '-ellipsis ' + disableClassName + '"><a>' + ellipsisText + '<\/a><\/li>';
         }
@@ -188,19 +200,31 @@
           if (i == currentPage) {
             html += '<li class="' + classPrefix + '-page J-paginationjs-page ' + activeClassName + '" data-num="' + i + '"><a>' + i + '<\/a><\/li>';
           } else {
-            html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
+            if (pageLink) {
+              html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
+            } else {
+              html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a>' + i + '<\/a><\/li>';
+            }
           }
         }
 
         if (rangeEnd >= totalPage - 2) {
           for (i = rangeEnd + 1; i <= totalPage; i++) {
-            html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
+            if (pageLink) {
+              html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
+            } else {
+              html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a>' + i + '<\/a><\/li>';
+            }
           }
         } else {
           html += '<li class="' + classPrefix + '-ellipsis ' + disableClassName + '"><a>' + ellipsisText + '<\/a><\/li>';
 
           if (attributes.showLastOnEllipsisShow) {
-            html += '<li class="' + classPrefix + '-page ' + classPrefix + '-last J-paginationjs-page" data-num="' + totalPage + '"><a href="' + pageLink + '">' + totalPage + '<\/a><\/li>';
+            if (pageLink) {
+              html += '<li class="' + classPrefix + '-page ' + classPrefix + '-last J-paginationjs-page" data-num="' + totalPage + '"><a href="' + pageLink + '">' + totalPage + '<\/a><\/li>';
+            } else {
+              html += '<li class="' + classPrefix + '-page ' + classPrefix + '-last J-paginationjs-page" data-num="' + totalPage + '"><a>' + totalPage + '<\/a><\/li>';
+            }
           }
         }
 
@@ -272,7 +296,11 @@
                 html += '<li class="' + classPrefix + '-prev ' + disableClassName + '"><a>' + prevText + '<\/a><\/li>';
               }
             } else {
-              html += '<li class="' + classPrefix + '-prev J-paginationjs-previous" data-num="' + (currentPage - 1) + '" title="Previous page"><a href="' + pageLink + '">' + prevText + '<\/a><\/li>';
+              if (pageLink) {
+                html += '<li class="' + classPrefix + '-prev J-paginationjs-previous" data-num="' + (currentPage - 1) + '" title="Previous page"><a href="' + pageLink + '">' + prevText + '<\/a><\/li>';
+              } else {
+                html += '<li class="' + classPrefix + '-prev J-paginationjs-previous" data-num="' + (currentPage - 1) + '" title="Previous page"><a>' + prevText + '<\/a><\/li>';
+              }
             }
           }
 
@@ -288,7 +316,11 @@
                 html += '<li class="' + classPrefix + '-next ' + disableClassName + '"><a>' + nextText + '<\/a><\/li>';
               }
             } else {
-              html += '<li class="' + classPrefix + '-next J-paginationjs-next" data-num="' + (currentPage + 1) + '" title="Next page"><a href="' + pageLink + '">' + nextText + '<\/a><\/li>';
+              if (pageLink) {
+                html += '<li class="' + classPrefix + '-next J-paginationjs-next" data-num="' + (currentPage + 1) + '" title="Next page"><a href="' + pageLink + '">' + nextText + '<\/a><\/li>';
+              } else {
+                html += '<li class="' + classPrefix + '-next J-paginationjs-next" data-num="' + (currentPage + 1) + '" title="Next page"><a>' + nextText + '<\/a><\/li>';
+              }
             }
           }
           html += '<\/ul><\/div>';
