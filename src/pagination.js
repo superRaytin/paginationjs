@@ -1,5 +1,5 @@
 /*
- * pagination.js 3.0.0
+ * pagination.js 2.3.0
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
@@ -161,9 +161,9 @@
         if (attributes.pageRange === null) {
           for (i = 1; i <= totalPage; i++) {
             if (i == currentPage) {
-              html += '<li class="' + classPrefix + '-page J-paginationjs-page ' + activeClassName + '" data-num="' + i + '"><a>' + i + '<\/a><\/li>';
+              html += `<li class="${classPrefix}-page J-paginationjs-page ${activeClassName}" data-num="${i}"><a>${i}</a></li>`;
             } else {
-              html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
+              html += `<li class="${classPrefix}-page J-paginationjs-page" data-num="${i}"><a href="${pageLink}">${i}</a></li>`;
             }
           }
           return html;
@@ -172,35 +172,35 @@
         if (rangeStart <= 3) {
           for (i = 1; i < rangeStart; i++) {
             if (i == currentPage) {
-              html += '<li class="' + classPrefix + '-page J-paginationjs-page ' + activeClassName + '" data-num="' + i + '"><a>' + i + '<\/a><\/li>';
+              html += `<li class="${classPrefix}-page J-paginationjs-page ${activeClassName}" data-num="${i}"><a>${i}</a></li>`;
             } else {
-              html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
+              html += `<li class="${classPrefix}-page J-paginationjs-page" data-num="${i}"><a href="${pageLink}">${i}</a></li>`;
             }
           }
         } else {
           if (attributes.showFirstOnEllipsisShow) {
-            html += '<li class="' + classPrefix + '-page ' + classPrefix + '-first J-paginationjs-page" data-num="1"><a href="' + pageLink + '">1<\/a><\/li>';
+            html += `<li class="${classPrefix}-page ${classPrefix}-first J-paginationjs-page" data-num="1"><a href="${pageLink}">1</a></li>`;
           }
-          html += '<li class="' + classPrefix + '-ellipsis ' + disableClassName + '"><a>' + ellipsisText + '<\/a><\/li>';
+          html += `<li class="${classPrefix}-ellipsis ${disableClassName}"><a>${ellipsisText}</a></li>`;
         }
 
         for (i = rangeStart; i <= rangeEnd; i++) {
           if (i == currentPage) {
-            html += '<li class="' + classPrefix + '-page J-paginationjs-page ' + activeClassName + '" data-num="' + i + '"><a>' + i + '<\/a><\/li>';
+            html += `<li class="${classPrefix}-page J-paginationjs-page ${activeClassName}" data-num="${i}"><a>${i}</a></li>`;
           } else {
-            html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
+            html += `<li class="${classPrefix}-page J-paginationjs-page" data-num="${i}"><a href="${pageLink}">${i}</a></li>`;
           }
         }
 
         if (rangeEnd >= totalPage - 2) {
           for (i = rangeEnd + 1; i <= totalPage; i++) {
-            html += '<li class="' + classPrefix + '-page J-paginationjs-page" data-num="' + i + '"><a href="' + pageLink + '">' + i + '<\/a><\/li>';
+            html += `<li class="${classPrefix}-page J-paginationjs-page" data-num="${i}"><a href="${pageLink}">${i}</a></li>`;
           }
         } else {
-          html += '<li class="' + classPrefix + '-ellipsis ' + disableClassName + '"><a>' + ellipsisText + '<\/a><\/li>';
+          html += `<li class="${classPrefix}-ellipsis ${disableClassName}"><a>${ellipsisText}</a></li>`;
 
           if (attributes.showLastOnEllipsisShow) {
-            html += '<li class="' + classPrefix + '-page ' + classPrefix + '-last J-paginationjs-page" data-num="' + totalPage + '"><a href="' + pageLink + '">' + totalPage + '<\/a><\/li>';
+            html += `<li class="${classPrefix}-page ${classPrefix}-last J-paginationjs-page" data-num="${totalPage}"><a href="${pageLink}">${totalPage}</a></li>`;
           }
         }
 
@@ -230,10 +230,12 @@
         var classPrefix = attributes.classPrefix;
         var disableClassName = attributes.disableClassName;
         var ulClassName = attributes.ulClassName;
+        var prevClassName = attributes.prevClassName;
+        var nextClassName = attributes.nextClassName;
 
         var html = '';
         var goInput = '<input type="text" class="J-paginationjs-go-pagenumber">';
-        var goButton = '<input type="button" class="J-paginationjs-go-button" value="' + goButtonText + '">';
+        var goButton = `<input type="button" class="J-paginationjs-go-button" value="${goButtonText}">`;
         var formattedString;
 
         var formatNavigator = typeof attributes.formatNavigator === 'function' ? attributes.formatNavigator(currentPage, totalPage, totalNumber) : attributes.formatNavigator;
@@ -260,7 +262,7 @@
           html += '<div class="paginationjs-pages">';
 
           if (ulClassName) {
-            html += '<ul class="' + ulClassName + '">';
+            html += `<ul class="${ulClassName}">`;
           } else {
             html += '<ul>';
           }
@@ -269,10 +271,10 @@
           if (showPrevious) {
             if (currentPage <= 1) {
               if (!autoHidePrevious) {
-                html += '<li class="' + classPrefix + '-prev ' + disableClassName + '"><a>' + prevText + '<\/a><\/li>';
+                html += `<li class="${classPrefix}-prev ${disableClassName} ${prevClassName}"><a>${prevText}</a></li>`;
               }
             } else {
-              html += '<li class="' + classPrefix + '-prev J-paginationjs-previous" data-num="' + (currentPage - 1) + '" title="Previous page"><a href="' + pageLink + '">' + prevText + '<\/a><\/li>';
+              html += `<li class="${classPrefix}-prev J-paginationjs-previous ${prevClassName}" data-num="${currentPage - 1}" title="Previous page"><a href="${pageLink}">${prevText}</a></li>`;
             }
           }
 
@@ -285,13 +287,13 @@
           if (showNext) {
             if (currentPage >= totalPage) {
               if (!autoHideNext) {
-                html += '<li class="' + classPrefix + '-next ' + disableClassName + '"><a>' + nextText + '<\/a><\/li>';
+                html += `<li class="${classPrefix}-next ${disableClassName} ${nextClassName}"><a>${nextText}</a></li>`;
               }
             } else {
-              html += '<li class="' + classPrefix + '-next J-paginationjs-next" data-num="' + (currentPage + 1) + '" title="Next page"><a href="' + pageLink + '">' + nextText + '<\/a><\/li>';
+              html += `<li class="${classPrefix}-next J-paginationjs-next ${nextClassName}" data-num="${currentPage + 1}" title="Next page"><a href="${pageLink}">${nextText}</a></li>`;
             }
           }
-          html += '<\/ul><\/div>';
+          html += `</ul></div>`;
         }
 
         // Whether to display the navigator
@@ -302,7 +304,7 @@
               totalPage: totalPage,
               totalNumber: totalNumber
             });
-            html += '<div class="' + classPrefix + '-nav J-paginationjs-nav">' + formattedString + '<\/div>';
+            html += `<div class="${classPrefix}-nav J-paginationjs-nav">${formattedString}</div>`;
           }
         }
 
@@ -315,7 +317,7 @@
               totalNumber: totalNumber,
               input: goInput
             });
-            html += '<div class="' + classPrefix + '-go-input">' + formattedString + '</div>';
+            html += `<div class="${classPrefix}-go-input">${formattedString}</div>`;
           }
         }
 
@@ -328,7 +330,7 @@
               totalNumber: totalNumber,
               button: goButton
             });
-            html += '<div class="' + classPrefix + '-go-button">' + formattedString + '</div>';
+            html += `<div class="${classPrefix}-go-button">${formattedString}</div>`;
           }
         }
 
