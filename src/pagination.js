@@ -647,7 +647,7 @@
       },
 
       callHook: function(hook) {
-        var paginationData = container.data('pagination');
+        var paginationData = container.data('pagination') || {};
         var result;
 
         var args = Array.prototype.slice.apply(arguments);
