@@ -1,5 +1,5 @@
 /*
- * pagination.js 2.1.5
+ * pagination.js 3.0.0
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
@@ -676,7 +676,7 @@
 
         // Go to specified page number
         container.on(eventPrefix + 'go', function(event, pageNumber, done) {
-          pageNumber = parseInt($.trim(pageNumber));
+          pageNumber = parseInt(pageNumber.trim());
 
           if (!pageNumber) return;
 
@@ -690,7 +690,7 @@
         // Page number button click
         el.delegate('.J-paginationjs-page', 'click', function(event) {
           var current = $(event.currentTarget);
-          var pageNumber = $.trim(current.attr('data-num'));
+          var pageNumber = current.attr('data-num').trim();
 
           if (!pageNumber || current.hasClass(attributes.disableClassName) || current.hasClass(attributes.activeClassName)) return;
 
@@ -708,7 +708,7 @@
         // Previous button click
         el.delegate('.J-paginationjs-previous', 'click', function(event) {
           var current = $(event.currentTarget);
-          var pageNumber = $.trim(current.attr('data-num'));
+          var pageNumber = current.attr('data-num').trim();
 
           if (!pageNumber || current.hasClass(attributes.disableClassName)) return;
 
@@ -726,7 +726,7 @@
         // Next button click
         el.delegate('.J-paginationjs-next', 'click', function(event) {
           var current = $(event.currentTarget);
-          var pageNumber = $.trim(current.attr('data-num'));
+          var pageNumber = current.attr('data-num').trim();
 
           if (!pageNumber || current.hasClass(attributes.disableClassName)) return;
 
@@ -834,7 +834,7 @@
         return this;
       } else if (typeof options === 'string') {
         var args = Array.prototype.slice.apply(arguments);
-        args[0] = eventPrefix + args[0];
+          args[0] = eventPrefix + args[0];
 
         switch (options) {
           case 'previous':
