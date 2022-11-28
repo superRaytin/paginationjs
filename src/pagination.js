@@ -236,15 +236,15 @@
         var goButton = '<input type="button" class="J-paginationjs-go-button" value="' + goButtonText + '">';
         var formattedString;
 
-        var formatNavigator = $.isFunction(attributes.formatNavigator) ? attributes.formatNavigator(currentPage, totalPage, totalNumber) : attributes.formatNavigator;
-        var formatGoInput = $.isFunction(attributes.formatGoInput) ? attributes.formatGoInput(goInput, currentPage, totalPage, totalNumber) : attributes.formatGoInput;
-        var formatGoButton = $.isFunction(attributes.formatGoButton) ? attributes.formatGoButton(goButton, currentPage, totalPage, totalNumber) : attributes.formatGoButton;
+        var formatNavigator = typeof attributes.formatNavigator === 'function' ? attributes.formatNavigator(currentPage, totalPage, totalNumber) : attributes.formatNavigator;
+        var formatGoInput = typeof attributes.formatGoInput === 'function' ? attributes.formatGoInput(goInput, currentPage, totalPage, totalNumber) : attributes.formatGoInput;
+        var formatGoButton = typeof attributes.formatGoButton === 'function' ? attributes.formatGoButton(goButton, currentPage, totalPage, totalNumber) : attributes.formatGoButton;
 
-        var autoHidePrevious = $.isFunction(attributes.autoHidePrevious) ? attributes.autoHidePrevious() : attributes.autoHidePrevious;
-        var autoHideNext = $.isFunction(attributes.autoHideNext) ? attributes.autoHideNext() : attributes.autoHideNext;
+        var autoHidePrevious = typeof attributes.autoHidePrevious === 'function' ? attributes.autoHidePrevious() : attributes.autoHidePrevious;
+        var autoHideNext = typeof attributes.autoHideNext === 'function' ? attributes.autoHideNext() : attributes.autoHideNext;
 
-        var header = $.isFunction(attributes.header) ? attributes.header(currentPage, totalPage, totalNumber) : attributes.header;
-        var footer = $.isFunction(attributes.footer) ? attributes.footer(currentPage, totalPage, totalNumber) : attributes.footer;
+        var header = typeof attributes.header === 'function' ? attributes.header(currentPage, totalPage, totalNumber) : attributes.header;
+        var footer = typeof attributes.footer === 'function' ? attributes.footer(currentPage, totalPage, totalNumber) : attributes.footer;
 
         // Whether to display header
         if (header) {
@@ -385,7 +385,7 @@
         postData[alias.pageSize ? alias.pageSize : 'pageSize'] = pageSize;
         postData[alias.pageNumber ? alias.pageNumber : 'pageNumber'] = pageNumber;
 
-        var ajaxParams = $.isFunction(attributes.ajax) ? attributes.ajax() : attributes.ajax;
+        var ajaxParams = typeof attributes.ajax === 'function' ? attributes.ajax() : attributes.ajax;
         var formatAjaxParams = {
           type: 'get',
           cache: false,
@@ -468,9 +468,9 @@
         var self = this;
         var model = self.model;
 
-        if ($.isFunction(customCallback)) {
+        if (typeof customCallback === 'function') {
           customCallback(data, model);
-        } else if ($.isFunction(attributes.callback)) {
+        } else if (typeof attributes.callback === 'function') {
           attributes.callback(data, model);
         }
       },
@@ -587,7 +587,7 @@
 
         if (typeof locator === 'string') {
           result = locator;
-        } else if ($.isFunction(locator)) {
+        } else if (typeof locator === 'function') {
           result = locator();
         } else {
           throwError('"locator" is incorrect. (String | Function)');
@@ -629,7 +629,7 @@
           callback(attributes.dataSource = self.filterDataByLocator(dataSource));
         } else if (Helpers.isArray(dataSource)) {
           callback(attributes.dataSource = dataSource);
-        } else if ($.isFunction(dataSource)) {
+        } else if (typeof dataSource === 'function') {
           attributes.dataSource(function(data) {
             if (!Helpers.isArray(data)) {
               throwError('The parameter of "done" Function should be an Array.');
@@ -653,7 +653,7 @@
         var args = Array.prototype.slice.apply(arguments);
         args.shift();
 
-        if (attributes[hook] && $.isFunction(attributes[hook])) {
+        if (attributes[hook] && typeof attributes[hook] === 'function') {
           if (attributes[hook].apply(global, args) === false) {
             result = false;
           }
@@ -1000,7 +1000,7 @@
       throwError('Missing argument.');
     }
 
-    if (!$.isFunction(callback)) {
+    if (typeof callback !== 'function') {
       throwError('callback must be a function.');
     }
 
@@ -1067,19 +1067,19 @@
           throwError('"totalNumber" is incorrect. (Number)');
         }
       } else {
-        if (!$.isFunction(args.totalNumberLocator)) {
+        if (typeof args.totalNumberLocator !== 'function') {
           throwError('"totalNumberLocator" should be a Function.');
         }
       }
     } else if (Helpers.isObject(args.dataSource)) {
       if (typeof args.locator === 'undefined') {
         throwError('"dataSource" is an Object, please specify "locator".');
-      } else if (typeof args.locator !== 'string' && !$.isFunction(args.locator)) {
+      } else if (typeof args.locator !== 'string' && typeof args.locator !== 'function') {
         throwError('' + args.locator + ' is incorrect. (String | Function)');
       }
     }
 
-    if (args.formatResult !== undefined && !$.isFunction(args.formatResult)) {
+    if (args.formatResult !== undefined && typeof args.formatResult !== 'function') {
       throwError('"formatResult" should be a Function.');
     }
   }
