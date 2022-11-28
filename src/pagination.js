@@ -680,7 +680,7 @@
 
           if (!pageNumber) return;
 
-          if (!$.isNumeric(pageNumber)) {
+          if (typeof pageNumber !== 'number') {
             throwError('"pageNumber" is incorrect. (Number)');
           }
 
@@ -828,7 +828,7 @@
     // Pagination has been initialized
     if (container.data('pagination') && container.data('pagination').initialized === true) {
       // Handle events
-      if ($.isNumeric(options)) {
+      if (isNumeric(options)) {
         // eg: container.pagination(5)
         container.trigger.call(this, eventPrefix + 'go', options, arguments[1]);
         return this;
@@ -1063,7 +1063,7 @@
       if (args.totalNumberLocator === undefined) {
         if (args.totalNumber === undefined) {
           throwError('"totalNumber" is required.');
-        } else if (!$.isNumeric(args.totalNumber)) {
+        } else if (!isNumeric(args.totalNumber)) {
           throwError('"totalNumber" is incorrect. (Number)');
         }
       } else {
@@ -1103,6 +1103,10 @@
   // Object type detection
   function getObjectType(object, tmp) {
     return ( (tmp = typeof(object)) == "object" ? object == null && "null" || Object.prototype.toString.call(object).slice(8, -1) : tmp ).toLowerCase();
+  }
+
+  function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
   }
 
   $.each(['Object', 'Array', 'String'], function(index, name) {
