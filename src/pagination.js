@@ -676,7 +676,9 @@
 
         // Go to specified page number
         container.on(eventPrefix + 'go', function(event, pageNumber, done) {
-          pageNumber = parseInt(pageNumber.trim());
+          if (typeof pageNumber === 'string') {
+            pageNumber = parseInt(pageNumber.trim());
+          }
 
           if (!pageNumber) return;
 
@@ -688,7 +690,7 @@
         });
 
         // Page number button click
-        el.delegate('.J-paginationjs-page', 'click', function(event) {
+        el.on('click', '.J-paginationjs-page', function(event) {
           var current = $(event.currentTarget);
           var pageNumber = current.attr('data-num').trim();
 
@@ -706,7 +708,7 @@
         });
 
         // Previous button click
-        el.delegate('.J-paginationjs-previous', 'click', function(event) {
+        el.on('click', '.J-paginationjs-previous', function(event) {
           var current = $(event.currentTarget);
           var pageNumber = current.attr('data-num').trim();
 
@@ -724,7 +726,7 @@
         });
 
         // Next button click
-        el.delegate('.J-paginationjs-next', 'click', function(event) {
+        el.on('click', '.J-paginationjs-next', function(event) {
           var current = $(event.currentTarget);
           var pageNumber = current.attr('data-num').trim();
 
@@ -742,7 +744,7 @@
         });
 
         // Go button click
-        el.delegate('.J-paginationjs-go-button', 'click', function(event) {
+        el.on('click', '.J-paginationjs-go-button', function(event) {
           var pageNumber = $('.J-paginationjs-go-pagenumber', el).val();
 
           // Before Go button clicked
@@ -755,7 +757,7 @@
         });
 
         // go input enter
-        el.delegate('.J-paginationjs-go-pagenumber', 'keyup', function(event) {
+        el.on('keyup', '.J-paginationjs-go-pagenumber', function(event) {
           if (event.which === 13) {
             var pageNumber = $(event.currentTarget).val();
 
