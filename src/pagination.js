@@ -21,9 +21,8 @@
 
   var eventPrefix = '__pagination-';
 
-  // Conflict, use backup
   if ($.fn.pagination) {
-    pluginName = 'pagination2';
+    throwError('plugin conflicted, the name "pagination" has been taken by another jQuery plugin.');
   }
 
   $.fn[pluginName] = function(options) {
@@ -41,7 +40,7 @@
       initialize: function() {
         var self = this;
 
-        // Cache attributes of current instance
+        // Cache data for current instance
         if (!container.data('pagination')) {
           container.data('pagination', {});
         }
@@ -62,16 +61,16 @@
           pageSize: attributes.pageSize
         };
 
-        // dataSource`s type is unknown, parse it to find true data
+        // Parse dataSource to find available paging data
         self.parseDataSource(attributes.dataSource, function(dataSource) {
 
-          // Currently in asynchronous mode
+          // Asynchronous mode
           self.isAsync = Helpers.isString(dataSource);
           if (Helpers.isArray(dataSource)) {
             model.totalNumber = attributes.totalNumber = dataSource.length;
           }
 
-          // Currently in asynchronous mode and a totalNumberLocator is specified
+          // Asynchronous mode and a 'totalNumberLocator' has been specified
           self.isDynamicTotalNumber = self.isAsync && attributes.totalNumberLocator;
 
           var el = self.render(true);
@@ -83,16 +82,16 @@
 
           model.el = el;
 
-          // Append/prepend pagination element to the container
+          // Append / prepend pagination element to the container
           container[attributes.position === 'bottom' ? 'append' : 'prepend'](el);
 
           // Bind events
           self.observer();
 
-          // Pagination is currently initialized
+          // Mark pagination has been initialized
           container.data('pagination').initialized = true;
 
-          // Will be invoked after initialized
+          // Call hook after initialization
           self.callHook('afterInit', el);
         });
       },
@@ -130,7 +129,7 @@
           rangeEnd: rangeEnd
         }));
 
-        // There is only one page
+        // Whether to hide pagination when there is only one page
         if (attributes.hideWhenLessThanOnePage) {
           el[totalPage <= 1 ? 'hide' : 'show']();
         }
@@ -140,7 +139,7 @@
         return el;
       },
 
-      // Generate HTML of the pages
+      // Generate HTML for page numbers
       generatePageNumbersHTML: function(args) {
         var self = this;
         var currentPage = args.currentPage;
@@ -157,7 +156,7 @@
         var activeClassName = attributes.activeClassName;
         var disableClassName = attributes.disableClassName;
 
-        // Disable page range, display all the pages
+        // Display all page numbers if page range disabled
         if (attributes.pageRange === null) {
           for (i = 1; i <= totalPage; i++) {
             if (i == currentPage) {
@@ -207,7 +206,7 @@
         return html;
       },
 
-      // Generate HTML content from the template
+      // Generate HTML content
       generateHTML: function(args) {
         var self = this;
         var currentPage = args.currentPage;
@@ -248,7 +247,7 @@
         var header = typeof attributes.header === 'function' ? attributes.header(currentPage, totalPage, totalNumber) : attributes.header;
         var footer = typeof attributes.footer === 'function' ? attributes.footer(currentPage, totalPage, totalNumber) : attributes.footer;
 
-        // Whether to display header
+        // Whether to display custom header
         if (header) {
           formattedString = self.replaceVariables(header, {
             currentPage: currentPage,
@@ -267,7 +266,7 @@
             html += '<ul>';
           }
 
-          // Whether to display the Previous button
+          // Whether to display Previous button
           if (showPrevious) {
             if (currentPage <= 1) {
               if (!autoHidePrevious) {
@@ -278,12 +277,12 @@
             }
           }
 
-          // Whether to display the pages
+          // Whether to display page numbers
           if (showPageNumbers) {
             html += self.generatePageNumbersHTML(args);
           }
 
-          // Whether to display the Next button
+          // Whether to display Next button
           if (showNext) {
             if (currentPage >= totalPage) {
               if (!autoHideNext) {
@@ -296,7 +295,7 @@
           html += `</ul></div>`;
         }
 
-        // Whether to display the navigator
+        // Whether to display navigator
         if (showNavigator) {
           if (formatNavigator) {
             formattedString = self.replaceVariables(formatNavigator, {
@@ -308,7 +307,7 @@
           }
         }
 
-        // Whether to display the Go input
+        // Whether to display Go input
         if (showGoInput) {
           if (formatGoInput) {
             formattedString = self.replaceVariables(formatGoInput, {
@@ -321,7 +320,7 @@
           }
         }
 
-        // Whether to display the Go button
+        // Whether to display Go button
         if (showGoButton) {
           if (formatGoButton) {
             formattedString = self.replaceVariables(formatGoButton, {
@@ -334,7 +333,7 @@
           }
         }
 
-        // Whether to display footer
+        // Whether to display custom footer
         if (footer) {
           formattedString = self.replaceVariables(footer, {
             currentPage: currentPage,
@@ -347,8 +346,8 @@
         return html;
       },
 
-      // Find totalNumber from the remote response
-      // Only available in asynchronous mode
+      // dataSource is a remote request URL and a 'totalNumberLocator' function specified
+      // execute it to find 'totalNumber' from response
       findTotalNumberFromRemoteResponse: function(response) {
         var self = this;
         self.model.totalNumber = attributes.totalNumberLocator(response);
@@ -364,21 +363,17 @@
         var pageNumber = number;
         pageNumber = parseInt(pageNumber);
 
-        // Page number is out of bounds
         if (!pageNumber || pageNumber < 1) return;
 
         var pageSize = attributes.pageSize;
         var totalNumber = self.getTotalNumber();
         var totalPage = self.getTotalPage();
 
-        // Page number is out of bounds
-        if (totalNumber > 0) {
-          if (pageNumber > totalPage) return;
-        }
+        if (totalNumber > 0 && pageNumber > totalPage) return;
 
-        // Pick data fragment in synchronous mode
+        // Pick paging data in synchronous mode
         if (!self.isAsync) {
-          render(self.getDataFragment(pageNumber));
+          render(self.getPagingData(pageNumber));
           return;
         }
 
@@ -421,7 +416,7 @@
         $.ajax(formatAjaxParams);
 
         function render(data) {
-          // Will be invoked before paging
+          // Call hook before paging
           if (self.callHook('beforePaging', pageNumber) === false) return false;
 
           // Pagination direction
@@ -449,18 +444,13 @@
 
           container.data('pagination').currentPageData = data;
 
-          // invoke callback
           self.doCallback(data, callback);
 
           self.callHook('afterPaging', pageNumber);
 
-          // pageNumber now is the first page
           if (pageNumber == 1) {
             self.callHook('afterIsFirstPage');
-          }
-
-          // pageNumber now is the last page
-          if (pageNumber == self.getTotalPage()) {
+          } else if (pageNumber == self.getTotalPage()) {
             self.callHook('afterIsLastPage');
           }
         }
@@ -478,7 +468,6 @@
       },
 
       destroy: function() {
-        // Before destroy
         if (this.callHook('beforeDestroy') === false) return;
 
         this.model.el.remove();
@@ -487,7 +476,6 @@
         // Remove style element
         $('#paginationjs-style').remove();
 
-        // After destroyed
         this.callHook('afterDestroy');
       },
 
@@ -503,13 +491,11 @@
         var self = this;
         var source = self.isAsync ? 'async' : 'sync';
 
-        // Before disabled
         if (self.callHook('beforeDisable', source) === false) return;
 
         self.disabled = true;
         self.model.disabled = true;
 
-        // After disabled
         self.callHook('afterDisable', source);
       },
 
@@ -517,13 +503,11 @@
         var self = this;
         var source = self.isAsync ? 'async' : 'sync';
 
-        // Before enabled
         if (self.callHook('beforeEnable', source) === false) return;
 
         self.disabled = false;
         self.model.disabled = false;
 
-        // After enabled
         self.callHook('afterEnable', source);
       },
 
@@ -547,7 +531,7 @@
         self.model.el.hide();
       },
 
-      // Parse variables in the template
+      // Replace variables for template string
       replaceVariables: function(template, variables) {
         var formattedString;
 
@@ -561,8 +545,7 @@
         return formattedString;
       },
 
-      // Get data fragment
-      getDataFragment: function(number) {
+      getPagingData: function(number) {
         var pageSize = attributes.pageSize;
         var dataSource = attributes.dataSource;
         var totalNumber = this.getTotalNumber();
@@ -573,17 +556,14 @@
         return dataSource.slice(start - 1, end);
       },
 
-      // Get total number
       getTotalNumber: function() {
         return this.model.totalNumber || attributes.totalNumber || 0;
       },
 
-      // Get total page
       getTotalPage: function() {
         return Math.ceil(this.getTotalNumber() / attributes.pageSize);
       },
 
-      // Get locator
       getLocator: function(locator) {
         var result;
 
@@ -598,12 +578,12 @@
         return result;
       },
 
-      // Filter data by "locator"
+      // Filter data by the "locator"
       filterDataByLocator: function(dataSource) {
         var locator = this.getLocator(attributes.locator);
         var filteredData;
 
-        // Datasource is an Object, use "locator" to locate the true data
+        // Datasource is an Object, use "locator" to locate available data
         if (Helpers.isObject(dataSource)) {
           try {
             $.each(locator.split('.'), function(index, item) {
@@ -611,19 +591,19 @@
             });
           }
           catch (e) {
+            // ignore
           }
 
           if (!filteredData) {
             throwError('dataSource.' + locator + ' is undefined.');
           } else if (!Helpers.isArray(filteredData)) {
-            throwError('dataSource.' + locator + ' must be an Array.');
+            throwError('dataSource.' + locator + ' should be an Array.');
           }
         }
 
         return filteredData || dataSource;
       },
 
-      // Parse dataSource
       parseDataSource: function(dataSource, callback) {
         var self = this;
 
@@ -691,87 +671,77 @@
           self.go(pageNumber, done);
         });
 
-        // Page number button click
+        // Page number button click listener
         el.on('click', '.J-paginationjs-page', function(event) {
           var current = $(event.currentTarget);
           var pageNumber = current.attr('data-num').trim();
 
           if (!pageNumber || current.hasClass(attributes.disableClassName) || current.hasClass(attributes.activeClassName)) return;
 
-          // Before page button clicked
           if (self.callHook('beforePageOnClick', event, pageNumber) === false) return false;
 
           self.go(pageNumber);
 
-          // After page button clicked
           self.callHook('afterPageOnClick', event, pageNumber);
 
           if (!attributes.pageLink) return false;
         });
 
-        // Previous button click
+        // Previous button click listener
         el.on('click', '.J-paginationjs-previous', function(event) {
           var current = $(event.currentTarget);
           var pageNumber = current.attr('data-num').trim();
 
           if (!pageNumber || current.hasClass(attributes.disableClassName)) return;
 
-          // Before previous clicked
           if (self.callHook('beforePreviousOnClick', event, pageNumber) === false) return false;
 
           self.go(pageNumber);
 
-          // After previous clicked
           self.callHook('afterPreviousOnClick', event, pageNumber);
 
           if (!attributes.pageLink) return false;
         });
 
-        // Next button click
+        // Next button click listener
         el.on('click', '.J-paginationjs-next', function(event) {
           var current = $(event.currentTarget);
           var pageNumber = current.attr('data-num').trim();
 
           if (!pageNumber || current.hasClass(attributes.disableClassName)) return;
 
-          // Before next clicked
           if (self.callHook('beforeNextOnClick', event, pageNumber) === false) return false;
 
           self.go(pageNumber);
 
-          // After next clicked
           self.callHook('afterNextOnClick', event, pageNumber);
 
           if (!attributes.pageLink) return false;
         });
 
-        // Go button click
+        // Go button click listener
         el.on('click', '.J-paginationjs-go-button', function(event) {
           var pageNumber = $('.J-paginationjs-go-pagenumber', el).val();
 
-          // Before Go button clicked
           if (self.callHook('beforeGoButtonOnClick', event, pageNumber) === false) return false;
 
           container.trigger(eventPrefix + 'go', pageNumber);
 
-          // After Go button clicked
           self.callHook('afterGoButtonOnClick', event, pageNumber);
         });
 
-        // go input enter
+        // go input enter keyup listener
         el.on('keyup', '.J-paginationjs-go-pagenumber', function(event) {
           if (event.which === 13) {
             var pageNumber = $(event.currentTarget).val();
 
-            // Before Go input enter
             if (self.callHook('beforeGoInputOnEnter', event, pageNumber) === false) return false;
 
             container.trigger(eventPrefix + 'go', pageNumber);
 
-            // Regains focus
+            // Maintain the cursor
             $('.J-paginationjs-go-pagenumber', el).focus();
 
-            // After Go input enter
             self.callHook('afterGoInputOnEnter', event, pageNumber);
           }
         });
@@ -852,17 +822,14 @@
           case 'destroy':
             container.trigger.apply(this, args);
             break;
-          // Get selected page number
           case 'getSelectedPageNum':
             if (container.data('pagination').model) {
               return container.data('pagination').model.pageNumber;
             } else {
               return container.data('pagination').attributes.pageNumber;
             }
-          // Get total page
           case 'getTotalPage':
             return Math.ceil(container.data('pagination').model.totalNumber / container.data('pagination').model.pageSize);
-          // Get data of selected page
           case 'getSelectedPageData':
             return container.data('pagination').currentPageData;
           // Whether pagination has been disabled
@@ -958,6 +925,10 @@
     disableClassName: 'disabled',
 
     //ulClassName: '',
+
+    //prevClassName: '',
+
+    //nextClassName: '',
 
     // Whether to insert inline style
     inlineStyle: true,
@@ -1068,7 +1039,7 @@
         if (args.totalNumber === undefined) {
           throwError('"totalNumber" is required.');
         } else if (!isNumeric(args.totalNumber)) {
-          throwError('"totalNumber" is incorrect. (Number)');
+          throwError('"totalNumber" is incorrect. Expect numberic type');
         }
       } else {
         if (typeof args.totalNumberLocator !== 'function') {
@@ -1077,9 +1048,9 @@
       }
     } else if (Helpers.isObject(args.dataSource)) {
       if (typeof args.locator === 'undefined') {
-        throwError('"dataSource" is an Object, please specify "locator".');
+        throwError('"dataSource" is an Object, please specify a "locator".');
       } else if (typeof args.locator !== 'string' && typeof args.locator !== 'function') {
-        throwError('' + args.locator + ' is incorrect. (String | Function)');
+        throwError('' + args.locator + ' is incorrect. Expect the string or function type');
       }
     }
 
@@ -1092,7 +1063,7 @@
   function uninstallPlugin(target) {
     var events = ['go', 'previous', 'next', 'disable', 'enable', 'refresh', 'show', 'hide', 'destroy'];
 
-    // off events of old instance
+    // off all events
     $.each(events, function(index, value) {
       target.off(eventPrefix + value);
     });
@@ -1100,7 +1071,7 @@
     // reset pagination data
     target.data('pagination', {});
 
-    // remove old
+    // remove pagination element
     $('.paginationjs', target).remove();
   }
 
