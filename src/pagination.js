@@ -416,7 +416,6 @@
         $.ajax(formatAjaxParams);
 
         function render(data) {
-          // Call hook before paging
           if (self.callHook('beforePaging', pageNumber) === false) return false;
 
           // Pagination direction
@@ -572,7 +571,7 @@
         } else if (typeof locator === 'function') {
           result = locator();
         } else {
-          throwError('"locator" is incorrect. (String | Function)');
+          throwError('"locator" is incorrect. Expect string or function type.');
         }
 
         return result;
@@ -624,7 +623,7 @@
           }
           callback(dataSource);
         } else {
-          throwError('Unexpected type of "dataSource".');
+          throwError('Unexpected dataSource type');
         }
       },
 
@@ -789,10 +788,12 @@
         // Whether to load the default page
         var validTotalPage = Math.max(self.getTotalPage(), 1)
         var defaultPageNumber = attributes.pageNumber;
+        
         // Default pageNumber should be 1 when totalNumber is dynamic
         if (self.isDynamicTotalNumber) {
-          defaultPageNumber = 1;
+          if (attributes.resetPageNumberOnInit) defaultPageNumber = 1;
         }
+
         if (attributes.triggerPagingOnInit) {
           container.trigger(eventPrefix + 'go', Math.min(defaultPageNumber, validTotalPage));
         }
@@ -958,6 +959,9 @@
     // Whether to trigger pagination at initialization
     triggerPagingOnInit: true,
 
+    // Whether to reset page number at initialization, it works only if dataSource is a URL and totalNumberLocator is specified
+    resetPageNumberOnInit: true,
+
     // Whether to hide pagination when less than one page
     hideWhenLessThanOnePage: false,
 
@@ -1050,7 +1054,7 @@
       if (typeof args.locator === 'undefined') {
         throwError('"dataSource" is an Object, please specify a "locator".');
       } else if (typeof args.locator !== 'string' && typeof args.locator !== 'function') {
-        throwError('' + args.locator + ' is incorrect. Expect the string or function type');
+        throwError('' + args.locator + ' is incorrect. Expect string or function type');
       }
     }
 
