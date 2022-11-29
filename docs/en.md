@@ -3,13 +3,13 @@
 ## Commonly used
 
 ### dataSource <em>array | string | object | function</em>
-Specify the data source of the pagination.
+The data to paginate.
 
-`dataSource` supports 4 formats.
+`dataSource` can be one of the following 4 formats.
 
 1. **Array**
 	
-    Directly provide an array, such as:
+    an array data, eg:
 
     ```
     ['1', '2', '3', '4']
@@ -17,7 +17,7 @@ Specify the data source of the pagination.
 	
 2. **Object**
 	
-	Provide an object contained an array, that array can be specified via `locator: 'data'`.
+	an object that contained the array data, meanwhile, you should specify that array via `locator: 'data'`.
 		
 	```
 	{
@@ -27,7 +27,7 @@ Specify the data source of the pagination.
 	
 3. **Function**
 	
-	Provide a custom function.
+	a function that will indicate the array data.
 
     ```
     dataSource: function(done){
@@ -41,7 +41,7 @@ Specify the data source of the pagination.
     }
     ```
 		
-	You can also send a request to get data, invoke `done` to return the data source.
+	You can also send a request to get your data, and then call `done` to return the array data.
 
     ```
     dataSource: function(done){
@@ -57,15 +57,15 @@ Specify the data source of the pagination.
 		
 4. **URL**
 
-	Indicate the data source via Ajax, each request returns one page of data, the data returned can be located by `locator`.
+	Query array data of the current page via Ajax, usually you will use it  with a `locator`.
 	
-	Pagination will using `jsonp` to send requests while `URL` is file, HTTP or HTTPS protocol, otherwise Ajax.
+	Pagination will sending requests via `JSONP` while `URL` is one of File / HTTP / HTTPS protocol type, otherwise normal Ajax.
 
     ```
     /test.json
     ```
 		
-	For each pagination request, these two parameters `pageNumber` `pageSize` will be appended to the request url. The parameter's name can be specified by `alias`.
+	For each pagination request, these two parameters `pageNumber` `pageSize` will be appended to the request url. You can specify their names via `alias`.
 
 	```
     /test.json?pageNumber=2&pageSize=10
@@ -73,9 +73,7 @@ Specify the data source of the pagination.
 		
 	
 ### locator <em>string | function (default `data`)</em>
-In general, data source is an array, and it can be processed directly by Pagination. But if an Object is returned, then you need to specify that array.
-
-This option is used to manually modify the location of that array in the data source.
+When the data source is not an array type, this option is used to indicate the position of the array in the data source.
 
 Using as a string:
 
@@ -97,19 +95,19 @@ locator uses [to-function](https://github.com/component/to-function), so you can
 
 Using as a function:
 
-Provide a custom function to find the position of that array.
+Provides a custom function to find the position of the array data.
 
 ```js
 locator: function(){
-	// find data and return
+	// Find the position of the array and return
 	return 'a.b';
 }
 ```
 
-Please note that the data got via Ajax will apply the same rules.
+The data got via Ajax also follow this rule.
 
 ### totalNumber <em>number (default `0`)</em>
-Specify the total number of entries in advance (optional), it can be used when Pagination is in asynchronous mode
+Specifies the total number of entries in advance (optional), it can be used when Pagination is in asynchronous mode
 
 Note: This option only has effect in Pagination constructor and only if dataSource option is a URL.
 

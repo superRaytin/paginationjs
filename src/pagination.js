@@ -914,15 +914,14 @@
     // 'Go' button text
     goButtonText: 'Go',
 
-    // Additional className for Pagination element
+    // Additional className for Pagination container
     //className: '',
 
     classPrefix: 'paginationjs',
 
-    // Default active class
     activeClassName: 'active',
 
-    // Default disable class
+    // class name when disabled
     disableClassName: 'disabled',
 
     //ulClassName: '',
@@ -969,18 +968,18 @@
 
     showLastOnEllipsisShow: true,
 
-    // Pagination callback
+    // callback for each paging
     callback: function() {}
   };
 
   // Hook register
   $.fn[pluginHookMethod] = function(hook, callback) {
     if (arguments.length < 2) {
-      throwError('Missing argument.');
+      throwError('Expect 2 arguments at least.');
     }
 
     if (typeof callback !== 'function') {
-      throwError('callback must be a function.');
+      throwError('callback should be a function.');
     }
 
     var container = $(this);
