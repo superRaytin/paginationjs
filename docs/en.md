@@ -3,7 +3,6 @@
 ## Commonly used
 
 ### dataSource <em>array | string | object | function</em>
-The data to paginate.
 
 `dataSource` can be one of the following 4 formats.
 
@@ -57,7 +56,7 @@ The data to paginate.
 		
 4. **URL**
 
-	Query array data of the current page via Ajax, usually you will use it  with a `locator`.
+	Query data items of the current page from remote server via Ajax, usually you will use it  with a `locator`.
 	
 	Pagination will sending requests via `JSONP` while `URL` is one of File / HTTP / HTTPS protocol type, otherwise normal Ajax.
 
@@ -65,7 +64,7 @@ The data to paginate.
     /test.json
     ```
 		
-	For each pagination request, these two parameters `pageNumber` `pageSize` will be appended to the request url. You can specify their names via `alias`.
+	For each pagination request, these two parameters `pageNumber` `pageSize` will be appended to the request url. You can customize their names via `alias`.
 
 	```
     /test.json?pageNumber=2&pageSize=10
@@ -107,30 +106,33 @@ locator: function(){
 The data got via Ajax also follow this rule.
 
 ### totalNumber <em>number (default `0`)</em>
-Specifies the total number of entries in advance (optional), it can be used when Pagination is in asynchronous mode
 
-Note: This option only has effect in Pagination constructor and only if dataSource option is a URL.
+When the dataSource is a URL, you should pass a `totalNumber` to specify the total number of entries (or via `totalNumberLocator`). OtherWise, it will not take effect as total number will be calculated automatically.
 
 ### totalNumberLocator <em>function(response)</em>
-Find `totalNumber` from remote response, only available when `dataSource` is a string.
+Useful when the dataSource is a URL, and you expect specifies one of the field value in request response as the `totalNumber`.
 
-Note: Specify `totalNumberLocator` will ignore the `totalNumber` option.
+Note: Pagination will ignore `totalNumber` option when `totalNumberLocator` specified.
 
 See [demo](/index.html#totalNumber_locator)
 
 ### pageNumber <em>number (default `1`)</em>
-Specify the page number when initializing.
+Default page number at initialization.
 
 ### pageSize <em>number (default `10`)</em>
-Entries of per page.
+Number of data items per page.
 
 ### pageRange <em>number (default `2`)</em>
-Range of visible page number, this means that the amount on both sides of the selected page. For example, if the selected page number is `6`, and pageRange set to 2, then the pagination bar will be displayed as like this '1 ... 4 5`6`7 8'.
+`pageRange` defines a range of pages that should be display around current page. For example, if current page number is `6` and `pageRange` is set to 2, then pagination bar will be displayed as like this '1 ... 4 5`6`7 8 ... 11 12'.
+
+If you want to show all pages, just set it to `null`.
 
 ### callback <em>function(data, pagination)</em>
-This function will be triggered when paging happened. Useful for process the result data before rendered.
+To customize item's innerHTML, called on each paging.
 
-The `callback` function will get two parameters
+To make it easier to maintain, you'd better to use templating engine such as [Handlebars](http://handlebarsjs.com/) and [Undercore.template](http://underscorejs.org/#template).
+
+it takes the resulting data and page number and pageSize as its arguments:
 
 ```js
 callback: function(data, pagination){ ... }
@@ -138,25 +140,25 @@ callback: function(data, pagination){ ... }
 
 Parameter | Type | Description
 ------------ | ------------- | ------------
-data | array | data of selected page
+data | array | item data of current page
 pagination | object | pagination data
 
-`pagination` object contains the following custom properties:
+`pagination` object contains the following props:
 
 Property | Type | Description
 ------------ | ------------- | ------------
-pageNumber | number | The selected page number
-pageRange | number | Visible page number range
-pageSize | number | Entries of per page
+pageNumber | number | Current page number
+pageRange | number | Current page range
+pageSize | number | Number of data items per page
 totalPage | number | Total page
-totalNumber | number | Total entries
-el | jQuery object | Pagination element
+totalNumber | number | Total number of data items
+el | jQuery object | Pagination container element
 direction | number | Pagination direction, `-1` means forward, `1` means backward, `0` means current is at initialization.
 
 ### alias <em>object</em>
-Used to manually modify the parameters of the Ajax request. Useful for asynchronous pagination.
+Used to customize the name of `pageNumber` and `pageSize` when querying data items of the current page from remote server via Ajax.
 
-Here's the example：
+For example：
 
 ```js
 alias: {
@@ -164,54 +166,55 @@ alias: {
 	pageSize: 'limit'
 }
 ```
-	
-When the Ajax request sent, will replace the defaults `pageaNumber` and `pageSize`.
+
+The Ajax request will be sent with the new query names:
+
 
 	/test.json?pageNum=2&limit=10	
 
 ## Display control
 
 ### showPrevious <em>boolean (default `true`)</em>
-Determines whether to display the `previous` button.
+Display the `previous` button.
 
 ### showNext <em>boolean (default `true`)</em>
-Determines whether to display the `next` button.
+Display the `next` button.
 
 ### showPageNumbers <em>boolean (default `true`)</em>
-Determines whether to display the page number buttons.
+Display page number buttons.
 
 ### showNavigator <em>boolean (default `false`)</em>
-Determines whether to display the navigator.
+Display the navigator.
 
 ### showGoInput <em>boolean (default `false`)</em>
-Determines whether to display the 'Go' input box.
+Display the 'Go' input box.
 
 ### showGoButton <em>boolean (default `false`)</em>
-Determines whether to display the 'Go' button.
+Display the 'Go' button.
 
 ### showFirstOnEllipsisShow <em>boolean (default `true`)</em>
-Determines whether to display the first page number buttons when the ellipsis was displayed.
+Display first page number button when ellipsis showed.
 
 ```
-showBeginingOnOmit: false,
+showFirstOnEllipsisShow: false,
 pageRange: 1,
 totalNumber: 100,
 pageSize: 10
 ```
 
-The above settings, pagination bar will be displayed as like this "... 4 `5` 6 ... 10".
+Follow the settings above, pagination bar will be displayed as like this "... 4 `5` 6 ... 10".
 
 ### showLastOnEllipsisShow <em>boolean (default `true`)</em>
-Determines whether to display the last page number when the ellipsis was displayed.
+Display last page number when ellipsis showed.
 
 ```
-showEndingOnOmit: false,
+showLastOnEllipsisShow: false,
 pageRange: 1,
 totalNumber: 100,
 pageSize: 10
 ```
 
-The above settings, for example, pagination bar will be displayed as like this "1 ... 4 `5` 6 ...".
+Follow the settings above, pagination bar will be displayed as like this "1 ... 4 `5` 6 ...".
 
 ### autoHidePrevious <em>boolean (default `false`)</em>
 Determines whether to display the `previous` button when the selected page number was the first page.
