@@ -550,7 +550,7 @@ container.addHook('afterRender', function(){
 
     <link rel="stylesheet" href="{yourAssetsServer}/pagination.css" />
 
-css & less 文件: [pagination.css](../dist/2.3.0/pagination.css) [pagination.less](../dist/2.3.0/pagination.less)
+css & less 文件: [pagination.css](../dist/2.3.1/pagination.css) [pagination.less](../dist/2.3.1/pagination.less)
 
 例如蓝色皮肤，可以这样使用：
 

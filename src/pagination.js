@@ -1,5 +1,5 @@
 /*
- * pagination.js 2.3.0
+ * pagination.js 2.3.1
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
@@ -139,23 +139,28 @@
         return el;
       },
 
+      getPageLinkTag: function(index) {
+        var pageLink = attributes.pageLink;
+        return pageLink ? `<a href="${pageLink}">${index}</a>` : `<a>${index}</a>`;
+      },
+
       // Generate HTML for page numbers
       generatePageNumbersHTML: function(args) {
         var self = this;
         var currentPage = args.currentPage;
         var totalPage = self.getTotalPage();
+        var getPageLinkTag = self.getPageLinkTag;
         var rangeStart = args.rangeStart;
         var rangeEnd = args.rangeEnd;
         var html = '';
         var i;
 
-        var pageLink = attributes.pageLink;
         var ellipsisText = attributes.ellipsisText;
 
         var classPrefix = attributes.classPrefix;
-        var pageClassName = attributes.pageClassName;
-        var activeClassName = attributes.activeClassName;
-        var disableClassName = attributes.disableClassName;
+        var pageClassName = attributes.pageClassName || '';
+        var activeClassName = attributes.activeClassName || '';
+        var disableClassName = attributes.disableClassName || '';
 
         // Display all page numbers if page range disabled
         if (attributes.pageRange === null) {
@@ -163,7 +168,7 @@
             if (i == currentPage) {
               html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName} ${activeClassName}" data-num="${i}"><a>${i}</a></li>`;
             } else {
-              html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName}" data-num="${i}"><a href="${pageLink}">${i}</a></li>`;
+              html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName}" data-num="${i}">${getPageLinkTag(i)}</li>`;
             }
           }
           return html;
@@ -174,12 +179,12 @@
             if (i == currentPage) {
               html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName} ${activeClassName}" data-num="${i}"><a>${i}</a></li>`;
             } else {
-              html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName}" data-num="${i}"><a href="${pageLink}">${i}</a></li>`;
+              html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName}" data-num="${i}">${getPageLinkTag(i)}</li>`;
             }
           }
         } else {
           if (!attributes.hideFirstOnEllipsisShow) {
-            html += `<li class="${classPrefix}-page ${classPrefix}-first J-paginationjs-page ${pageClassName}" data-num="1"><a href="${pageLink}">1</a></li>`;
+            html += `<li class="${classPrefix}-page ${classPrefix}-first J-paginationjs-page ${pageClassName}" data-num="1">${getPageLinkTag(1)}</li>`;
           }
           html += `<li class="${classPrefix}-ellipsis ${disableClassName}"><a>${ellipsisText}</a></li>`;
         }
@@ -188,19 +193,19 @@
           if (i == currentPage) {
             html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName} ${activeClassName}" data-num="${i}"><a>${i}</a></li>`;
           } else {
-            html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName}" data-num="${i}"><a href="${pageLink}">${i}</a></li>`;
+            html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName}" data-num="${i}">${getPageLinkTag(i)}</li>`;
           }
         }
 
         if (rangeEnd >= totalPage - 2) {
           for (i = rangeEnd + 1; i <= totalPage; i++) {
-            html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName}" data-num="${i}"><a href="${pageLink}">${i}</a></li>`;
+            html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName}" data-num="${i}">${getPageLinkTag(i)}</li>`;
           }
         } else {
           html += `<li class="${classPrefix}-ellipsis ${disableClassName}"><a>${ellipsisText}</a></li>`;
 
           if (!attributes.hideLastOnEllipsisShow) {
-            html += `<li class="${classPrefix}-page ${classPrefix}-last J-paginationjs-page ${pageClassName}" data-num="${totalPage}"><a href="${pageLink}">${totalPage}</a></li>`;
+            html += `<li class="${classPrefix}-page ${classPrefix}-last J-paginationjs-page ${pageClassName}" data-num="${totalPage}">${getPageLinkTag(totalPage)}</li>`;
           }
         }
 
@@ -212,6 +217,7 @@
         var self = this;
         var currentPage = args.currentPage;
         var totalPage = self.getTotalPage();
+        var getPageLinkTag = self.getPageLinkTag;
 
         var totalNumber = self.getTotalNumber();
 
@@ -222,16 +228,15 @@
         var showGoInput = attributes.showGoInput;
         var showGoButton = attributes.showGoButton;
 
-        var pageLink = attributes.pageLink;
         var prevText = attributes.prevText;
         var nextText = attributes.nextText;
         var goButtonText = attributes.goButtonText;
 
         var classPrefix = attributes.classPrefix;
-        var disableClassName = attributes.disableClassName;
-        var ulClassName = attributes.ulClassName;
-        var prevClassName = attributes.prevClassName;
-        var nextClassName = attributes.nextClassName;
+        var disableClassName = attributes.disableClassName || '';
+        var ulClassName = attributes.ulClassName || '';
+        var prevClassName = attributes.prevClassName || '';
+        var nextClassName = attributes.nextClassName || '';
 
         var html = '';
         var goInput = '<input type="text" class="J-paginationjs-go-pagenumber">';
@@ -274,7 +279,7 @@
                 html += `<li class="${classPrefix}-prev ${disableClassName} ${prevClassName}"><a>${prevText}</a></li>`;
               }
             } else {
-              html += `<li class="${classPrefix}-prev J-paginationjs-previous ${prevClassName}" data-num="${currentPage - 1}" title="Previous page"><a href="${pageLink}">${prevText}</a></li>`;
+              html += `<li class="${classPrefix}-prev J-paginationjs-previous ${prevClassName}" data-num="${currentPage - 1}" title="Previous page">${getPageLinkTag(prevText)}</li>`;
             }
           }
 
@@ -290,7 +295,7 @@
                 html += `<li class="${classPrefix}-next ${disableClassName} ${nextClassName}"><a>${nextText}</a></li>`;
               }
             } else {
-              html += `<li class="${classPrefix}-next J-paginationjs-next ${nextClassName}" data-num="${currentPage + 1}" title="Next page"><a href="${pageLink}">${nextText}</a></li>`;
+              html += `<li class="${classPrefix}-next J-paginationjs-next ${nextClassName}" data-num="${currentPage + 1}" title="Next page">${getPageLinkTag(nextText)}</li>`;
             }
           }
           html += `</ul></div>`;
