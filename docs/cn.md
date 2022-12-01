@@ -191,11 +191,11 @@ alias: {
 ### showGoButton <em>boolean (default `false`)</em>
 是否显示跳转按钮
 
-### showFirstOnEllipsisShow <em>boolean (default `true`)</em>
+### hideFirstOnEllipsisShow <em>boolean (default `false`)</em>
 是否在有省略号时显示开始页码
 
 ```
-showBeginingOnOmit: false,
+hideFirstOnEllipsisShow: true,
 pageRange: 1,
 totalNumber: 100,
 pageSize: 10
@@ -203,11 +203,11 @@ pageSize: 10
 
 如上设置，分页条会显示成这样 '... 4 `5` 6 ... 10'
 
-### showLastOnEllipsisShow <em>boolean (default `true`)</em>
+### hideLastOnEllipsisShow <em>boolean (default `false`)</em>
 是否在有省略号时显示结束页码
 
 ```
-showEndingOnOmit: false,
+hideLastOnEllipsisShow: true,
 pageRange: 1,
 totalNumber: 100,
 pageSize: 10
@@ -241,6 +241,15 @@ pageSize: 10
 
 ### ulClassName <em>string</em>
 附加给分页容器下的 'ul' 元素的样式类，默认为空
+
+### pageClassName <em>string</em>
+页码按钮的样式类。
+
+### prevClassName <em>string</em>
+上一页按钮的样式类。
+
+### nextClassName <em>string</em>
+下一页按钮的样式类。
 
 ## Customize
 
@@ -354,21 +363,8 @@ triggerPagingOnInit: true，
 pageNum: 2
 ```
 
-### hideWhenLessThanOnePage <em>boolean (default `false`)</em>
-是否在总页数小于1页时隐藏分页
-
-### inlineStyle <em>boolean (default `true`)</em>
-是否使用内联样式
-
-分页组件自带了样式内容，默认情况下，会在 head 里插入一个 `style` 标签元素，并放入分页自带的样式内容
-
-如果你觉得使用 `link` 外链样式文件更好，那么可以将此项设置为 `false`来阻止插入行为，并将你的样式文件以 `link` 方式引用
-
-默认的样式在这下载 [pagination.css](../dist/2.0.6/pagination.css) [pagination.less](../dist/2.0.6/pagination.less)，但你完全可以自己编写这些样式
-
-<s>注意，只有使用带样式版本的分页组件，此项设置才会生效，即 `pagination-with-styles.js`</s>
-
-注意，从 2.0.6 起，不再支持 inlineStyle 配置，样式需要单独用 Link 标签引入
+### hideOnlyOnePage <em>boolean (default `false`)</em>
+是否在总页数小于 1 页时隐藏分页
 
 # Methods
 
@@ -472,8 +468,10 @@ container.addHook('afterRender', function(){
 ### beforeInit <em>function</em>
 分页实例初始化之前调用，返回 `false` 将阻止初始化
 
-### beforeRender <em>function</em>
-每次分页时会重新渲染分页条，渲染之前调用
+### beforeRender <em>function(isForced)</em>
+每次分页时会重新渲染分页条，渲染之前调用。
+
+如果渲染是在分页时触发，则 `isForce` 为 `true`，如果是在初始化时触发，则为 `false`。
 
 ### beforePaging <em>function</em>
 分页之前调用

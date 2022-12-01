@@ -56,7 +56,7 @@
 		
 4. **URL**
 
-	Query data items of the current page from remote server via Ajax, usually you will use it  with a `locator`.
+	Query data items for each paging from a remote server via Ajax, usually you will use it with a `locator`.
 	
 	Pagination will sending requests via `JSONP` while `URL` is one of File / HTTP / HTTPS protocol type, otherwise normal Ajax.
 
@@ -107,10 +107,10 @@ The data got via Ajax also follow this rule.
 
 ### totalNumber <em>number (default `0`)</em>
 
-When the dataSource is a URL, you should pass a `totalNumber` to specify the total number of entries (or via `totalNumberLocator`). OtherWise, it will not take effect as total number will be calculated automatically.
+When the dataSource is a URL, you should pass a `totalNumber` to specify the total number of data items (or via `totalNumberLocator`). OtherWise, it will not take effect as total number will be calculated automatically.
 
 ### totalNumberLocator <em>function(response)</em>
-Useful when the dataSource is a URL, and you expect specifies one of the field value in request response as the `totalNumber`.
+Useful when the dataSource is a URL, and you expect specifies one of the field value in the request's response as the `totalNumber`.
 
 Note: Pagination will ignore `totalNumber` option when `totalNumberLocator` specified.
 
@@ -192,127 +192,130 @@ Display the 'Go' input box.
 ### showGoButton <em>boolean (default `false`)</em>
 Display the 'Go' button.
 
-### showFirstOnEllipsisShow <em>boolean (default `true`)</em>
-Display first page number button when ellipsis showed.
+### hideFirstOnEllipsisShow <em>boolean (default `false`)</em>
+To hide the first page number button when ellipsis showed.
 
 ```
-showFirstOnEllipsisShow: false,
+hideFirstOnEllipsisShow: true,
 pageRange: 1,
 totalNumber: 100,
 pageSize: 10
 ```
 
-Follow the settings above, pagination bar will be displayed as like this "... 4 `5` 6 ... 10".
+Follow the settings above, the pagination bar will be "... 4 `5` 6 ... 10".
 
-### showLastOnEllipsisShow <em>boolean (default `true`)</em>
-Display last page number when ellipsis showed.
+### hideLastOnEllipsisShow <em>boolean (default `false`)</em>
+To hide the last page number when ellipsis showed.
 
 ```
-showLastOnEllipsisShow: false,
+hideLastOnEllipsisShow: true,
 pageRange: 1,
 totalNumber: 100,
 pageSize: 10
 ```
 
-Follow the settings above, pagination bar will be displayed as like this "1 ... 4 `5` 6 ...".
+Follow the settings above, the pagination bar will be "1 ... 4 `5` 6 ...".
 
 ### autoHidePrevious <em>boolean (default `false`)</em>
-Determines whether to display the `previous` button when the selected page number was the first page.
+To hide the `previous` button when current page number is the first.
 
 See [demo](/index.html#auto_hide)
 
 ### autoHideNext <em>boolean (default `false`)</em>
-Determines whether to display the `next` button when the selected page number was the last page.
+To hide the `next` button when current page number is the last.
 
 See [demo](/index.html#auto_hide)
 
 ## Style
 
 ### classPrefix <em>string</em>
-Style prefix. Default is `pagination`.
+Prefixes class name of pagination elements. Default is `paginationjs`.
 
 ### className <em>string</em>
-Additional style class(es) for the Pagination element.
+Additional css class(es) for the root pagination element.
 
 ### activeClassName <em>string</em>
-ClassName of the selected page number button. Default is `active`.
+CSS class(es) for the active button. Default is `active`.
 
 ### disableClassName <em>string</em>
-ClassName of the disabled page number button. Default is `disabled`.
+CSS class(es) for the disabled buttons. Default is `disabled`.
 
 ### ulClassName <em>string</em>
-ClassName of the 'ul' element that contained by the Pagination element.
+CSS class(es) for the inner "ul" element.
+
+### pageClassName <em>string</em>
+CSS class(es) for the page buttons.
+
+### prevClassName <em>string</em>
+CSS class(es) for the "Previous" button.
+
+### nextClassName <em>string</em>
+CSS class(es) for the "Next" button.
 
 ## Customizable text
 
 ### prevText <em>string</em>
-The text to display for the `previous` button. Default is `&laquo;`. That is the symbol '&laquo;'.
+Custom label for the `Previous` button. Default is `&laquo;`. Which is the symbol '&laquo;'.
 
 ### nextText <em>string</em>
-The text to display for the `next` button. Default is `&raquo;`. That is the symbol '&raquo;'.
+Custom label for the `Next` button. Default is `&raquo;`. Which is the symbol '&raquo;'.
 
 ### ellipsisText <em>string</em>
-The text to display for the ellipsis button. Default is `...`.
+Custom text for the ellipsis button. Default is `...`.
 
 ### goButtonText <em>string</em>
-The text to display for the `Go` button. Default is `Go`.
+Custom text for the `Go` button. Default is `Go`.
 
 ### formatNavigator <em>string | function(currentPage, totalPage, totalNumber)</em>
-Format the navigator from the template. Default is `<%= currentPage %> / <%= totalPage %>`.
+Formats the navigator according to the specified variables. Accepts a `string` or a `function` that return those strings. Default is `<%= currentPage %> / <%= totalPage %>`.
 
-A string contained template variables or a function that returns such a string.
+The following are the available template variables:
 
-There are 3 template variables.
-
-- `currentPage`
-- `totalPage`
-- `totalNumber` Total entries.
+- `currentPage` Current page number.
+- `totalPage` Total pages.
+- `totalNumber` Total number of data items.
 
 See [demo](/index.html#format_navigator)
 
 ### formatGoInput <em>string | function(input, currentPage, totalPage, totalNumber)</em>
-Format the "Go" input from the template. Default is `<%= input %>`.
+Formats the `Go` input according to the specified variables. Accepts a `string` or a `function` that return those strings. Default is `<%= input %>`.
 
-A string contained template variables or a function that returns such a string.
+`<%= input %>` is equivalent to `<input type= "text" class= "J-paginationjs-go-pagenumber" >`, therefore, you can also customize an input element yourself, just ensure that the class name of the input contains `J-paginationjs-go-pagenumber`.
 
-`<%= input %>` is equivalent to `<input type= "text" class= "J-paginationjs-go-pagenumber" >`, therefore, you can also customize an input element yourself, just ensure that the element has a `J-paginationjs-go-pagenumber` class.
-
-There are 4 template variables.
+The following are the available template variables:
 
 - `input`
 - `currentPage`
 - `totalPage`
-- `totalNumber` Total entries.
+- `totalNumber`
 
 See [demo](/index.html#format_go_input)
 
 ### formatGoButton <em>string | function(button, currentPage, totalPage, totalNumber)</em>
-Format the "Go" button from the template. Default is `<%= button %>`.
+Formats the `Go` button according to the specified variables. Accepts a `string` or a `function` that return those strings. Default is `<%= button %>`.
 
-A string contained template variables or a function that returns such a string.
+`<%= button %>` is equivalent to `<input type="button" class="J-paginationjs-go-button">`, therefore, you can also customize an button element yourself, just ensure that the class name of the button contains `J-paginationjs-go-button`.
 
-`<%= button %>` is equivalent to `<input type="button" class="J-paginationjs-go-button">`, therefore, you can also customize an button element yourself, just ensure that the element has a `J-paginationjs-go-button` class.
-
-There are 4 template variables.
+The following are the available template variables:
 
 - `button`
 - `currentPage`
 - `totalPage`
-- `totalNumber` Total entries.
+- `totalNumber`
 
 ### header <em>string | function(currentPage, totalPage, totalNumber)</em>
-Customize the header content. `header` may be a string or a function.
+Prepend extra contents to the pagination buttons. Accepts a `string` or a `function` that return the extra contents.
 
-There are 3 template variables.
+The following are the available template variables:
 
 - `currentPage`
 - `totalPage`
 - `totalNumber`
 
 ### footer <em>string | function(currentPage, totalPage, totalNumber)</em>
-Customize the footer content. `footer` may be a string or a function.
+Append extra contents to the pagination buttons. Accepts a `string` or a `function` that return the extra contents.
 
-There are 3 template variables.
+The following are the available template variables:
 
 - `currentPage`
 - `totalPage`
@@ -321,21 +324,24 @@ There are 3 template variables.
 ## Utilities
 
 ### formatResult <em>function(data)</em>
-Used to process result data before `callback` invoked.
+Formats the data items of current page before `callback` invoked.
 
-You should return an array processed by this function, you can also process `data` directly.
+In this function, you should return a result array, alse you can process the original `data` directly.
 
 See [demo](/index.html#formatResult)
 
 ### formatAjaxError <em>function(jqXHR, textStatus, errorThrown)</em>
-A function for rendering the error message.
+
+A function to be called if the dataSource is a URL and request fails.
 
 ```
 formatAjaxError: function(jqXHR, textStatus, errorThrown){ ... }
 ```
 
+For more info on the parameters, refer to the [JQuery API Documentation](https://api.jquery.com/jquery.ajax/).
+
 ### ajax <em>object | function</em>
-Used to customize configuration for the built-in Ajax function. it must be parameter-compatible with `$.ajax`. Usuful for the asynchronous pagination.
+Used to customize configuration for the built-in Ajax function. it must be parameter-compatible with `$.ajax`. Useful when you want to fetch data items from a remote server.
 
 Parameter | Type | Description
 ------------ | ------------- | ------------
@@ -346,31 +352,21 @@ cache | boolean  | If set to `false`, it will force requested pages not to be ca
 async | boolean | By default, all requests are sent asynchronously. If you need synchronous requests, set this option to `false`. Default is `true`.
 beforeSend | function | A pre-request callback function that can be used to modify the jqXHR object before it is sent. Returning false in the beforeSend function will cancel the request.
 
-For more info on the parameters, refer to the [JQuery API Documentation](http://api.jquery.com/jquery.ajax/).
+For more info on the parameters, refer to the [JQuery API Documentation](https://api.jquery.com/jquery.ajax/).
 
 ### triggerPagingOnInit <em>boolean (default `true`)</em>
-Determines whether to trigger default pagination at initialization.
+Determines whether to trigger the default pagination at initialization.
 
-you may want to load the first page with AJAX, while the content has already been loaded before the pagination initialized. In this situation, you should set this option to `false`.
+If you have already set innerHTML for the first page before Pagination initialization, you can set this option to `false` to prevent unnecessary paging once.
 
-### hideWhenLessThanOnePage <em>boolean (default `false`)</em>
-Determines whether to hide pagination when less than one page.
+### resetPageNumberOnInit <em>boolean (default `true`)</em>
+Reset page number to `1` when Pagination initialized/reinitialized and dataSource is a URL.
 
-### inlineStyle <em>boolean (default `true`)</em>
-Determines whether to use inline styles.
-
-Pagination comes with style content, by default, the style content will be inserted in an `style` element to the `head` element.
-
-If you think the use of the `link` would be better, you can set this option to `false` to prevent insertion behavior, and references your css file to the `link` element.
-
-The default styles: [pagination.css](../dist/2.0.6/pagination.css) [pagination.less](../dist/2.0.6/pagination.less), but you can easily write these styles to apply your own.
-
-<s>Note, make sure that use `pagination-with-styles.js` before set this option.</s>
-
-Note, this will not be supported from v2.0.6, please use Link to import css.
+### hideOnlyOnePage <em>boolean (default `false`)</em>
+Determines whether to hide pagination when there is only one page.
 
 # Methods
-After Pagination is constructed, you can modify the behavior using the available public methods.
+After Pagination intialized, you can change the behavior of the `.pagination` through the following supported methods.
 
 ```js
 var container = $('#example1');
@@ -392,8 +388,8 @@ Go to the custom page. There is 2 ways:
 container.pagination('go', 8)
 container.pagination(8)
 ```
-	
-A custom callback function is also supported, for example:
+
+you can also provide a callback to customize item's innerHTML of the page. For example:
 
 ```js
 container.pagination('go', 8, function(data, pagination){
@@ -401,42 +397,44 @@ container.pagination('go', 8, function(data, pagination){
 })
 ```
 
-Note, after set a custom function, will no longer call the default `callback` function.
+Follow the code above, Pagination will use your callback function instead of the default `callback` function on this paging.
 
 ### disable
-Disables the pagination.
+To disable the pagination.
 
-Note: before the asynchronous pagination request sent, pagination will automatically call this method, and automatically call `enable` method to enables the pagination after the request was completed successfully.
+Note: If the dataSource is a URL, DDD will be automatically set to disabled before sending the request, and `enable` will be automatically invoked after the request completes.
 
 ### enable
-Enables the pagination.
+To enable the pagination.
 
 ### show
-Show the pagination.
+To display the pagination.
 
 ### hide
-Hide the pagination.
+To hide the pagination.
 	
 ### destroy
-Destroy the pagination instance.
+To destroy the pagination.
 	
-### getSelectedPageNum <em>number</em>
-Get selected page number.
+### getCurrentPageNum <em>number</em>
+Get current page number.
 
 ### getTotalPage <em>number</em>
 Get total page.
 
-### getSelectedPageData <em>array</em>
-Get selected page data.
+### getCurrentPageData <em>array</em>
+Get data items of current page.
 
 ### isDisabled <em>function</em>
-Whether pagination was be disabled.
+Whether pagination has been disabled.
 
 
 # [Events](id:events)
-Pagination events are the common interface that function in 2 ways: as callbacks and as plugin hooks.
+Pagination allows you to register all events for the lifetime of a paging behavior.
 
-Using events as callbacks:
+There are 2 ways: as callbacks or as plugin hooks.
+
+Register events as callbacks:
 
 ```js
 var container = $('#example1');
@@ -447,7 +445,7 @@ container.pagination({
 });
 ```
 
-Using events as plugin hooks:
+Register events as plugin hooks:
 
 ```js
 var container = $('#example2');
@@ -462,86 +460,93 @@ container.addHook('afterRender', function(){
 });
 ```
 
-Note, the hook can be added before Pagination initialized, can also be added after Pagination initialized.
+In this way, the hook can be added before Pagination initialized.
 
 ### beforeInit <em>function</em>
-Callback fired before Pagination instance initialized. Return `false` will stop the initialization.
+Fired before Pagination instance initialized. Return `false` will stop the initialization.
 
-### beforeRender <em>function</em>
-Callback fired before Pagination bar is rendered. Parameters:
+### beforeRender <em>function(isForced)</em>
+Fired before Pagination bar rendering. Parameters:
 
-`isForced` is `true` if rendering was triggered by a paging; or `false` if rendering was triggered by Pagination initialization.
+`isForced` is `true` if the rendering is triggered on paging and `false` if it is triggered at initialization.
 
 ### beforePaging <em>function</em>
-Callback fired before a paging was triggered.
+Fired before paging.
 
 ### beforeDestroy <em>function</em>
-Callback fired before pagination instance was destroyed.
+Fired before pagination destroyed.
 
 ### beforeDisable <em>function</em>
-Callback fired before pagination was disabled.
+Fired before pagination disabled.
 
 ### beforeEnable <em>function</em>
-Callback fired before pagination was enabled.
+Fired before pagination enabled.
 
 ### beforePreviousOnClick <em>function</em>
-Callback fired before 'previous' clicked.
+Fired before the 'previous' button clicked.
 
 ### beforePageOnClick <em>function</em>
-Callback fired before page number clicked.
+Fired before page button clicked.
 
 ### beforeNextOnClick <em>function</em>
-Callback fired before 'next' clicked.
+Fired before the 'next' button clicked.
 
 ### beforeGoInputOnEnter <em>function</em>
-Callback fired before 'Go' input Enter pressed.
+Fired before `Enter` pressed on the 'Go' input.
 
 ### beforeGoButtonOnClick <em>function</em>
-Callback fired before 'Go' button clicked.
+Fired before the 'Go' button clicked.
 
 ### afterInit <em>function</em>
-Callback fired after Pagination instance is initialized.
+Fired after Pagination initialized.
 
 ### afterRender <em>function</em>
-Callback fired after Pagination bar is rendered. Parameters:
+Fired after Pagination bar rendered. Parameters:
 
-`isForced` is `true` if rendering was triggered by a paging; or `false` if rendering was triggered by Pagination initialization.
+`isForced` is `true` if the rendering is triggered on paging and `false` if it is triggered at initialization.
 
 ### afterPaging <em>function</em>
-Callback fired after a paging was triggered.
+Fired after paging.
 
 ### afterDestroy <em>function</em>
-Callback fired after pagination instance was destroyed.
+Fired after pagination destroyed.
 
 ### afterDisable <em>function</em>
-Callback fired after pagination was disabled.
+Fired after pagination disabled.
 
 ### afterEnable <em>function</em>
-Callback fired after pagination was enabled.
+Fired after pagination enabled.
 
 ### afterPreviousOnClick <em>function</em>
-Callback fired after 'previous' clicked.
+Fired after the 'previous' button clicked.
 
 ### afterPageOnClick <em>function</em>
-Callback fired after page number clicked.
+Fired after page button clicked.
 
 ### afterNextOnClick <em>function</em>
-Callback fired after 'next' clicked.
+Fired after the 'next' button clicked.
 
 ### afterGoInputOnEnter <em>function</em>
-Callback fired after 'Go' input Enter pressed.
+Fired after `Enter` pressed on the 'Go' input.
 
 ### afterGoButtonOnClick <em>function</em>
-Callback fired after 'Go' button clicked.
+Fired after the 'Go' button clicked.
 
 ### afterIsFirstPage <em>function</em>
-Callback fired after the selected page number was the first.
+Fired after current page number is the first.
 
 ### afterIsLastPage <em>function</em>
-Callback fired after the selected page number was the last.
+Fired after current page number is the last.
 
 # Skin
-Pagination.js comes with a bunch of default skins to get you started, also you can fully customize your own skin.
+
+First, you should link the css file in the header tag of HTML: 
+
+    <link rel="stylesheet" href="{yourAssetsServer}/pagination.css" />
+
+css & less file: [pagination.css](../dist/2.3.0/pagination.css) [pagination.less](../dist/2.3.0/pagination.less)
+
+Pagination comes with 5 sets of default skins, but you can fully customize your own skin.
 
 The blue skin, for example, it can be used:
 
@@ -561,7 +566,7 @@ The big blue skin:
 className: 'paginationjs-theme-blue paginationjs-big'
 ```
 
-If you need a custom style, you can add CSS class `custom-paginationjs`.
+If you want to fully customize the style, you can add `custom-paginationjs` to the `className` option.
 
 # Configuring Defaults
 Pagination.js exposes its default options via the `$.fn.pagination.defaults` object. Properties changed in this object (same properties configurable through the constructor) will take effect for every instance created after the change.
