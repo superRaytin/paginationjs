@@ -422,13 +422,13 @@ container.pagination('go', 8, function(data, pagination){
 ### destroy
 销毁分页实例
 	
-### getSelectedPageNum <em>number</em>
+### getCurrentPageNum <em>number</em>
 获取当前页码
 
 ### getTotalPage <em>number</em>
 获取总页数
 
-### getSelectedPageData <em>array</em>
+### getCurrentPageData <em>array</em>
 获取当前页码的数据
 
 ### isDisabled <em>function</em>
@@ -570,7 +570,7 @@ className: 'paginationjs-theme-blue paginationjs-small'
 className: 'paginationjs-theme-blue paginationjs-big'
 ```
 
-如果需要自定义样式，则可以增加 css 类 `custom-paginationjs`
+如果需要完全地自定义样式，则可以增加 css 类 `custom-paginationjs`
 
 # Configuring Defaults
 分页可通过 `$.fn.pagination.defaults` 对象来修改默认配置，修改后，将影响所有之后创建的实例
