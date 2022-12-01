@@ -130,7 +130,7 @@
         }));
 
         // Whether to hide pagination when there is only one page
-        if (attributes.hideWhenLessThanOnePage) {
+        if (attributes.hideOnlyOnePage) {
           el[totalPage <= 1 ? 'hide' : 'show']();
         }
 
@@ -153,6 +153,7 @@
         var ellipsisText = attributes.ellipsisText;
 
         var classPrefix = attributes.classPrefix;
+        var pageClassName = attributes.pageClassName;
         var activeClassName = attributes.activeClassName;
         var disableClassName = attributes.disableClassName;
 
@@ -160,9 +161,9 @@
         if (attributes.pageRange === null) {
           for (i = 1; i <= totalPage; i++) {
             if (i == currentPage) {
-              html += `<li class="${classPrefix}-page J-paginationjs-page ${activeClassName}" data-num="${i}"><a>${i}</a></li>`;
+              html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName} ${activeClassName}" data-num="${i}"><a>${i}</a></li>`;
             } else {
-              html += `<li class="${classPrefix}-page J-paginationjs-page" data-num="${i}"><a href="${pageLink}">${i}</a></li>`;
+              html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName}" data-num="${i}"><a href="${pageLink}">${i}</a></li>`;
             }
           }
           return html;
@@ -171,35 +172,35 @@
         if (rangeStart <= 3) {
           for (i = 1; i < rangeStart; i++) {
             if (i == currentPage) {
-              html += `<li class="${classPrefix}-page J-paginationjs-page ${activeClassName}" data-num="${i}"><a>${i}</a></li>`;
+              html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName} ${activeClassName}" data-num="${i}"><a>${i}</a></li>`;
             } else {
-              html += `<li class="${classPrefix}-page J-paginationjs-page" data-num="${i}"><a href="${pageLink}">${i}</a></li>`;
+              html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName}" data-num="${i}"><a href="${pageLink}">${i}</a></li>`;
             }
           }
         } else {
-          if (attributes.showFirstOnEllipsisShow) {
-            html += `<li class="${classPrefix}-page ${classPrefix}-first J-paginationjs-page" data-num="1"><a href="${pageLink}">1</a></li>`;
+          if (!attributes.hideFirstOnEllipsisShow) {
+            html += `<li class="${classPrefix}-page ${classPrefix}-first J-paginationjs-page ${pageClassName}" data-num="1"><a href="${pageLink}">1</a></li>`;
           }
           html += `<li class="${classPrefix}-ellipsis ${disableClassName}"><a>${ellipsisText}</a></li>`;
         }
 
         for (i = rangeStart; i <= rangeEnd; i++) {
           if (i == currentPage) {
-            html += `<li class="${classPrefix}-page J-paginationjs-page ${activeClassName}" data-num="${i}"><a>${i}</a></li>`;
+            html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName} ${activeClassName}" data-num="${i}"><a>${i}</a></li>`;
           } else {
-            html += `<li class="${classPrefix}-page J-paginationjs-page" data-num="${i}"><a href="${pageLink}">${i}</a></li>`;
+            html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName}" data-num="${i}"><a href="${pageLink}">${i}</a></li>`;
           }
         }
 
         if (rangeEnd >= totalPage - 2) {
           for (i = rangeEnd + 1; i <= totalPage; i++) {
-            html += `<li class="${classPrefix}-page J-paginationjs-page" data-num="${i}"><a href="${pageLink}">${i}</a></li>`;
+            html += `<li class="${classPrefix}-page J-paginationjs-page ${pageClassName}" data-num="${i}"><a href="${pageLink}">${i}</a></li>`;
           }
         } else {
           html += `<li class="${classPrefix}-ellipsis ${disableClassName}"><a>${ellipsisText}</a></li>`;
 
-          if (attributes.showLastOnEllipsisShow) {
-            html += `<li class="${classPrefix}-page ${classPrefix}-last J-paginationjs-page" data-num="${totalPage}"><a href="${pageLink}">${totalPage}</a></li>`;
+          if (!attributes.hideLastOnEllipsisShow) {
+            html += `<li class="${classPrefix}-page ${classPrefix}-last J-paginationjs-page ${pageClassName}" data-num="${totalPage}"><a href="${pageLink}">${totalPage}</a></li>`;
           }
         }
 
@@ -247,7 +248,7 @@
         var header = typeof attributes.header === 'function' ? attributes.header(currentPage, totalPage, totalNumber) : attributes.header;
         var footer = typeof attributes.footer === 'function' ? attributes.footer(currentPage, totalPage, totalNumber) : attributes.footer;
 
-        // Whether to display custom header
+        // Prepend extra contents to the pagination buttons
         if (header) {
           formattedString = self.replaceVariables(header, {
             currentPage: currentPage,
@@ -333,7 +334,7 @@
           }
         }
 
-        // Whether to display custom footer
+        // Append extra contents to the pagination buttons
         if (footer) {
           formattedString = self.replaceVariables(footer, {
             currentPage: currentPage,
@@ -346,8 +347,8 @@
         return html;
       },
 
-      // dataSource is a remote request URL and a 'totalNumberLocator' function specified
-      // execute it to find 'totalNumber' from response
+      // dataSource is a request URL and a 'totalNumberLocator' function specified
+      // execute it to find out 'totalNumber' from the response
       findTotalNumberFromRemoteResponse: function(response) {
         var self = this;
         self.model.totalNumber = attributes.totalNumberLocator(response);
@@ -823,7 +824,7 @@
           case 'destroy':
             container.trigger.apply(this, args);
             break;
-          case 'getSelectedPageNum':
+          case 'getCurrentPageNum':
             if (container.data('pagination').model) {
               return container.data('pagination').model.pageNumber;
             } else {
@@ -831,7 +832,7 @@
             }
           case 'getTotalPage':
             return Math.ceil(container.data('pagination').model.totalNumber / container.data('pagination').model.pageSize);
-          case 'getSelectedPageData':
+          case 'getCurrentPageData':
             return container.data('pagination').currentPageData;
           // Whether pagination has been disabled
           case 'isDisabled':
@@ -866,20 +867,19 @@
     // String | Function
     //locator: 'data',
 
-    // Find totalNumber from remote response, the totalNumber will be ignored when totalNumberLocator is specified
     // Function
     //totalNumberLocator: function() {},
 
-    // Total entries
+    // Total number of data items
     totalNumber: 0,
 
-    // Default page
+    // Default page number
     pageNumber: 1,
 
-    // entries of per page
+    // Number of data items per page
     pageSize: 10,
 
-    // Page range (pages on both sides of the current page)
+    // Page range (pages around current page)
     pageRange: 2,
 
     // Whether to display the 'Previous' button
@@ -914,7 +914,7 @@
     // 'Go' button text
     goButtonText: 'Go',
 
-    // Additional className for Pagination container
+    // Additional class name(s) for the Pagination container
     //className: '',
 
     classPrefix: 'paginationjs',
@@ -926,12 +926,11 @@
 
     //ulClassName: '',
 
+    //pageClassName: '',
+
     //prevClassName: '',
 
     //nextClassName: '',
-
-    // Whether to insert inline style
-    inlineStyle: true,
 
     formatNavigator: '<%= currentPage %> / <%= totalPage %>',
 
@@ -939,20 +938,19 @@
 
     formatGoButton: '<%= button %>',
 
-    // Pagination element's position in the container
+    // position in the container
     position: 'bottom',
 
-    // Auto hide previous button when current page is the first page
+    // Auto hide previous button when current page is the first
     autoHidePrevious: false,
 
-    // Auto hide next button when current page is the last page
+    // Auto hide next button when current page is the last
     autoHideNext: false,
 
     //header: '',
 
     //footer: '',
 
-    // Aliases for custom pagination parameters
     //alias: {},
 
     // Whether to trigger pagination at initialization
@@ -962,13 +960,13 @@
     resetPageNumberOnInit: true,
 
     // Whether to hide pagination when less than one page
-    hideWhenLessThanOnePage: false,
+    hideOnlyOnePage: false,
 
-    showFirstOnEllipsisShow: true,
+    hideFirstOnEllipsisShow: false,
 
-    showLastOnEllipsisShow: true,
+    hideLastOnEllipsisShow: false,
 
-    // callback for each paging
+    // Customize item's innerHTML
     callback: function() {}
   };
 
