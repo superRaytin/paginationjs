@@ -64,7 +64,7 @@ $('#pagination-container').pagination({
 })
 ```
 
-To make it easier to maintain, you'd better use specialized templating engine to do that. Such as [Handlebars](http://handlebarsjs.com/) and [Undercore.template](http://underscorejs.org/#template).
+To make it easier to maintain, you'd better to use specialized templating engine to do that. Such as [Handlebars](http://handlebarsjs.com/) and [Undercore.template](http://underscorejs.org/#template).
 
 ### Handlebars
 

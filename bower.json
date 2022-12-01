@@ -1,6 +1,6 @@
 {
     "name": "paginationjs",
-    "version": "2.1.5",
+    "version": "2.3.0",
     "main": "dist/pagination.min.js",
     "keywords": [
         "paginationjs",
@@ -24,6 +24,6 @@
         "Gruntfile.js"
     ],
     "dependencies": {
-        "jquery": "git://github.com/components/jquery.git#~1.8.3"
+        "jquery": "git://github.com/components/jquery.git#~3"
     }
 }
