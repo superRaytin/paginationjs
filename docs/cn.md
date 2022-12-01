@@ -431,7 +431,7 @@ container.pagination('go', 8, function(data, pagination){
 ### isDisabled <em>function</em>
 当前是否正处在禁用状态
 
-# [Events](id:events)
+# Events
 
 分页事件的功能接口有 2 种使用方式，分别是 `回调函数` 和 `插件钩子`
 
@@ -542,6 +542,12 @@ container.addHook('afterRender', function(){
 
 # Skin
 分页组件自带了 5 套默认皮肤，但你完全可以定制你自己的皮肤
+
+首先，需要在 header 标签内引用 css 文件：
+
+    <link rel="stylesheet" href="{yourAssetsServer}/pagination.css" />
+
+css & less 文件: [pagination.css](../dist/2.3.0/pagination.css) [pagination.less](../dist/2.3.0/pagination.less)
 
 例如蓝色皮肤，可以这样使用：
 

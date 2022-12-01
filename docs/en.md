@@ -128,7 +128,7 @@ Number of data items per page.
 If you want to show all pages, just set it to `null`.
 
 ### callback <em>function(data, pagination)</em>
-To customize item's innerHTML, called on each paging.
+Used to customize item's innerHTML, will be invoked on each paging.
 
 To make it easier to maintain, you'd better to use templating engine such as [Handlebars](http://handlebarsjs.com/) and [Undercore.template](http://underscorejs.org/#template).
 
@@ -261,10 +261,10 @@ Custom label for the `Previous` button. Default is `&laquo;`. Which is the symbo
 Custom label for the `Next` button. Default is `&raquo;`. Which is the symbol '&raquo;'.
 
 ### ellipsisText <em>string</em>
-Custom text for the ellipsis button. Default is `...`.
+Custom label for the ellipsis button. Default is `...`.
 
 ### goButtonText <em>string</em>
-Custom text for the `Go` button. Default is `Go`.
+Custom label for the `Go` button. Default is `Go`.
 
 ### formatNavigator <em>string | function(currentPage, totalPage, totalNumber)</em>
 Formats the navigator according to the specified variables. Accepts a `string` or a `function` that return those strings. Default is `<%= currentPage %> / <%= totalPage %>`.
@@ -389,7 +389,7 @@ container.pagination('go', 8)
 container.pagination(8)
 ```
 
-you can also provide a callback to customize item's innerHTML of the page. For example:
+you can also provide a callback to customize item's innerHTML of the target page. For example:
 
 ```js
 container.pagination('go', 8, function(data, pagination){
@@ -402,7 +402,7 @@ Follow the code above, Pagination will use your callback function instead of the
 ### disable
 To disable the pagination.
 
-Note: If the dataSource is a URL, DDD will be automatically set to disabled before sending the request, and `enable` will be automatically invoked after the request completes.
+Note: If the dataSource is a URL, Pagination will be automatically set to disabled before sending the request, and `enable` will be automatically invoked after the request completes.
 
 ### enable
 To enable the pagination.
@@ -429,7 +429,7 @@ Get data items of current page.
 Whether pagination has been disabled.
 
 
-# [Events](id:events)
+# Events
 Pagination allows you to register all events for the lifetime of a paging behavior.
 
 There are 2 ways: as callbacks or as plugin hooks.
@@ -540,27 +540,27 @@ Fired after current page number is the last.
 
 # Skin
 
+Pagination comes with 5 sets of default skins, but you can fully customize your own skin.
+
 First, you should link the css file in the header tag of HTML: 
 
     <link rel="stylesheet" href="{yourAssetsServer}/pagination.css" />
 
 css & less file: [pagination.css](../dist/2.3.0/pagination.css) [pagination.less](../dist/2.3.0/pagination.less)
 
-Pagination comes with 5 sets of default skins, but you can fully customize your own skin.
-
-The blue skin, for example, it can be used:
+For example, you want to use the blue skin:
 
 ```
 className: 'paginationjs-theme-blue'
 ```
 
-The small blue skin:
+small & blue:
 
 ```
 className: 'paginationjs-theme-blue paginationjs-small'
 ```
 
-The big blue skin:
+big & blue:
 
 ```
 className: 'paginationjs-theme-blue paginationjs-big'
