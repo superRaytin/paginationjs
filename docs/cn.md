@@ -363,8 +363,11 @@ triggerPagingOnInit: true，
 pageNum: 2
 ```
 
+### resetPageNumberOnInit <em>boolean (default `true`)</em>
+当 dataSource 是一个 URL，在分页初始化或重新初始化时重置页码为 `1`
+
 ### hideOnlyOnePage <em>boolean (default `false`)</em>
-是否在总页数小于 1 页时隐藏分页
+是否在只有 1 页时隐藏分页
 
 # Methods
 
