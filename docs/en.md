@@ -4,11 +4,13 @@
 
 ### dataSource <em>array | string | object | function</em>
 
+Provides data items directly.
+
 `dataSource` can be one of the following 4 formats.
 
 1. **Array**
 	
-    an array data, eg:
+    all the data items, eg:
 
     ```
     ['1', '2', '3', '4']
@@ -16,7 +18,7 @@
 	
 2. **Object**
 	
-	an object that contained the array data, meanwhile, you should specify that array via `locator: 'data'`.
+	an object that contained all the data items, meanwhile, you should specify the array via `locator: 'data'`.
 		
 	```
 	{
@@ -26,7 +28,7 @@
 	
 3. **Function**
 	
-	a function that will indicate the array data.
+	a function that should indicate the array data via `done` function.
 
     ```
     dataSource: function(done){
