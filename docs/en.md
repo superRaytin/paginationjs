@@ -172,7 +172,7 @@ alias: {
 The Ajax request will be sent with the new query names:
 
 
-	/test.json?pageNum=2&limit=10	
+	/test.json?pageNum=1&limit=10	
 
 ## Display control
 
@@ -306,7 +306,7 @@ The following are the available template variables:
 - `totalNumber`
 
 ### header <em>string | function(currentPage, totalPage, totalNumber)</em>
-Prepend extra contents to the pagination buttons. Accepts a `string` or a `function` that return the extra contents.
+Prepend extra contents to the pagination buttons. Accepts a `string` or a `function` that will return the extra contents.
 
 The following are the available template variables:
 
@@ -315,7 +315,7 @@ The following are the available template variables:
 - `totalNumber`
 
 ### footer <em>string | function(currentPage, totalPage, totalNumber)</em>
-Append extra contents to the pagination buttons. Accepts a `string` or a `function` that return the extra contents.
+Append extra contents to the pagination buttons. Accepts a `string` or a `function` that will return the extra contents.
 
 The following are the available template variables:
 
@@ -353,6 +353,7 @@ data | object | By default, `pageNumber` and `pageSize` will be sent. If you nee
 cache | boolean  | If set to `false`, it will force requested pages not to be cached by the browser. Default is `true`.
 async | boolean | By default, all requests are sent asynchronously. If you need synchronous requests, set this option to `false`. Default is `true`.
 beforeSend | function | A pre-request callback function that can be used to modify the jqXHR object before it is sent. Returning false in the beforeSend function will cancel the request.
+pageNumberStartWithZero | boolean | By default, the passed `pageNumber`(or a alias if specified) will be `1`. If your backend indexes pages starting with zero rather than 1, just set `pageNumberStartWithZero: true`.
 
 For more info on the parameters, refer to the [JQuery API Documentation](https://api.jquery.com/jquery.ajax/).
 
@@ -404,7 +405,7 @@ Follow the code above, Pagination will use your callback function instead of the
 ### disable
 To disable the pagination.
 
-Note: If the dataSource is a URL, Pagination will be automatically set to disabled before sending the request, and `enable` will be automatically invoked after the request completes.
+Note: If the dataSource is a URL, Pagination will be automatically set to disabled before sending the request, and `enable` will be automatically invoked after the request completed.
 
 ### enable
 To enable the pagination.

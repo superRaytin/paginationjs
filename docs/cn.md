@@ -168,7 +168,7 @@ alias: {
 那么通过 Ajax 发起请求时，会替换默认的 `pageNumber` 和 `pageSize`
 
 ```
-/test.json?pageNum=2&limit=10
+/test.json?pageNum=1&limit=10
 ```
 
 ## Display control
