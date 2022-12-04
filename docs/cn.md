@@ -350,6 +350,7 @@ data | object | 默认情况下，分页请求都会被附加 `pageNumber` 和 `
 cache | boolean  | 如果设置为 `false`，将会强制请求不被浏览器缓存，默认为 `true`
 async | boolean | 默认所有请求都以异步方式发送，默认为 `true`。如果需要同步方式，设置为 `false` 即可，跨域请求或 `dataType: 'jsonp'` 不支持同步操作。
 beforeSend | function | 发起请求之前的回调函数，可用于发送前修改 jqXHR 对象。beforeSend 函数返回 `false` 将取消该请求。
+pageNumberStartWithZero | boolean | 默认情况下，分页请求发送的 `pageNumber`（或者其他的别名）会从 1 开始，如果你的服务端是从 0 开始处理分页的，那么只需要设置 `pageNumberStartWithZero: true`。
 
 参数的更多信息，请参阅 [JQuery API Documentation](http://api.jquery.com/jquery.ajax/)
 

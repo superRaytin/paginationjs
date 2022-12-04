@@ -1,5 +1,5 @@
 /*
- * pagination.js 2.3.0
+ * pagination.js 2.3.1
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
@@ -385,10 +385,19 @@
 
         var postData = {};
         var alias = attributes.alias || {};
-        postData[alias.pageSize ? alias.pageSize : 'pageSize'] = pageSize;
-        postData[alias.pageNumber ? alias.pageNumber : 'pageNumber'] = pageNumber;
+        var pageSizeName = alias.pageSize ? alias.pageSize : 'pageSize';
+        var pageNumberName = alias.pageNumber ? alias.pageNumber : 'pageNumber';
+        postData[pageSizeName] = pageSize;
+        postData[pageNumberName] = pageNumber;
 
         var ajaxParams = typeof attributes.ajax === 'function' ? attributes.ajax() : attributes.ajax;
+
+        // If the pageNumber's value starts with 0 via Ajax
+        if (ajaxParams && ajaxParams.pageNumberStartWithZero) {
+          postData[pageNumberName] = pageNumber - 1;
+          delete ajaxParams.pageNumberStartWithZero;
+        }
+
         var formatAjaxParams = {
           type: 'get',
           cache: false,
