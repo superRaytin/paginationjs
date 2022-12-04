@@ -550,7 +550,7 @@ First, you should link the css file in the header tag of HTML:
 
 css & less file: [pagination.css](../dist/2.3.1/pagination.css) [pagination.less](../dist/2.3.1/pagination.less)
 
-For example, you want to use the blue skin:
+For example, the blue skin:
 
 ```
 className: 'paginationjs-theme-blue'
@@ -585,4 +585,4 @@ After the change, all the new pagination instances's `pageSize` will be set to 2
 
 ---
 
-[Help improve these docs. Open an issue or pull request.](https://github.com/superRaytin/paginationjs/issues)
+[Help improve these docs. Open an issue or pull request.](https://github.com/superRaytin/paginationjs-site/issues)

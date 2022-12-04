@@ -586,4 +586,4 @@ $.extend($.fn.pagination.defaults, {
 
 ---
 
-[帮助改进这些文档，新建一个 issue 或 pull request](https://github.com/superRaytin/paginationjs/issues)
+[帮助改进这些文档，新建一个 issue 或 pull request](https://github.com/superRaytin/paginationjs-site/issues)
