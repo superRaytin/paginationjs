@@ -185,6 +185,12 @@ Display the `next` button.
 ### showPageNumbers <em>boolean (default `true`)</em>
 Display page number buttons.
 
+### showSizeChanger <em>boolean (default `false`)</em>
+Display size changer.
+
+### sizeChangerOptions <em>array (default `[10, 20, 50, 100]`)</em>
+Specifies options for the size selector. Default is `[10, 20, 50, 100]`.
+
 ### showNavigator <em>boolean (default `false`)</em>
 Display the navigator.
 
@@ -276,6 +282,14 @@ The following are the available template variables:
 - `currentPage` Current page number.
 - `totalPage` Total pages.
 - `totalNumber` Total number of data items.
+- `rangeStart` Range start of current page.
+- `rangeEnd` Range end of current page.
+
+For example, total 195 data items and 20 items per page:
+
+- `<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items`  => `1-20 of 195 items`
+- `Total <%= totalNumber %> items` => `Total 195 items`
+- `<%= currentPage %> / <%= totalPage %>` => `1 / 10`
 
 See [demo](/index.html#format_navigator)
 
@@ -479,6 +493,9 @@ Fired before Pagination bar rendering. Parameters:
 ### beforePaging <em>function</em>
 Fired before paging.
 
+### beforeSizeSelectorChange <em>function</em>
+Fired before the size selector changed.
+
 ### beforeDestroy <em>function</em>
 Fired before pagination destroyed.
 
@@ -513,6 +530,9 @@ Fired after Pagination bar rendered. Parameters:
 
 ### afterPaging <em>function</em>
 Fired after paging.
+
+### afterSizeSelectorChange <em>function</em>
+Fired after the size selector changed.
 
 ### afterDestroy <em>function</em>
 Fired after pagination destroyed.
@@ -552,7 +572,7 @@ First, you should link the css file in the header tag of HTML:
 
     <link rel="stylesheet" href="{yourAssetsServer}/pagination.css" />
 
-css & less file: [pagination.css](../dist/2.3.2/pagination.css) [pagination.less](../dist/2.3.2/pagination.less)
+css & less file: [pagination.css](../dist/2.4.0/pagination.css) [pagination.less](../dist/2.4.0/pagination.less)
 
 For example, the blue skin:
 

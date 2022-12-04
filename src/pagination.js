@@ -1,5 +1,5 @@
 /*
- * pagination.js 2.3.2
+ * pagination.js 2.4.0
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
@@ -221,10 +221,13 @@
 
         var totalNumber = self.getTotalNumber();
 
+        var pageSize = attributes.pageSize;
         var showPrevious = attributes.showPrevious;
         var showNext = attributes.showNext;
         var showPageNumbers = attributes.showPageNumbers;
         var showNavigator = attributes.showNavigator;
+        var showSizeChanger = attributes.showSizeChanger;
+        var sizeChangerOptions = attributes.sizeChangerOptions;
         var showGoInput = attributes.showGoInput;
         var showGoButton = attributes.showGoButton;
 
@@ -239,10 +242,12 @@
         var nextClassName = attributes.nextClassName || '';
 
         var html = '';
+        var sizeSelect = '<select class="J-paginationjs-size-select">';
         var goInput = '<input type="text" class="J-paginationjs-go-pagenumber">';
         var goButton = `<input type="button" class="J-paginationjs-go-button" value="${goButtonText}">`;
         var formattedString;
 
+        var formatSizeChanger = typeof attributes.formatSizeChanger === 'function' ? attributes.formatSizeChanger(currentPage, totalPage, totalNumber) : attributes.formatSizeChanger;
         var formatNavigator = typeof attributes.formatNavigator === 'function' ? attributes.formatNavigator(currentPage, totalPage, totalNumber) : attributes.formatNavigator;
         var formatGoInput = typeof attributes.formatGoInput === 'function' ? attributes.formatGoInput(goInput, currentPage, totalPage, totalNumber) : attributes.formatGoInput;
         var formatGoButton = typeof attributes.formatGoButton === 'function' ? attributes.formatGoButton(goButton, currentPage, totalPage, totalNumber) : attributes.formatGoButton;
@@ -261,6 +266,20 @@
             totalNumber: totalNumber
           });
           html += formattedString;
+        }
+
+        // Whether to display navigator
+        if (showNavigator) {
+          if (formatNavigator) {
+            formattedString = self.replaceVariables(formatNavigator, {
+              currentPage: currentPage,
+              totalPage: totalPage,
+              totalNumber: totalNumber,
+              rangeStart: (currentPage - 1) * pageSize + 1,
+              rangeEnd: Math.min(currentPage * pageSize, totalNumber)
+            });
+            html += `<div class="${classPrefix}-nav J-paginationjs-nav">${formattedString}</div>`;
+          }
         }
 
         if (showPrevious || showPageNumbers || showNext) {
@@ -301,15 +320,21 @@
           html += `</ul></div>`;
         }
 
-        // Whether to display navigator
-        if (showNavigator) {
-          if (formatNavigator) {
-            formattedString = self.replaceVariables(formatNavigator, {
-              currentPage: currentPage,
-              totalPage: totalPage,
-              totalNumber: totalNumber
-            });
-            html += `<div class="${classPrefix}-nav J-paginationjs-nav">${formattedString}</div>`;
+        if (showSizeChanger) {
+          if (Helpers.isArray(sizeChangerOptions)) {
+            for (let i = 0; i < sizeChangerOptions.length; i++) {
+              sizeSelect += `<option value="${sizeChangerOptions[i]}"${(sizeChangerOptions[i] === pageSize ? ' selected' : '')}>${sizeChangerOptions[i]} / page</option>`;
+            }
+            sizeSelect += `</select>`;
+            formattedString = sizeSelect;
+
+            if (formatSizeChanger) {
+              formattedString = self.replaceVariables(formatSizeChanger, {
+                length: sizeSelect,
+                total: totalNumber
+              });
+            }
+            html += `<div class="paginationjs-size-changer">${formattedString}</div>`;
           }
         }
 
@@ -765,6 +790,28 @@
           }
         });
 
+        el.on('change', '.J-paginationjs-size-select', function(event) {
+          var current = $(event.currentTarget);
+          var size = parseInt(current.val());
+          var currentPage = self.model.pageNumber || attributes.pageNumber;
+
+          if (typeof size !== 'number') return;
+
+          if (self.callHook('beforeSizeSelectorChange', event, size) === false) return false;
+
+          attributes.pageSize = size;
+          self.model.pageSize = size;
+          self.model.totalPage = self.getTotalPage();
+          if (currentPage > self.model.totalPage) {
+            currentPage = self.model.totalPage;
+          }
+          self.go(currentPage);
+
+          self.callHook('afterSizeSelectorChange', event, size);
+
+          if (!attributes.pageLink) return false;
+        });
+
         // Previous page
         container.on(eventPrefix + 'previous', function(event, done) {
           self.previous(done);
@@ -918,14 +965,18 @@
     // Whether to display the 'Go' button
     showGoButton: false,
 
+    showSizeChanger: false,
+
+    sizeChangerOptions: [10, 20, 50, 100],
+
     // Page link
     pageLink: '',
 
     // 'Previous' text
-    prevText: '&laquo;',
+    prevText: '&lsaquo;',
 
     // 'Next' text
-    nextText: '&raquo;',
+    nextText: '&rsaquo;',
 
     // Ellipsis text
     ellipsisText: '...',
@@ -951,7 +1002,7 @@
 
     //nextClassName: '',
 
-    formatNavigator: '<%= currentPage %> / <%= totalPage %>',
+    formatNavigator: 'Total <%= totalNumber %> items',
 
     formatGoInput: '<%= input %>',
 

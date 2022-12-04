@@ -84,6 +84,7 @@
   }
   .paginationjs-pages{
     float: left;
+    margin-left: 10px;
     ul{
       float: left;
       margin: 0;
@@ -143,6 +144,24 @@
       }
     }
   }
+  .paginationjs-size-changer {
+    float: left;
+    font-size: @N_fontSize;
+    margin-left: 10px;
+    > select{
+      height: @N_inputHeight;
+      background: #fff;
+      border-radius: 3px;
+      border: 1px solid @borderColor;
+      padding: 0;
+      font-size: @N_fontSize;
+      text-align: center;
+      vertical-align: baseline;
+      outline: none;
+      box-shadow: none;
+      box-sizing: initial;
+    }
+  }
   .paginationjs-go-input{
     float: left;
     margin-left: 10px;
@@ -190,7 +209,6 @@
     float: left;
     height: @N_navHeight;
     line-height: @N_navHeight;
-    margin-left: 10px;
     font-size: @N_fontSize;
   }
 
@@ -210,6 +228,13 @@
             line-height: @S_activeHeight;
           }
         }
+      }
+    }
+    .paginationjs-size-changer {
+      font-size: @S_fontSize;
+      > select{
+        height: @S_inputHeight;
+        font-size: @S_fontSize;
       }
     }
     .paginationjs-go-input{
@@ -254,6 +279,13 @@
         }
       }
     }
+    .paginationjs-size-changer {
+      font-size: @B_fontSize;
+      > select{
+        height: @B_inputHeight;
+        font-size: @B_fontSize;
+      }
+    }
     .paginationjs-go-input{
       font-size: @B_fontSize;
       > input[type="text"]{
@@ -278,6 +310,10 @@
       font-size: @B_fontSize;
     }
   }
+
+  > :first-child {
+    margin-left: 0;
+  }
 }
 
 .paginationjs{
@@ -300,6 +336,11 @@
         &.disabled > a:hover{
             background: none;
         }
+      }
+    }
+    .paginationjs-size-changer {
+      > select{
+        border-color: @Blue_color_border;
       }
     }
     .paginationjs-go-input{
@@ -342,6 +383,11 @@
         }
       }
     }
+    .paginationjs-size-changer {
+      > select{
+        border-color: @Green_color_border;
+      }
+    }
     .paginationjs-go-input{
       > input[type="text"]{
         border-color: @Green_color_border;
@@ -380,6 +426,11 @@
         &.disabled > a:hover{
           background: none;
         }
+      }
+    }
+    .paginationjs-size-changer {
+      > select{
+        border-color: @Yellow_color_border;
       }
     }
     .paginationjs-go-input{
@@ -422,6 +473,11 @@
         }
       }
     }
+    .paginationjs-size-changer {
+      > select{
+        border-color: @Red_color_border;
+      }
+    }
     .paginationjs-go-input{
       > input[type="text"]{
         border-color: @Red_color_border;
@@ -451,6 +507,16 @@
         *border-right: 1px solid @borderColor;
         border-right: 1px solid #aaa\0;
       }
+    }
+  }
+  .paginationjs-size-changer{
+    *margin-left: 5px;
+    margin-left: 5px\0;
+    > select{
+      *line-height: @N_inputHeight;
+      line-height: 28px\0;
+      *vertical-align: middle;
+      vertical-align: middle\0;
     }
   }
   .paginationjs-go-input{

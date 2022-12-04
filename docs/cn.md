@@ -182,6 +182,12 @@ alias: {
 ### showPageNumbers <em>boolean (default `true`)</em>
 是否显示 '页码'
 
+### showSizeChanger <em>boolean (default `false`)</em>
+是否显示 pageSize 选择器
+
+### sizeChangerOptions <em>array (default `[10, 20, 50, 100]`)</em>
+指定 pageSize 的选项范围，默认是 `[10, 20, 50, 100]`.
+
 ### showNavigator <em>boolean (default `false`)</em>
 是否显示导航器
 
@@ -268,11 +274,19 @@ pageSize: 10
 ### formatNavigator <em>string | function(currentPage, totalPage, totalNumber)</em>
 导航器格式化模板，默认为 `<%= currentPage %> / <%= totalPage %>`，也可提供一个自定义函数，返回一个这样的字符串
 
-提供 3 个模板变量
+提供 5 个模板变量
 
 - `currentPage` 当前页码
 - `totalPage` 总页数
 - `totalNumber` 总条目数
+- `rangeStart` 当前页的开始数
+- `rangeEnd` 当前页的结束数
+
+举个例子，总共 195 条数据，每页 20 条：
+
+- `<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items`  => `1-20 of 195 items`
+- `Total <%= totalNumber %> items` => `Total 195 items`
+- `<%= currentPage %> / <%= totalPage %>` => `1 / 10`
 
 查看 [demo](/index.html#format_navigator)
 
@@ -483,6 +497,9 @@ container.addHook('afterRender', function(){
 ### beforePaging <em>function</em>
 分页之前调用
 
+### beforeSizeSelectorChange <em>function</em>
+pageSize 改变之前调用
+
 ### beforeDestroy <em>function</em>
 分页实例销毁之前调用
 
@@ -516,6 +533,9 @@ container.addHook('afterRender', function(){
 
 ### afterPaging <em>function</em>
 分页之后调用
+
+### afterSizeSelectorChange <em>function</em>
+pageSize 改变之后调用
 
 ### afterDestroy <em>function</em>
 分页实例销毁之后调用
@@ -554,7 +574,7 @@ container.addHook('afterRender', function(){
 
     <link rel="stylesheet" href="{yourAssetsServer}/pagination.css" />
 
-css & less 文件: [pagination.css](../dist/2.3.2/pagination.css) [pagination.less](../dist/2.3.2/pagination.less)
+css & less 文件: [pagination.css](../dist/2.4.0/pagination.css) [pagination.less](../dist/2.4.0/pagination.less)
 
 例如蓝色皮肤，可以这样使用：
 

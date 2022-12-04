@@ -39,6 +39,8 @@
     <div id="pagination-demo1"></div>
     <div class="data-container"></div>
     <div id="pagination-demo2"></div>
+    <div class="data-container"></div>
+    <div id="pagination-demo3"></div>
   </section>
 </div>
 
@@ -48,6 +50,7 @@
 $(function() {
   (function(name) {
     var container = $('#pagination-' + name);
+    if (!container.length) return;
     var sources = function () {
       var result = [];
 
@@ -90,6 +93,56 @@ $(function() {
 
   (function(name) {
     var container = $('#pagination-' + name);
+    if (!container.length) return;
+    var sources = function () {
+      var result = [];
+
+      for (var i = 1; i < 196; i++) {
+        result.push(i);
+      }
+
+      return result;
+    }();
+
+    var options = {
+      dataSource: sources,
+      pageSize: 5,
+      showGoInput: true,
+      showGoButton: true,
+      showNavigator: true,
+      showSizeChanger: true,
+      formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
+      callback: function (response, pagination) {
+        window.console && console.log(response, pagination);
+
+        var dataHtml = '<ul>';
+
+        $.each(response, function (index, item) {
+          dataHtml += '<li>' + item + '</li>';
+        });
+
+        dataHtml += '</ul>';
+
+        container.prev().html(dataHtml);
+      }
+    };
+
+    //$.pagination(container, options);
+
+    container.addHook('beforeInit', function () {
+      window.console && console.log('beforeInit...');
+    });
+    container.pagination(options);
+
+    container.addHook('beforePageOnClick', function () {
+      window.console && console.log('beforePageOnClick...');
+      //return false
+    });
+  })('demo2');
+
+  (function(name) {
+    var container = $('#pagination-' + name);
+    if (!container.length) return;
     container.pagination({
       dataSource: 'https://api.flickr.com/services/feeds/photos_public.gne?tags=cat&tagmode=any&format=json&jsoncallback=?',
       locator: 'items',
@@ -113,7 +166,7 @@ $(function() {
         container.prev().html(dataHtml);
       }
     })
-  })('demo2');
+  })('demo3');
 })
 </script>
 </body>
