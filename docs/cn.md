@@ -569,8 +569,8 @@ pageSize 改变之后调用
 ### afterIsLastPage <em>function</em>
 当前是最后一页时调用
 
-# Skin
-分页组件自带了 5 套默认皮肤，但你完全可以定制你自己的皮肤
+# Theme
+分页组件自带了 5 套默认主题，但你完全可以定制你自己的主题
 
 首先，需要在 header 标签内引用 css 文件：
 
@@ -578,19 +578,19 @@ pageSize 改变之后调用
 
 css & less 文件: [pagination.css](../dist/2.4.1/pagination.css) [pagination.less](../dist/2.4.1/pagination.less)
 
-例如蓝色皮肤，可以这样使用：
+例如蓝色主题，可以这样使用：
 
 ```
 className: 'paginationjs-theme-blue'
 ```
 
-小号蓝色皮肤：
+小号蓝色主题：
 
 ```
 className: 'paginationjs-theme-blue paginationjs-small'
 ```
 
-大号蓝色皮肤：
+大号蓝色主题：
 
 ```
 className: 'paginationjs-theme-blue paginationjs-big'

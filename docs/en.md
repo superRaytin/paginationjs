@@ -566,9 +566,9 @@ Fired after current page number is the first.
 ### afterIsLastPage <em>function</em>
 Fired after current page number is the last.
 
-# Skin
+# Theme
 
-Pagination comes with 5 sets of default skins, but you can fully customize your own skin.
+Pagination comes with 5 sets of default themes, but you can fully customize your own theme.
 
 First, you should link the css file in the header tag of HTML: 
 
@@ -576,7 +576,7 @@ First, you should link the css file in the header tag of HTML:
 
 css & less file: [pagination.css](../dist/2.4.1/pagination.css) [pagination.less](../dist/2.4.1/pagination.less)
 
-For example, the blue skin:
+For example, the blue theme:
 
 ```
 className: 'paginationjs-theme-blue'
