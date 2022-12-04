@@ -1,5 +1,5 @@
 /*
- * pagination.js 2.4.0
+ * pagination.js 2.4.1
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
@@ -242,7 +242,7 @@
         var nextClassName = attributes.nextClassName || '';
 
         var html = '';
-        var sizeSelect = '<select class="J-paginationjs-size-select">';
+        var sizeSelect = `<select class="J-paginationjs-size-select">`;
         var goInput = '<input type="text" class="J-paginationjs-go-pagenumber">';
         var goButton = `<input type="button" class="J-paginationjs-go-button" value="${goButtonText}">`;
         var formattedString;
@@ -322,6 +322,10 @@
 
         if (showSizeChanger) {
           if (Helpers.isArray(sizeChangerOptions)) {
+            if (sizeChangerOptions.indexOf(pageSize) === -1) {
+              sizeChangerOptions.unshift(pageSize);
+              sizeChangerOptions.sort((a, b) => a - b);
+            }
             for (let i = 0; i < sizeChangerOptions.length; i++) {
               sizeSelect += `<option value="${sizeChangerOptions[i]}"${(sizeChangerOptions[i] === pageSize ? ' selected' : '')}>${sizeChangerOptions[i]} / page</option>`;
             }
