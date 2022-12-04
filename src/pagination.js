@@ -1,5 +1,5 @@
 /*
- * pagination.js 2.3.1
+ * pagination.js 2.3.2
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
@@ -418,7 +418,7 @@
             self.model.totalNumber = attributes.totalNumber;
           }
 
-          var finalData = self.filterDataByLocator(response);
+          var finalData = self.filterDataWithLocator(response);
           render(finalData);
         };
         formatAjaxParams.error = function(jqXHR, textStatus, errorThrown) {
@@ -429,6 +429,11 @@
         self.disable();
 
         $.ajax(formatAjaxParams);
+        if (attributes.ajaxFunction) {
+          attributes.ajaxFunction(formatAjaxParams);
+        } else {
+          $.ajax(formatAjaxParams);
+        }
 
         function render(data) {
           if (self.callHook('beforePaging', pageNumber) === false) return false;
@@ -592,8 +597,8 @@
         return result;
       },
 
-      // Filter data by the "locator"
-      filterDataByLocator: function(dataSource) {
+      // Filter data with "locator"
+      filterDataWithLocator: function(dataSource) {
         var locator = this.getLocator(attributes.locator);
         var filteredData;
 
@@ -622,7 +627,7 @@
         var self = this;
 
         if (Helpers.isObject(dataSource)) {
-          callback(attributes.dataSource = self.filterDataByLocator(dataSource));
+          callback(attributes.dataSource = self.filterDataWithLocator(dataSource));
         } else if (Helpers.isArray(dataSource)) {
           callback(attributes.dataSource = dataSource);
         } else if (typeof dataSource === 'function') {

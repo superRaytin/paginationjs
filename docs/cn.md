@@ -354,6 +354,9 @@ pageNumberStartWithZero | boolean | 默认情况下，分页请求发送的 `pag
 
 参数的更多信息，请参阅 [JQuery API Documentation](http://api.jquery.com/jquery.ajax/)
 
+### ajaxFunction <em>function(settings)</em>
+用于自定义分页的 ajax 函数，会替换默认的 `$.ajax`，此函数接收的参数和 `$.ajax` 相同，函数内部必须调用 `settings.success(response)` 或 `settings.error(jqXHR, textStatus, errorThrown)`，错误函数的参数将传递给 `formatAjaxError` 函数（如果提供了）。这些参数与内置的 Ajax 函数提供的参数保持一致。
+
 ### triggerPagingOnInit <em>boolean (default `true`)</em>
 是否在初始化时触发默认分页，有些情况下，你可能希望默认触发首次分页，因为你已经用AJAX加载了内容并且内容已显示
 
@@ -551,7 +554,7 @@ container.addHook('afterRender', function(){
 
     <link rel="stylesheet" href="{yourAssetsServer}/pagination.css" />
 
-css & less 文件: [pagination.css](../dist/2.3.1/pagination.css) [pagination.less](../dist/2.3.1/pagination.less)
+css & less 文件: [pagination.css](../dist/2.3.2/pagination.css) [pagination.less](../dist/2.3.2/pagination.less)
 
 例如蓝色皮肤，可以这样使用：
 

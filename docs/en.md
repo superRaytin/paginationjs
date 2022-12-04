@@ -357,6 +357,9 @@ pageNumberStartWithZero | boolean | By default, the passed `pageNumber`(or a ali
 
 For more info on the parameters, refer to the [JQuery API Documentation](https://api.jquery.com/jquery.ajax/).
 
+### ajaxFunction <em>function(settings)</em>
+A function to use as a replacement for `$.ajax()`. This function will be called with a single object parameter containing the same parameters as $.ajax(). Use this to implement a custom ajax function for pagination. The provided function must call either `settings.success(response)` where `response` is the returned data array or `settings.error(jqXHR, textStatus, errorThrown)`. The parameters for the error function are passed to the `formatAjaxError` function if one is provided. These are the same parameters provided by the built-in Ajax function.
+
 ### triggerPagingOnInit <em>boolean (default `true`)</em>
 Determines whether to trigger the default pagination at initialization.
 
@@ -549,7 +552,7 @@ First, you should link the css file in the header tag of HTML:
 
     <link rel="stylesheet" href="{yourAssetsServer}/pagination.css" />
 
-css & less file: [pagination.css](../dist/2.3.1/pagination.css) [pagination.less](../dist/2.3.1/pagination.less)
+css & less file: [pagination.css](../dist/2.3.2/pagination.css) [pagination.less](../dist/2.3.2/pagination.less)
 
 For example, the blue skin:
 
