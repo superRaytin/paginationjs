@@ -188,6 +188,8 @@ Display page number buttons.
 ### showSizeChanger <em>boolean (default `false`)</em>
 Display size changer.
 
+See [demo](/index.html#show_page_size_changer)
+
 ### sizeChangerOptions <em>array (default `[10, 20, 50, 100]`)</em>
 Specifies options for the size selector. Default is `[10, 20, 50, 100]`.
 

@@ -185,6 +185,8 @@ alias: {
 ### showSizeChanger <em>boolean (default `false`)</em>
 是否显示 pageSize 选择器
 
+查看 [demo](/index.html#show_page_size_changer)
+
 ### sizeChangerOptions <em>array (default `[10, 20, 50, 100]`)</em>
 指定 pageSize 的选项范围，默认是 `[10, 20, 50, 100]`.
 
