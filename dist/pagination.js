@@ -1,5 +1,5 @@
 /*
- * pagination.js 2.4.1
+ * pagination.js 2.4.2
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
@@ -457,7 +457,6 @@
 
         self.disable();
 
-        $.ajax(formatAjaxParams);
         if (attributes.ajaxFunction) {
           attributes.ajaxFunction(formatAjaxParams);
         } else {
@@ -894,6 +893,7 @@
           case 'destroy':
             container.trigger.apply(this, args);
             break;
+          case 'getSelectedPageNum':
           case 'getCurrentPageNum':
             if (container.data('pagination').model) {
               return container.data('pagination').model.pageNumber;
@@ -902,6 +902,7 @@
             }
           case 'getTotalPage':
             return Math.ceil(container.data('pagination').model.totalNumber / container.data('pagination').model.pageSize);
+          case 'getSelectedPageData':
           case 'getCurrentPageData':
             return container.data('pagination').currentPageData;
           // Whether pagination has been disabled

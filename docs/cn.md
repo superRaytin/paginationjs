@@ -576,7 +576,7 @@ pageSize 改变之后调用
 
     <link rel="stylesheet" href="{yourAssetsServer}/pagination.css" />
 
-css & less 文件: [pagination.css](../dist/2.4.1/pagination.css) [pagination.less](../dist/2.4.1/pagination.less)
+css & less 文件: [pagination.css](../dist/2.4.2/pagination.css) [pagination.less](../dist/2.4.2/pagination.less)
 
 例如蓝色主题，可以这样使用：
 

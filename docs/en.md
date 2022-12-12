@@ -574,7 +574,7 @@ First, you should link the css file in the header tag of HTML:
 
     <link rel="stylesheet" href="{yourAssetsServer}/pagination.css" />
 
-css & less file: [pagination.css](../dist/2.4.1/pagination.css) [pagination.less](../dist/2.4.1/pagination.less)
+css & less file: [pagination.css](../dist/2.4.2/pagination.css) [pagination.less](../dist/2.4.2/pagination.less)
 
 For example, the blue theme:
 
