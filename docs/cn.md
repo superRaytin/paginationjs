@@ -154,6 +154,7 @@ pageSize | number | 每页条目数
 totalNumber | number | 总条目数
 el | jQueryObject | 分页实例的容器
 direction | number | 分页方向，往前翻页时值为 -1，往后翻为 1，初始化时为 0
+originalResponse | object | 当数据源是一个 URL 时，每次分页请求的原始响应内容
 
 ### alias <em>object</em>
 请求的参数别名，用于异步分页，默认为空
@@ -576,7 +577,7 @@ pageSize 改变之后调用
 
     <link rel="stylesheet" href="{yourAssetsServer}/pagination.css" />
 
-css & less 文件: [pagination.css](../dist/2.4.2/pagination.css) [pagination.less](../dist/2.4.2/pagination.less)
+css & less 文件: [pagination.css](../dist/2.5.0/pagination.css) [pagination.less](../dist/2.5.0/pagination.less)
 
 例如蓝色主题，可以这样使用：
 

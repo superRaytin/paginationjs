@@ -1,5 +1,5 @@
 /*
- * pagination.js 2.4.2
+ * pagination.js 2.5.0
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
@@ -441,6 +441,7 @@
 
         formatAjaxParams.url = attributes.dataSource;
         formatAjaxParams.success = function(response) {
+          self.model.originalResponse = response;
           if (self.isDynamicTotalNumber) {
             self.findTotalNumberFromRemoteResponse(response);
           } else {

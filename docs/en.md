@@ -109,10 +109,10 @@ The data got via Ajax also follow this rule.
 
 ### totalNumber <em>number (default `0`)</em>
 
-When the dataSource is a URL, you should pass a `totalNumber` to specify the total number of data items (or via `totalNumberLocator`). OtherWise, it will not take effect as total number will be calculated automatically.
+When the dataSource is an URL, you should pass a `totalNumber` to specify the total number of data items (or via `totalNumberLocator`). OtherWise, it will not take effect as total number will be calculated automatically.
 
 ### totalNumberLocator <em>function(response)</em>
-Useful when the dataSource is a URL, and you expect specifies one of the field value in the request's response as the `totalNumber`.
+Useful when the dataSource is an URL, and you expect specifies one of the field value in the request's response as the `totalNumber`.
 
 Note: Pagination will ignore `totalNumber` option when `totalNumberLocator` specified.
 
@@ -156,6 +156,7 @@ totalPage | number | Total page
 totalNumber | number | Total number of data items
 el | jQuery object | Pagination container element
 direction | number | Pagination direction, `-1` means forward, `1` means backward, `0` means current is at initialization.
+originalResponse | object | Original response of the request sent by `$.ajax()` when the `dataSource` is an URL.
 
 ### alias <em>object</em>
 Used to customize the name of `pageNumber` and `pageSize` when querying data items of the current page from remote server via Ajax.
@@ -344,13 +345,13 @@ The following are the available template variables:
 ### formatResult <em>function(data)</em>
 Formats the data items of current page before `callback` invoked.
 
-In this function, you should return a result array, alse you can process the original `data` directly.
+In this function, you should return a result array, you also can process the original `data` directly.
 
 See [demo](/index.html#formatResult)
 
 ### formatAjaxError <em>function(jqXHR, textStatus, errorThrown)</em>
 
-A function to be called if the dataSource is a URL and request fails.
+A function to be called if the dataSource is an URL and request fails.
 
 ```
 formatAjaxError: function(jqXHR, textStatus, errorThrown){ ... }
@@ -382,7 +383,7 @@ Determines whether to trigger the default pagination at initialization.
 If you have already set innerHTML for the first page before Pagination initialization, you can set this option to `false` to prevent unnecessary paging once.
 
 ### resetPageNumberOnInit <em>boolean (default `true`)</em>
-Reset page number to `1` when Pagination initialized/reinitialized and dataSource is a URL.
+Reset page number to `1` when Pagination initialized/reinitialized and dataSource is an URL.
 
 ### hideOnlyOnePage <em>boolean (default `false`)</em>
 Determines whether to hide pagination when there is only one page.
@@ -424,7 +425,7 @@ Follow the code above, Pagination will use your callback function instead of the
 ### disable
 To disable the pagination.
 
-Note: If the dataSource is a URL, Pagination will be automatically set to disabled before sending the request, and `enable` will be automatically invoked after the request completed.
+Note: If the dataSource is an URL, Pagination will be automatically set to disabled before sending the request, and `enable` will be automatically invoked after the request completed.
 
 ### enable
 To enable the pagination.
@@ -574,7 +575,7 @@ First, you should link the css file in the header tag of HTML:
 
     <link rel="stylesheet" href="{yourAssetsServer}/pagination.css" />
 
-css & less file: [pagination.css](../dist/2.4.2/pagination.css) [pagination.less](../dist/2.4.2/pagination.less)
+css & less file: [pagination.css](../dist/2.5.0/pagination.css) [pagination.less](../dist/2.5.0/pagination.less)
 
 For example, the blue theme:
 
