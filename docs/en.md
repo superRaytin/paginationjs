@@ -62,7 +62,6 @@ Provides data items directly.
 
 	Usually you will use it with a `locator` to specify the location of the array containing data items within the response.  The full response of the Ajax request is available as the `originalResponse` property of the `pagination` object passed to `callback`.
 	
-	Pagination will sending requests via `JSONP` while `URL` is one of File / HTTP / HTTPS protocol type, otherwise normal Ajax.
 
     ```
     /test.json
