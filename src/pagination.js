@@ -1,5 +1,5 @@
 /*
- * pagination.js 2.5.0
+ * pagination.js 2.5.1
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
@@ -424,7 +424,6 @@
         // If the pageNumber's value starts with 0 via Ajax
         if (ajaxParams && ajaxParams.pageNumberStartWithZero) {
           postData[pageNumberName] = pageNumber - 1;
-          delete ajaxParams.pageNumberStartWithZero;
         }
 
         var formatAjaxParams = {
