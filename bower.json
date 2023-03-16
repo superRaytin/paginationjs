@@ -1,6 +1,6 @@
 {
     "name": "paginationjs",
-    "version": "2.5.1",
+    "version": "2.6.0",
     "main": "dist/pagination.min.js",
     "keywords": [
         "paginationjs",

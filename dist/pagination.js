@@ -1,5 +1,5 @@
 /*
- * pagination.js 2.5.1
+ * pagination.js 2.6.0
  * A jQuery plugin to provide simple yet fully customisable pagination.
  * https://github.com/superRaytin/paginationjs
  *
@@ -440,15 +440,23 @@
 
         formatAjaxParams.url = attributes.dataSource;
         formatAjaxParams.success = function(response) {
-          self.model.originalResponse = response;
-          if (self.isDynamicTotalNumber) {
-            self.findTotalNumberFromRemoteResponse(response);
-          } else {
-            self.model.totalNumber = attributes.totalNumber;
-          }
+          try {
+            self.model.originalResponse = response;
+            if (self.isDynamicTotalNumber) {
+              self.findTotalNumberFromRemoteResponse(response);
+            } else {
+              self.model.totalNumber = attributes.totalNumber;
+            }
 
-          var finalData = self.filterDataWithLocator(response);
-          render(finalData);
+            var finalData = self.filterDataWithLocator(response);
+            render(finalData);
+          } catch (e) {
+            if(typeof attributes.onError === 'function') {
+              attributes.onError(e, 'ajaxSuccessHandlerError');
+            } else {
+              throw e;
+            }
+          }
         };
         formatAjaxParams.error = function(jqXHR, textStatus, errorThrown) {
           attributes.formatAjaxError && attributes.formatAjaxError(jqXHR, textStatus, errorThrown);
@@ -1132,6 +1140,10 @@
 
     if (args.formatResult !== undefined && typeof args.formatResult !== 'function') {
       throwError('"formatResult" should be a Function.');
+    }
+
+    if (args.onError !== undefined && typeof args.onError !== 'function') {
+      throwError('"onError" should be a Function.');
     }
   }
 

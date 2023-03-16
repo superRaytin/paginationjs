@@ -390,6 +390,13 @@ pageNum: 2
 ### hideOnlyOnePage <em>boolean (default `false`)</em>
 是否在只有 1 页时隐藏分页
 
+### onError <em>function(errorThrown, errorType)</em>
+渲染分页时发生异常时执行，此函数有 2 个参数：错误对象和错误类型，错误类型见下表。
+
+ErrorType | 描述
+------------ | ------------- | ------------
+ajaxSuccessHandlerError | 在执行 Ajax 的 `success` 回调函数时发生错误。
+
 # Methods
 
 分页初始化之后，可以使用下面列出的方法来改变分页的行为
@@ -577,7 +584,7 @@ pageSize 改变之后调用
 
     <link rel="stylesheet" href="{yourAssetsServer}/pagination.css" />
 
-css & less 文件: [pagination.css](../dist/2.5.1/pagination.css) [pagination.less](../dist/2.5.1/pagination.less)
+css & less 文件: [pagination.css](../dist/2.6.0/pagination.css) [pagination.less](../dist/2.6.0/pagination.less)
 
 例如蓝色主题，可以这样使用：
 

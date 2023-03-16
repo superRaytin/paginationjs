@@ -389,6 +389,14 @@ Reset page number to `1` when Pagination initialized/reinitialized and dataSourc
 ### hideOnlyOnePage <em>boolean (default `false`)</em>
 Determines whether to hide pagination when there is only one page.
 
+### onError <em>function(errorThrown, errorType)</em>
+A function to be called if error thrown when rendering pagination. The function gets passed two arguments: The error object and the error type.
+
+ErrorType | Description
+------------ | ------------- | ------------
+ajaxSuccessHandlerError | error occurred while executing the `success` callback of Ajax.
+
+
 # Methods
 After Pagination intialized, you can change the behavior of the `.pagination` through the following supported methods.
 
@@ -576,7 +584,7 @@ First, you should link the css file in the header tag of HTML:
 
     <link rel="stylesheet" href="{yourAssetsServer}/pagination.css" />
 
-css & less file: [pagination.css](../dist/2.5.1/pagination.css) [pagination.less](../dist/2.5.1/pagination.less)
+css & less file: [pagination.css](../dist/2.6.0/pagination.css) [pagination.less](../dist/2.6.0/pagination.less)
 
 For example, the blue theme:
 
