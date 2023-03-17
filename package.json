@@ -2,7 +2,7 @@
   "name": "paginationjs",
   "version": "2.6.0",
   "description": "A jQuery plugin to provide simple yet fully customisable pagination",
-  "main": "dist/pagination.js",
+  "main": "dist/pagination.min.js",
   "directories": {
     "test": "test"
   },
@@ -21,6 +21,9 @@
     "pagination",
     "jquery.pagination",
     "jquery pagination"
+  ],
+  "files": [
+    "dist"
   ],
   "author": "superRaytin",
   "license": "MIT",
